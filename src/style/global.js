@@ -95,6 +95,9 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
   }
+  label {
+    display: none;
+  }
 `;
 
 export default GlobalStyle;

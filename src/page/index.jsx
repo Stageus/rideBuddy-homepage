@@ -9,7 +9,7 @@ const Page = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Login />} />
         <Route path="/Main" element={<Main />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Profile" element={<Profile />} />
