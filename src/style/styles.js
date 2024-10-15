@@ -5,7 +5,7 @@ export const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.colors.primary60};
   color: ${({ theme }) => theme.colors.white};
   border: none;
-  padding: 16px;
+  padding: 14px;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.buttonM};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
@@ -27,7 +27,7 @@ export const StyledContainer = styled.div`
 
 // 4. 공통 인풋 스타일
 export const StyledInput = styled.input`
-  padding: 16px;
+  padding: 14px;
   border: 1px solid ${({ theme }) => theme.colors.coolGray20};
   border-radius: 10px;
   font-size: ${({ theme }) => theme.fontSizes.bodyM};
