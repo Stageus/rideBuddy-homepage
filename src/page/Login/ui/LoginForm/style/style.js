@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledLoginForm = styled.div`
-  width: 25%;
+  width: 28%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,6 +20,11 @@ export const StyledLoginForm = styled.div`
     margin-bottom: 30px;
     text-align: center;
     font-size: ${({ theme }) => theme.fontSizes.bodyM};
+  }
+
+  @media (max-width: 1400px) {
+    width: 100%;
+    margin-top: 50px;
   }
 `;
 
@@ -43,3 +48,24 @@ export const StyledSignUpDiv = styled.div`
   align-items: center;
   margin-top: 50px;
 `;
+
+export const StyledSNSLoginBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  width: 50px;
+  height: 30px;
+  background: ${({ logo }) => 
+    logo === 'naver' ? '#2DB400' : 'none'};
+  border: 1px solid ${({ theme }) => theme.colors.coolGray20};
+  border-radius: 5px;
+
+  svg {
+    width: ${({ logo }) => (logo === 'naver' ? '14px' : '18px')};
+    height: ${({ logo }) => (logo === 'naver' ? '14px' : '18px')};
+    color: #fff;
+  }
+`;
+
+

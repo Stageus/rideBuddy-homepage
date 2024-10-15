@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyledButton, StyledInput, StyledLink } from '../../../../style/styles';
-import { StyledInputDiv, StyledLoginForm, StyledSignUpDiv, StyledSNSLoginDiv } from './style/style';
+import { StyledInputDiv, StyledLoginForm, StyledSignUpDiv, StyledSNSLoginBtn, StyledSNSLoginDiv } from './style/style';
 import { SiNaver } from 'react-icons/si';
-import { FaGoogle } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc";
 
 const LoginForm = () => {
   const handleLoginClick = () => {
@@ -48,12 +48,12 @@ const LoginForm = () => {
       <span>SNS 로그인 하기</span>
 
       <StyledSNSLoginDiv>
-        <button aria-label="구글로 로그인" onClick={handleGoogleLogin}>
-          <FaGoogle></FaGoogle>
-        </button>
-        <button aria-label="네이버로 로그인" onClick={handleNaverLogin}>
-          <SiNaver></SiNaver>
-        </button>
+        <StyledSNSLoginBtn aria-label="구글로 로그인" onClick={handleGoogleLogin}>
+          <FcGoogle />
+        </StyledSNSLoginBtn>
+        <StyledSNSLoginBtn logo="naver" aria-label="네이버로 로그인" onClick={handleNaverLogin}>
+          <SiNaver />
+        </StyledSNSLoginBtn>
       </StyledSNSLoginDiv>
 
       <StyledSignUpDiv>

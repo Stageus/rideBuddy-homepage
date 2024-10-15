@@ -7,4 +7,10 @@ export const PageWrapper = styled(StyledContainer)`
   display: flex;
   justify-content: space-between;
   color: ${({ theme }) => theme.colors.primary60};
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
