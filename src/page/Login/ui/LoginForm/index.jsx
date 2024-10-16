@@ -50,7 +50,7 @@ const LoginForm = () => {
 
           <SpaceBetweenDiv padding="1px">
             {errorMessage ? <StyledErrorMessage>{errorMessage}</StyledErrorMessage> : <div></div>}
-            <StyledLink href="/find-id">아이디 찾기</StyledLink>
+            <StyledLink href="/findId">아이디 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
@@ -74,7 +74,7 @@ const LoginForm = () => {
             ) : (
               <div></div>
             )}
-            <StyledLink href="/find-password">비밀번호 찾기</StyledLink>
+            <StyledLink href="/findPassword">비밀번호 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
