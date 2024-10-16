@@ -15,7 +15,7 @@ import useTestLogin from './api/useTestLogin';
 const LoginForm = () => {
   const [userId, setUserId] = useState(''); 
   const [password, setPassword] = useState(''); 
-  const [status, errorMessage, loginClickEvent] = useTestLogin(); 
+  const [status, errorMessage, loginClickEvent] = useTestLogin();
 
   const handleLoginClick = () => {
     loginClickEvent(userId, password);
@@ -50,7 +50,7 @@ const LoginForm = () => {
 
           <SpaceBetweenDiv padding="1px">
             {errorMessage ? <StyledErrorMessage>{errorMessage}</StyledErrorMessage> : <div></div>}
-            <StyledLink href="/findId">아이디 찾기</StyledLink>
+            <StyledLink to="/findId">아이디 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
@@ -74,7 +74,7 @@ const LoginForm = () => {
             ) : (
               <div></div>
             )}
-            <StyledLink href="/findPassword">비밀번호 찾기</StyledLink>
+            <StyledLink to="/findPw">비밀번호 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
