@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // 1. 공통 버튼 스타일
@@ -55,12 +56,16 @@ export const StyledText = styled.p`
   line-height: 1.5;
 `;
 
-export const StyledLink = styled.a`
+export const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.primary60};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   font-size: ${({ theme }) => theme.fontSizes.bodyS};
   text-decoration: none;
   cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;  // 호버 시 밑줄 추가
+  }
 `;
 
 export const StyledErrorMessage = styled.p`
