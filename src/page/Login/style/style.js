@@ -12,5 +12,6 @@ export const PageWrapper = styled(StyledContainer)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80%;
   }
 `;

@@ -62,10 +62,6 @@ export const StyledLink = styled(Link)`
   font-size: ${({ theme }) => theme.fontSizes.bodyS};
   text-decoration: none;
   cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;  // 호버 시 밑줄 추가
-  }
 `;
 
 export const StyledErrorMessage = styled.p`

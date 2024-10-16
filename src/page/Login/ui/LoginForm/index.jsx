@@ -95,7 +95,7 @@ const LoginForm = () => {
       </StyledSNSLoginDiv>
 
       <StyledSignUpDiv>
-        <StyledLink>계정이 아직 없으신가요?</StyledLink>
+        <StyledLink to="/SignUp">계정이 아직 없으신가요?</StyledLink>
       </StyledSignUpDiv>
     </StyledLoginForm>
   );
