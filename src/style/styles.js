@@ -28,7 +28,8 @@ export const StyledContainer = styled.div`
 // 4. 공통 인풋 스타일
 export const StyledInput = styled.input`
   padding: 14px;
-  border: 1px solid ${({ theme }) => theme.colors.coolGray20};
+  border: 1px solid
+    ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.coolGray20)};
   border-radius: 10px;
   font-size: ${({ theme }) => theme.fontSizes.bodyM};
   color: ${({ theme }) => theme.colors.text};
@@ -37,8 +38,11 @@ export const StyledInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.primary60};
-    box-shadow: 0 0 4px ${({ theme }) => theme.colors.primary30};
+    border-color: ${({ theme, status }) =>
+      status !== 200 ? theme.colors.error : theme.colors.primary60};
+    box-shadow: 0 0 4px
+      ${({ theme, status }) =>
+        status !== 200 ? theme.colors.error : theme.colors.primary30};
   }
 `;
 
@@ -57,4 +61,9 @@ export const StyledLink = styled.a`
   font-size: ${({ theme }) => theme.fontSizes.bodyS};
   text-decoration: none;
   cursor: pointer;
+`;
+
+export const StyledErrorMessage = styled.p`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: ${({ theme }) => theme.fontSizes.bodyXS};
 `;
