@@ -1,22 +1,31 @@
-import React from 'react';
-import { StyledButton, StyledInput, StyledLink } from '../../../../style/styles';
-import { StyledInputDiv, StyledLoginForm, StyledSignUpDiv, StyledSNSLoginBtn, StyledSNSLoginDiv } from './style/style';
+import React, { useState } from 'react';
+import { StyledButton, StyledInput, StyledLink, StyledErrorMessage } from '../../../../style/styles';
+import {
+  SpaceBetweenDiv,
+  StyledInputDiv,
+  StyledLoginForm,
+  StyledSignUpDiv,
+  StyledSNSLoginBtn,
+  StyledSNSLoginDiv,
+} from './style/style';
 import { SiNaver } from 'react-icons/si';
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from 'react-icons/fc';
+import useTestLogin from './api/useTestLogin';
 
 const LoginForm = () => {
+  const [userId, setUserId] = useState(''); 
+  const [password, setPassword] = useState(''); 
+  const [status, errorMessage, loginClickEvent] = useTestLogin(); 
+
   const handleLoginClick = () => {
-    // 로그인 버튼 클릭 시 처리할 로직
-    console.log('로그인 버튼 클릭됨');
+    loginClickEvent(userId, password);
   };
 
   const handleGoogleLogin = () => {
-    // 구글 로그인 처리 로직
     console.log('구글 로그인');
   };
 
   const handleNaverLogin = () => {
-    // 네이버 로그인 처리 로직
     console.log('네이버 로그인');
   };
 
@@ -28,16 +37,45 @@ const LoginForm = () => {
       <StyledInputDiv>
         <label htmlFor="user-id">아이디 입력</label>
         <div>
-          <StyledInput type="text" id="user-id" name="user-id" placeholder="아이디 입력" required />
-          <StyledLink href="/find-id">아이디 찾기</StyledLink>
+          <StyledInput
+            type="text"
+            id="user-id"
+            name="user-id"
+            placeholder="아이디 입력"
+            value={userId}
+            onChange={e => setUserId(e.target.value)} // 입력 변경 시 상태 업데이트
+            required
+            status={status}
+          />
+
+          <SpaceBetweenDiv padding="1px">
+            {errorMessage ? <StyledErrorMessage>{errorMessage}</StyledErrorMessage> : <div></div>}
+            <StyledLink href="/find-id">아이디 찾기</StyledLink>
+          </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
 
-      <StyledInputDiv>
+      <StyledInputDiv padding="1px">
         <label htmlFor="password">비밀번호 입력</label>
         <div>
-          <StyledInput type="password" id="password" name="password" placeholder="비밀번호 입력" required />
-          <StyledLink href="/find-password">비밀번호 찾기</StyledLink>
+          <StyledInput
+            type="password"
+            id="password"
+            name="password"
+            placeholder="비밀번호 입력"
+            value={password}
+            onChange={e => setPassword(e.target.value)} // 입력 변경 시 상태 업데이트
+            required
+            status={status}
+          />
+          <SpaceBetweenDiv padding="1px">
+            {errorMessage && status != 500 && status != 400 && status != 404 ? (
+              <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
+            ) : (
+              <div></div>
+            )}
+            <StyledLink href="/find-password">비밀번호 찾기</StyledLink>
+          </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
 

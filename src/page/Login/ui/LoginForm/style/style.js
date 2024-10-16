@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledLoginForm = styled.div`
-  width: 28%;
+  width: 33%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@ export const StyledLoginForm = styled.div`
 
   p:nth-child(2) {
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
 
   span {
@@ -39,21 +39,23 @@ export const StyledInputDiv = styled.div`
 
 export const StyledSNSLoginDiv = styled.div`
   display: flex;
-  justify-content: center;
+  width: 110px;
+  justify-content: space-between;
+  margin-left:auto;
+  margin-right: auto;
 `;
 
 export const StyledSignUpDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 
 export const StyledSNSLoginBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
   width: 50px;
   height: 30px;
   background: ${({ logo }) => 
@@ -67,5 +69,13 @@ export const StyledSNSLoginBtn = styled.button`
     color: #fff;
   }
 `;
+
+export const SpaceBetweenDiv = styled.div`
+  padding-left: ${({ padding }) => padding || '0'};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 
 
