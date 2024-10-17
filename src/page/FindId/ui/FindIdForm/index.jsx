@@ -1,32 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyledButton, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
 import { StyledEmailDiv, StyledFindIdForm, StyledFindIdFormSection, StyledHiddenEmailDiv } from './style/style';
+import useTimer from './model/useTimer';
+import formatTime from './util/formatTime';
 
 const FindIdForm = () => {
   const [isEmailVisible, setIsEmailVisible] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(180); // 3:00 minutes countdown (180 seconds)
-  const [isVerificationSent, setIsVerificationSent] = useState(false); // New state to track verification status
+  const [isVerificationSent, setIsVerificationSent] = useState(false);
 
-  useEffect(() => {
-    if (isEmailVisible && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [isEmailVisible, timeLeft]);
-
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-  };
+  const { timeLeft, resetTimer } = useTimer(180, isEmailVisible);
 
   const handleVerifyClick = () => {
     setIsEmailVisible(true);
-    setTimeLeft(180); // Reset the countdown to 3:00 whenever verification is clicked
-    setIsVerificationSent(true); // Set verification sent to true
+    resetTimer();
+    setIsVerificationSent(true);
   };
 
   return (
@@ -45,7 +32,7 @@ const FindIdForm = () => {
           <StyledEmailDiv>
             <StyledInputPrimary10 type="email" id="email" name="email" placeholder="이메일 입력" required />
             <StyledButton type="button" onClick={handleVerifyClick}>
-              {isVerificationSent ? '재전송' : '인증'} {/* Button text changes after clicking */}
+              {isVerificationSent ? '재전송' : '인증'}
             </StyledButton>
           </StyledEmailDiv>
         </div>
@@ -56,7 +43,7 @@ const FindIdForm = () => {
           <span>{formatTime(timeLeft)}</span>
         </StyledHiddenEmailDiv>
 
-        <StyledLink>로그인페이지 이동</StyledLink>
+        <StyledLink to="/Login">로그인페이지 이동</StyledLink>
         <StyledButton width="100%" type="submit">
           아이디 찾기
         </StyledButton>
