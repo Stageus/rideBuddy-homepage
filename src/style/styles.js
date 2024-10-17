@@ -11,7 +11,7 @@ export const StyledButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.buttonM};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 5px;
   width: ${({ width }) => width || 'auto'}; /* width를 props로 받아서 설정, 기본값은 auto */
 `;
 
@@ -32,6 +32,28 @@ export const StyledInput = styled.input`
   border: 1px solid
     ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.coolGray20)};
   border-radius: 10px;
+  font-size: ${({ theme }) => theme.fontSizes.bodyM};
+  color: ${({ theme }) => theme.colors.text};
+  width: ${({ width }) => width || '100%'};
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme, status }) =>
+      status !== 200 ? theme.colors.error : theme.colors.primary60};
+    box-shadow: 0 0 4px
+      ${({ theme, status }) =>
+        status !== 200 ? theme.colors.error : theme.colors.primary30};
+  }
+`;
+
+// 4. 공통 인풋 스타일
+export const StyledInputPrimary10 = styled.input`
+  padding: 14px;
+  border: 1px solid
+    ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.primary10)};
+  border-radius: 10px;
+  background: ${({ theme }) => theme.colors.primary10};;
   font-size: ${({ theme }) => theme.fontSizes.bodyM};
   color: ${({ theme }) => theme.colors.text};
   width: ${({ width }) => width || '100%'};

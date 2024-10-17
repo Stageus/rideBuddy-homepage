@@ -4,6 +4,7 @@ import SignUp from './Signup';
 import Profile from './Profile';
 import Login from './Login';
 import History from './History';
+import FindId from './FindId';
 
 const Page = () => {
   return (
@@ -15,6 +16,7 @@ const Page = () => {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/History" element={<History />} />
+        <Route path="/FindId" element={<FindId />} />
       </Routes>
     </>
   );

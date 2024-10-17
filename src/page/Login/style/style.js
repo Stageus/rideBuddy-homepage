@@ -6,6 +6,7 @@ export const PageWrapper = styled(StyledContainer)`
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: ${({ theme }) => theme.colors.primary60};
 
   @media (max-width: 1400px) {

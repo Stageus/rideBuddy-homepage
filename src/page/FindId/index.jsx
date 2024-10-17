@@ -1,5 +1,12 @@
+import { PageWrapper } from "./style/style";
+import FindIdForm from "./ui/FindIdForm";
+
 const FindId = () => {
-    return <div>아이디 찾기 페이지</div>;
+    return (
+      <PageWrapper>
+        <FindIdForm></FindIdForm>
+      </PageWrapper>
+    );
   };
   
   export default FindId;
