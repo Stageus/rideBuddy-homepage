@@ -13,8 +13,8 @@ import { FcGoogle } from 'react-icons/fc';
 import useTestLogin from './api/useTestLogin';
 
 const LoginForm = () => {
-  const [userId, setUserId] = useState(''); 
-  const [password, setPassword] = useState(''); 
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
   const [status, errorMessage, loginClickEvent] = useTestLogin();
 
   const handleLoginClick = () => {
@@ -50,7 +50,7 @@ const LoginForm = () => {
 
           <SpaceBetweenDiv padding="1px">
             {errorMessage ? <StyledErrorMessage>{errorMessage}</StyledErrorMessage> : <div></div>}
-            <StyledLink to="/findId">아이디 찾기</StyledLink>
+            <StyledLink to="/FindId">아이디 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
@@ -74,7 +74,7 @@ const LoginForm = () => {
             ) : (
               <div></div>
             )}
-            <StyledLink to="/findPw">비밀번호 찾기</StyledLink>
+            <StyledLink to="/FindPw">비밀번호 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>
       </StyledInputDiv>
