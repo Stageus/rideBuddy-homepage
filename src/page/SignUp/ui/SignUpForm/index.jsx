@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyledButton, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
-import { StyledEmailDiv, StyledSignUpForm, StyledHiddenEmailDiv, StyledSignUpSection } from './style/style';
-import useTimer from './model/useTimer';
-import formatTime from './util/formatTime';
+import { StyledEmailDiv, StyledSignUpForm, StyledHiddenEmailDiv, StyledSignUpSection, StyledPwConfirmDiv } from './style/style';
+import useTimer from '../../../../shared/model/useTimer';
+import formatTime from '../../../../shared/util/formatTime';
 
 const SignUpForm = () => {
   const [isEmailVisible, setIsEmailVisible] = useState(false);
@@ -41,10 +41,10 @@ const SignUpForm = () => {
         </div>
         <div>
           <label htmlFor="email">비밀번호 확인</label>
-          <StyledEmailDiv>
+          <StyledPwConfirmDiv>
             <StyledInputPrimary10 type="email" id="email" name="email" placeholder="비밀번호 확인 입력" required />
             <StyledButton type="button">확인</StyledButton>
-          </StyledEmailDiv>
+          </StyledPwConfirmDiv>
         </div>
         <div>
           <label htmlFor="email">이메일</label>

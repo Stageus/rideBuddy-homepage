@@ -62,6 +62,27 @@ export const StyledEmailDiv = styled.div`
   }
 `;
 
+export const StyledPwConfirmDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  input {
+    margin-bottom: 0px;
+  }
+
+  button {
+    margin-left: 10px;
+    width: 90px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSizes.bodyS};
+  }
+`;
+
 export const StyledHiddenEmailDiv = styled.div`
   display: ${({ isvisible }) => (isvisible ? 'block' : 'none')};
   position: relative;

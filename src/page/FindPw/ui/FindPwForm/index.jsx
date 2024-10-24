@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyledButton, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
 import { StyledEmailDiv, StyledFindPwForm, StyledFindPwFormSection, StyledHiddenEmailDiv } from './style/style';
-import useTimer from './model/useTimer';
-import formatTime from './util/formatTime';
+import useTimer from '../../../../shared/model/useTimer';
+import formatTime from '../../../../shared/util/formatTime';
 
 const FindPwForm = () => {
   const [isEmailVisible, setIsEmailVisible] = useState(false);

@@ -45,7 +45,7 @@ const LoginForm = () => {
             {errorMessage ? (
               <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
             ) : (
-              <StyledErrorMessage style={{ width: '260px', opacity: 0 }}>메세지 출력</StyledErrorMessage>
+              <StyledErrorMessage style={{ opacity: 0 }}>메세지 출력</StyledErrorMessage>
             )}
             <StyledLink to="/FindId">아이디 찾기</StyledLink>
           </SpaceBetweenDiv>
