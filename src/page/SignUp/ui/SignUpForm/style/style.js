@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledFindPwFormSection = styled.section`
+export const StyledSignUpSection = styled.section`
   padding: 16px;
   background: #fff;
   border-radius: 5px;
@@ -18,7 +18,7 @@ export const StyledFindPwFormSection = styled.section`
   }
 `;
 
-export const StyledFindPwForm = styled.div`
+export const StyledSignUpForm = styled.div`
   input {
     margin-bottom: 15px;
   }

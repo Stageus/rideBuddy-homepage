@@ -41,29 +41,29 @@ export const StyledFindIdForm = styled.div`
   }
 `;
 
-
 export const StyledEmailDiv = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-margin-bottom: 15px;
-input {
+  margin-bottom: 15px;
+  input {
     margin-bottom: 0px;
-}
+  }
 
-button {
+  button {
     margin-left: 10px;
-    width:90px; height:46px;
+    width: 90px;
+    height: 46px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.bodyS};;
-}
+    font-size: ${({ theme }) => theme.fontSizes.bodyS};
+  }
 `;
 
 export const StyledHiddenEmailDiv = styled.div`
-  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+  display: ${({ isvisible }) => (isvisible ? 'block' : 'none')};
   position: relative;
   span {
     position: absolute;
@@ -71,6 +71,3 @@ export const StyledHiddenEmailDiv = styled.div`
     right: 15px;
   }
 `;
-
-
-

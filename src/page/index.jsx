@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import Main from './Main';
-import SignUp from './Signup';
 import Profile from './Profile';
 import Login from './Login';
 import History from './History';
 import FindId from './FindId';
 import FindPw from './FindPw';
+import SignUp from './SignUp';
 
 const Page = () => {
   return (

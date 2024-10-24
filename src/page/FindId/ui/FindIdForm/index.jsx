@@ -36,8 +36,8 @@ const FindIdForm = () => {
             </StyledButton>
           </StyledEmailDiv>
         </div>
-        
-        <StyledHiddenEmailDiv isVisible={isEmailVisible}>
+
+        <StyledHiddenEmailDiv isvisible={isEmailVisible}>
           <label htmlFor="hiddenEmail">이메일 인증</label>
           <StyledInputPrimary10 type="email" id="hiddenEmail" name="hiddenEmail" placeholder="이메일 입력" required />
           <span>{formatTime(timeLeft)}</span>

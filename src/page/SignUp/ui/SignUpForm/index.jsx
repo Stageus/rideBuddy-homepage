@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyledButton, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
-import { StyledEmailDiv, StyledFindPwForm, StyledFindPwFormSection, StyledHiddenEmailDiv } from './style/style';
+import { StyledEmailDiv, StyledSignUpForm, StyledHiddenEmailDiv, StyledSignUpSection } from './style/style';
 import useTimer from './model/useTimer';
 import formatTime from './util/formatTime';
 
-const FindPwForm = () => {
+const SignUpForm = () => {
   const [isEmailVisible, setIsEmailVisible] = useState(false);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
 
@@ -17,15 +17,34 @@ const FindPwForm = () => {
   };
 
   return (
-    <StyledFindPwFormSection>
-      <h1>비밀번호 찾기</h1>
-      <p>회원가입시 인증한 이메일로 진행해주세요.</p>
-      <StyledFindPwForm>
+    <StyledSignUpSection>
+      <h1>회원가입</h1>
+      <p>빠르고 쉽게 가입하세요.</p>
+      <StyledSignUpForm>
+        <div>
+          <label htmlFor="name">
+            이름 <span>(최대 5글자 한글 입력)</span>
+          </label>
+          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="이름 입력" required />
+        </div>
         <div>
           <label htmlFor="name">
             아이디 <span>(최대 20글자 영대소문자 입력)</span>
           </label>
-          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="이름 입력" required />
+          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="아이디 입력" required />
+        </div>
+        <div>
+          <label htmlFor="name">
+            비밀번호 <span>(최대 5글자 한글 입력)</span>
+          </label>
+          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="비밀번호 입력" required />
+        </div>
+        <div>
+          <label htmlFor="email">비밀번호 확인</label>
+          <StyledEmailDiv>
+            <StyledInputPrimary10 type="email" id="email" name="email" placeholder="비밀번호 확인 입력" required />
+            <StyledButton type="button">확인</StyledButton>
+          </StyledEmailDiv>
         </div>
         <div>
           <label htmlFor="email">이메일</label>
@@ -47,9 +66,9 @@ const FindPwForm = () => {
         <StyledButton width="100%" type="submit">
           비밀번호 찾기
         </StyledButton>
-      </StyledFindPwForm>
-    </StyledFindPwFormSection>
+      </StyledSignUpForm>
+    </StyledSignUpSection>
   );
 };
 
-export default FindPwForm;
+export default SignUpForm;

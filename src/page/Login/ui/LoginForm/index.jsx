@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import { StyledButton, StyledInput, StyledLink, StyledErrorMessage } from '../../../../style/styles';
-import {
-  SpaceBetweenDiv,
-  StyledInputDiv,
-  StyledLoginForm,
-  StyledSignUpDiv,
-  StyledSNSLoginBtn,
-  StyledSNSLoginDiv,
-} from './style/style';
+import { SpaceBetweenDiv, StyledInputDiv, StyledLoginForm, StyledSignUpDiv, StyledSNSLoginBtn, StyledSNSLoginDiv } from './style/style';
 import { SiNaver } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
 import useTestLogin from './api/useTestLogin';
@@ -49,7 +42,11 @@ const LoginForm = () => {
           />
 
           <SpaceBetweenDiv padding="1px">
-            {errorMessage ? <StyledErrorMessage>{errorMessage}</StyledErrorMessage> : <div></div>}
+            {errorMessage ? (
+              <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
+            ) : (
+              <StyledErrorMessage style={{ width: '260px', opacity: 0 }}>메세지 출력</StyledErrorMessage>
+            )}
             <StyledLink to="/FindId">아이디 찾기</StyledLink>
           </SpaceBetweenDiv>
         </div>

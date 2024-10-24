@@ -4,9 +4,7 @@ import App from './app/App';
 import { RecoilRoot } from 'recoil';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
-  </StrictMode>,
+  <RecoilRoot>
+    <App />
+  </RecoilRoot>,
 );
