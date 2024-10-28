@@ -29,8 +29,7 @@ export const StyledContainer = styled.div`
 // 4. 공통 인풋 스타일
 export const StyledInput = styled.input`
   padding: 14px;
-  border: 1px solid
-    ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.coolGray20)};
+  border: 1px solid ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.coolGray20)};
   border-radius: 10px;
   font-size: ${({ theme }) => theme.fontSizes.bodyM};
   color: ${({ theme }) => theme.colors.text};
@@ -39,21 +38,17 @@ export const StyledInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme, status }) =>
-      status !== 200 ? theme.colors.error : theme.colors.primary60};
-    box-shadow: 0 0 4px
-      ${({ theme, status }) =>
-        status !== 200 ? theme.colors.error : theme.colors.primary30};
+    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
+    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary30)};
   }
 `;
 
 // 4. 공통 인풋 스타일
 export const StyledInputPrimary10 = styled.input`
   padding: 14px;
-  border: 1px solid
-    ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.primary10)};
+  border: 1px solid ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.primary10)};
   border-radius: 10px;
-  background: ${({ theme }) => theme.colors.primary10};;
+  background: ${({ theme }) => theme.colors.primary10};
   font-size: ${({ theme }) => theme.fontSizes.bodyM};
   color: ${({ theme }) => theme.colors.text};
   width: ${({ width }) => width || '100%'};
@@ -61,11 +56,8 @@ export const StyledInputPrimary10 = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme, status }) =>
-      status !== 200 ? theme.colors.error : theme.colors.primary60};
-    box-shadow: 0 0 4px
-      ${({ theme, status }) =>
-        status !== 200 ? theme.colors.error : theme.colors.primary30};
+    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
+    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary30)};
   }
 `;
 

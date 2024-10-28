@@ -1,5 +1,12 @@
+import { PageWrapper } from './style/style';
+import SignUpForm from './ui/SignUpForm';
+
 const SignUp = () => {
-  return <div>회원가입 페이지</div>;
+  return (
+    <PageWrapper>
+      <SignUpForm></SignUpForm>
+    </PageWrapper>
+  );
 };
 
 export default SignUp;

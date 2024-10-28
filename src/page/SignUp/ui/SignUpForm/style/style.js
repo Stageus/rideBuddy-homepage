@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledFindPwFormSection = styled.section`
+export const StyledSignUpSection = styled.section`
   padding: 16px;
   background: #fff;
   border-radius: 5px;
@@ -18,7 +18,7 @@ export const StyledFindPwFormSection = styled.section`
   }
 `;
 
-export const StyledFindPwForm = styled.div`
+export const StyledSignUpForm = styled.div`
   input {
     margin-bottom: 15px;
   }
@@ -42,6 +42,27 @@ export const StyledFindPwForm = styled.div`
 `;
 
 export const StyledEmailDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  input {
+    margin-bottom: 0px;
+  }
+
+  button {
+    margin-left: 10px;
+    width: 90px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSizes.bodyS};
+  }
+`;
+
+export const StyledPwConfirmDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

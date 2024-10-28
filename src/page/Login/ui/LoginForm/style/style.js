@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const StyledLoginForm = styled.div`
-  width: 33%;
+  width: 360px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
 
   h1 {
     color: ${({ theme }) => theme.colors.primary90};
@@ -41,7 +42,7 @@ export const StyledSNSLoginDiv = styled.div`
   display: flex;
   width: 110px;
   justify-content: space-between;
-  margin-left:auto;
+  margin-left: auto;
   margin-right: auto;
 `;
 
@@ -58,8 +59,7 @@ export const StyledSNSLoginBtn = styled.button`
   justify-content: center;
   width: 50px;
   height: 30px;
-  background: ${({ logo }) => 
-    logo === 'naver' ? '#2DB400' : 'none'};
+  background: ${({ logo }) => (logo === 'naver' ? '#2DB400' : 'none')};
   border: 1px solid ${({ theme }) => theme.colors.coolGray20};
   border-radius: 5px;
 
@@ -76,6 +76,3 @@ export const SpaceBetweenDiv = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-
-

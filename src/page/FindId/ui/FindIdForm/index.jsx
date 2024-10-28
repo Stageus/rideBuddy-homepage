@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyledButton, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
 import { StyledEmailDiv, StyledFindIdForm, StyledFindIdFormSection, StyledHiddenEmailDiv } from './style/style';
-import useTimer from './model/useTimer';
-import formatTime from './util/formatTime';
+import useTimer from '../../../../shared/model/useTimer';
+import formatTime from '../../../../shared/util/formatTime';
 
 const FindIdForm = () => {
   const [isEmailVisible, setIsEmailVisible] = useState(false);
@@ -36,8 +36,8 @@ const FindIdForm = () => {
             </StyledButton>
           </StyledEmailDiv>
         </div>
-        
-        <StyledHiddenEmailDiv isVisible={isEmailVisible}>
+
+        <StyledHiddenEmailDiv isvisible={isEmailVisible}>
           <label htmlFor="hiddenEmail">이메일 인증</label>
           <StyledInputPrimary10 type="email" id="hiddenEmail" name="hiddenEmail" placeholder="이메일 입력" required />
           <span>{formatTime(timeLeft)}</span>
