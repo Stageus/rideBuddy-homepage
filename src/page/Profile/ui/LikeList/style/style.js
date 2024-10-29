@@ -1,4 +1,3 @@
-// LikeList.styles.js
 import styled from "styled-components";
 
 export const StyledLikeListContainerDiv = styled.div`
