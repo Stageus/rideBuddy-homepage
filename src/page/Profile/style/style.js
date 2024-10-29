@@ -12,4 +12,5 @@ export const PageWrapper = styled(StyledContainer)`
   background-color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSizes.bodyS};
   color:${({ theme }) => theme.colors.primary60};
+  left: calc(50% + 25px);
 `;

@@ -1,40 +1,4 @@
-import styled from "styled-components";
-
-const StyledDetailsContainerDiv = styled.div`
-  margin-bottom: 20px;
-`;
-
-const StyledDetailItemDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.primary10};
-`;
-
-const StyledDetailLabelSpan = styled.span`
-  font-weight: bold;
-`;
-
-const StyledDetailValueSpan = styled.span`
-  color:${({ theme }) => theme.colors.primary60};
-`;
-
-const StyledDeleteAccountButton = styled.button`
-background-color: transparent;
-margin-top: 10px;
-font-size: ${({ theme }) => theme.fontSizes.bodyS};
-color: ${({ theme }) => theme.colors.error};
-display: block;
-margin-left: auto;
-`;
-
-const StyledEditButton = styled.button`
-  background-color: transparent;
-  border: none;
-  color:${({ theme }) => theme.colors.primary60};
-  cursor: pointer;
-`;
+import { StyledDeleteAccountButton, StyledDetailItemDiv, StyledDetailLabelSpan, StyledDetailValueSpan, StyledDetailsContainerDiv, StyledEditButton } from "./style/style";
 
 const UserProfileDetails = () => {
   return (

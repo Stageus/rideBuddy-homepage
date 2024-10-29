@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledLoginBanner = styled.div`
   width: 64%;
   img {
-    width: 100%;
+    width: 90%;
     box-sizing: border-box;
   }
 
