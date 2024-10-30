@@ -1,5 +1,12 @@
-import React from "react";
-import { StyledCloseButton, StyledInputContainerDiv, StyledPhoneInput, StyledPopupContainerDiv, StyledTitleH2, StyledUpdateButton } from "./style/style";
+import React from 'react';
+import {
+  StyledCloseButton,
+  StyledInputContainerDiv,
+  StyledPhoneInput,
+  StyledPopupContainerDiv,
+  StyledTitleH2,
+  StyledUpdateButton,
+} from './style/style';
 
 const PhoneNumberChangePopup = ({ onClose, onUpdate }) => {
   return (

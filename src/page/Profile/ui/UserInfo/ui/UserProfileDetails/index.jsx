@@ -12,7 +12,7 @@ import PhoneNumberChangePopup from "../../../PhoneNumChangePopUp";
 import DeleteAccountPopup from "../../../DelPopUp";
 
 const UserProfileDetails = () => {
-  const [popupType, setPopupType] = useState(null); // null, "password", "phone" 중 하나의 상태
+  const [popupType, setPopupType] = useState(null); 
 
   const handleClosePopup = () => setPopupType(null);
 
@@ -40,15 +40,14 @@ const UserProfileDetails = () => {
       </StyledDetailItemDiv>
       <StyledDeleteAccountButton onClick={() => setPopupType("del")} >회원탈퇴</StyledDeleteAccountButton>
 
-      {/* 조건부로 팝업 렌더링 */}
       {popupType === "password" && (
-        <PasswordChangePopup onClose={handleClosePopup} onUpdate={() => console.log("비밀번호 수정 완료")} />
+        <PasswordChangePopup onClose={handleClosePopup}/>
       )}
       {popupType === "phone" && (
-        <PhoneNumberChangePopup onClose={handleClosePopup} onUpdate={() => console.log("전화번호 수정 완료")} />
+        <PhoneNumberChangePopup onClose={handleClosePopup}/>
       )}
       {popupType === "del" && (
-        <DeleteAccountPopup onClose={handleClosePopup} onUpdate={() => console.log("아이디 삭제 완료")} />
+        <DeleteAccountPopup onClose={handleClosePopup}/>
       )}
     </StyledDetailsContainerDiv>
   );

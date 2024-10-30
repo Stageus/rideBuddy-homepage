@@ -1,5 +1,13 @@
-import React from "react";
-import { StyledCloseButton, StyledConfirmButton, StyledDeleteAccountTitleH2, StyledIconContainerDiv, StyledPopupContainerDiv, StyledWarningIconDiv, StyledWarningMessageP } from "./style/style";
+import React from 'react';
+import {
+  StyledCloseButton,
+  StyledConfirmButton,
+  StyledDeleteAccountTitleH2,
+  StyledIconContainerDiv,
+  StyledPopupContainerDiv,
+  StyledWarningIconDiv,
+  StyledWarningMessageP,
+} from './style/style';
 
 const DeleteAccountPopup = ({ onClose, onConfirm }) => {
   return (

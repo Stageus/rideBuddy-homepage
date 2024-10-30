@@ -1,4 +1,3 @@
-// UserProfile.styles.js
 import styled from "styled-components";
 
 export const StyledUserProfileContainerDiv = styled.div`
