@@ -1,4 +1,3 @@
-// Aside.styles.js
 import styled from "styled-components";
 
 export const StyledAside = styled.aside`
@@ -11,9 +10,24 @@ export const StyledAside = styled.aside`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.white};
   padding: 20px 0;
   z-index: 999;
+  transition: transform 0.3s ease;
+  
+  
+  @media (max-width: 1024px) {
+    transform: ${({ isHovered }) => (isHovered ? "translateX(0)" : "translateX(-100%)")};
+  }
+`;
+
+export const StyledTriggerArea = styled.div`
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 80px;
+  height: calc(100vh - 100px);
+  z-index: 998;
 `;
 
 export const StyledIconContainer = styled.div`
@@ -24,9 +38,9 @@ export const StyledIconContainer = styled.div`
 `;
 
 export const StyledIcon = styled.img`
-  width: 30px;
-  height: 30px;
-  opacity: 0.7;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
 `;
 
 export const StyledLogoutButton = styled.div`
