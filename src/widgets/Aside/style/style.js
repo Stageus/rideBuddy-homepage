@@ -1,8 +1,9 @@
-import styled from "styled-components";
+// style/style.js
+import styled from 'styled-components';
 
 export const StyledAside = styled.aside`
   position: fixed;
-  top: 60px; 
+  top: 60px;
   left: 0;
   width: 80px;
   height: calc(100vh - 100px);
@@ -14,10 +15,9 @@ export const StyledAside = styled.aside`
   padding: 20px 0;
   z-index: 999;
   transition: transform 0.3s ease;
-  
-  
+
   @media (max-width: 1024px) {
-    transform: ${({ isHovered }) => (isHovered ? "translateX(0)" : "translateX(-100%)")};
+    transform: ${({ $isHovered }) => ($isHovered ? 'translateX(0)' : 'translateX(-100%)')};
   }
 `;
 

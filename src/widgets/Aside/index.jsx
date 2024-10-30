@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { StyledAside, StyledIcon, StyledIconContainer, StyledLogoutButton, StyledTriggerArea } from './style/style';
 
 const Aside = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const location = useLocation(); // 현재 경로를 가져옴
+  const location = useLocation();
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
@@ -13,11 +13,11 @@ const Aside = () => {
     <>
       <StyledTriggerArea onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
 
-      {/* 어사이드 바 */}
-      <StyledAside isHovered={isHovered} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <StyledAside $isHovered={isHovered} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <StyledIconContainer>
-          {/* /profile 경로일 때는 User 아이콘과 Logout 아이콘만 표시 */}
-          <StyledIcon src="img/icon_user.png" alt="User Icon" />
+          <Link to="/profile">
+            <StyledIcon src="img/icon_user.png" alt="User Icon" />
+          </Link>
           {location.pathname !== '/profile' && (
             <>
               <StyledIcon src="img/icon_map_pin.png" alt="Map Icon" />
@@ -25,9 +25,11 @@ const Aside = () => {
             </>
           )}
         </StyledIconContainer>
-        <StyledLogoutButton>
-          <StyledIcon src="img/icon_logout.png" alt="Logout Icon" />
-        </StyledLogoutButton>
+        <Link to="/login">
+          <StyledLogoutButton>
+            <StyledIcon src="img/icon_logout.png" alt="Logout Icon" />
+          </StyledLogoutButton>
+        </Link>
       </StyledAside>
     </>
   );
