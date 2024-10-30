@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { StyledAvatarContainerDiv, StyledAvatarImg, StyledEditButtonButton, StyledProfileEmailP, StyledProfileInfoDiv, StyledProfileNameP, StyledProfilePhoneP, StyledUserProfileContainerDiv } from "./style/style";
 
 const UserProfile = () => {
@@ -5,7 +6,9 @@ const UserProfile = () => {
     <StyledUserProfileContainerDiv>
       <StyledAvatarContainerDiv>
         <StyledAvatarImg />
-        <StyledEditButtonButton>✏️</StyledEditButtonButton>
+        <Link to="/history">
+          <StyledEditButtonButton>✏️</StyledEditButtonButton>
+        </Link>
       </StyledAvatarContainerDiv>
       <StyledProfileInfoDiv>
         <StyledProfileNameP>홍길동</StyledProfileNameP>

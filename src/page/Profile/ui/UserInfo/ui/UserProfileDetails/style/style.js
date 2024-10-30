@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 export const StyledDetailsContainerDiv = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 export const StyledDetailItemDiv = styled.div`
@@ -14,7 +14,7 @@ export const StyledDetailItemDiv = styled.div`
 `;
 
 export const StyledDetailLabelSpan = styled.span`
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;
 
 export const StyledDetailValueSpan = styled.span`
@@ -33,6 +33,7 @@ export const StyledDeleteAccountButton = styled.button`
 export const StyledEditButton = styled.button`
   background-color: transparent;
   border: none;
+  font-size: ${({ theme }) => theme.fontSizes.bodyS};
   color: ${({ theme }) => theme.colors.primary60};
   cursor: pointer;
 `;

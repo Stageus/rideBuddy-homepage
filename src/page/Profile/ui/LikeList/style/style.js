@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledButton } from "../../../../../style/styles";
 
 export const StyledLikeListContainerDiv = styled.div`
   text-align: center;
@@ -8,13 +9,13 @@ export const StyledLikeListContainerDiv = styled.div`
 export const StyledLikeListTitleH2 = styled.h2`
   font-size: 18px;
   font-weight: bold;
-  color: #3b5998;
+  color: ${({ theme }) => theme.colors.primary60};
   margin-bottom: 5px;
 `;
 
 export const StyledLikeListDescriptionP = styled.p`
   font-size: 14px;
-  color: #888;
+  color: ${({ theme }) => theme.colors.primary60};
   margin-bottom: 10px;
 `;
 
@@ -30,15 +31,33 @@ export const StyledActionButtonContainerDiv = styled.div`
   margin-top: 20px;
 `;
 
-export const StyledActionButtonButton = styled.button`
-  padding: 10px 20px;
-  background-color: #3b5998;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+export const StyledListUl = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 25px 0;
+  text-align: left;
+  padding-left: 20px; 
+`;
 
+export const StyledListItemLi = styled.li`
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.primary60};
+
+  .icon {
+    margin-right: 5px;
+    font-size: 18px;
+  }
+`;
+
+export const StyledListButton = styled(StyledButton)`
+  background-color: ${({ active, theme }) => (active ? theme.colors.primary60 : theme.colors.primary10)};
+  color: ${({ active, theme }) => (active ? theme.colors.white : theme.colors.primary60)};
+  
   &:hover {
-    background-color: #334a7d;
+    background-color: ${({ theme }) => theme.colors.primary60};
+    color: ${({ theme }) => theme.colors.white};
   }
 `;
