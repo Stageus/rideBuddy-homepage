@@ -21,7 +21,7 @@ const MapComponent = () => {
   }, []);
 
   return (
-    <div ref={mapRef} style={{ width: '500px', height: '500px' }}></div> // 지도 컨테이너
+    <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div> // 지도 컨테이너가 부모 요소를 꽉 채우도록 설정
   );
 };
 
