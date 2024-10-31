@@ -37,8 +37,8 @@ export const StyledInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
-    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary30)};
+    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.primary30 : theme.colors.primary60)};
+    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.primary30 : theme.colors.primary30)};
   }
 `;
 
@@ -54,15 +54,18 @@ export const StyledInputPrimary10 = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
-    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary30)};
+    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.primary30 : theme.colors.primary60)};
+    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.primary30 : theme.colors.primary30)};
   }
 `;
 
 export const StyledInputPrimary30 = styled.input`
   padding: 14px;
-  border: 1px solid ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.primary10)};
-  border-radius: 10px;
+  border: 1px solid
+    ${({ theme, status, isKeywordListOpen }) =>
+      status && status !== 200 ? theme.colors.error : isKeywordListOpen ? theme.colors.primary60 : theme.colors.primary10};
+  border-bottom: ${({ isKeywordListOpen }) => (isKeywordListOpen ? 'none' : '1px solid')};
+  border-radius: ${({ isKeywordListOpen }) => (isKeywordListOpen ? '10px 10px 0 0' : '10px')};
   background: ${({ theme }) => theme.colors.primary30};
   font-size: ${({ theme }) => theme.fontSizes.bodyS};
   color: ${({ theme }) => theme.colors.white};
@@ -76,8 +79,8 @@ export const StyledInputPrimary30 = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
-    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
+    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.primary30 : theme.colors.primary60)};
+    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.primary30 : theme.colors.primary30)};
   }
 `;
 
