@@ -110,7 +110,7 @@ const GraphChart = () => {
     };
   }, [theme]);
 
-  return <canvas ref={chartRef} width="320" height="200"></canvas>;
+  return <canvas ref={chartRef} width="320px" height="200px"></canvas>;
 };
 
 export default GraphChart;
