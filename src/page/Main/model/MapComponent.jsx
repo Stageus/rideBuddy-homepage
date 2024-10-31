@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from 'react';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
-  const lat = 37.556835; // 위도
-  const lng = 126.6038861; // 경도
+  const lat = 37.5181389; // 위도
+  const lng = 126.9452965; // 경도
 
   useEffect(() => {
     const { naver } = window; // window에서 naver 객체를 가져옴
