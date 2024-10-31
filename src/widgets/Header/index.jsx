@@ -2,6 +2,7 @@
 import React from 'react';
 import { StyledHeader, StyledLeftIcon, StyledLogo, StyledTitle, StyledTitleContainer } from './style/style';
 import { Link } from 'react-router-dom';
+import { StyledLink } from '../../style/styles';
 
 const Header = () => {
   return (
@@ -11,11 +12,12 @@ const Header = () => {
           <StyledLogo src="img/Logo_header.png" alt="Bike Icon" />
         </Link>
       </StyledLeftIcon>
-      <Link to="/main">
-        <StyledTitleContainer>
+
+      <StyledTitleContainer>
+        <StyledLink to="/main">
           <StyledTitle>ride buddy</StyledTitle>
-        </StyledTitleContainer>
-      </Link>
+        </StyledLink>
+      </StyledTitleContainer>
     </StyledHeader>
   );
 };

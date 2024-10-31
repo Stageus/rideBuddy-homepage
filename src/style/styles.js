@@ -26,7 +26,6 @@ export const StyledContainer = styled.div`
   width: ${({ width }) => width || 'auto'};
 `;
 
-// 4. 공통 인풋 스타일
 export const StyledInput = styled.input`
   padding: 14px;
   border: 1px solid ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.coolGray20)};
@@ -43,7 +42,6 @@ export const StyledInput = styled.input`
   }
 `;
 
-// 4. 공통 인풋 스타일
 export const StyledInputPrimary10 = styled.input`
   padding: 14px;
   border: 1px solid ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.primary10)};
@@ -58,6 +56,28 @@ export const StyledInputPrimary10 = styled.input`
     outline: none;
     border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
     box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary30)};
+  }
+`;
+
+export const StyledInputPrimary30 = styled.input`
+  padding: 14px;
+  border: 1px solid ${({ theme, status }) => (status && status !== 200 ? theme.colors.error : theme.colors.primary10)};
+  border-radius: 10px;
+  background: ${({ theme }) => theme.colors.primary30};
+  font-size: ${({ theme }) => theme.fontSizes.bodyS};
+  color: ${({ theme }) => theme.colors.white};
+  width: ${({ width }) => width || '100%'};
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.bodyS};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
+    box-shadow: 0 0 4px ${({ theme, status }) => (status !== 200 ? theme.colors.error : theme.colors.primary60)};
   }
 `;
 
