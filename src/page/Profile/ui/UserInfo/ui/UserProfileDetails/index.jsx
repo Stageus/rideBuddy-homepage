@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   StyledDeleteAccountButton,
   StyledDetailItemDiv,
   StyledDetailLabelSpan,
   StyledDetailValueSpan,
   StyledDetailsContainerDiv,
-  StyledEditButton
-} from "./style/style";
-import PasswordChangePopup from "../../../PwChangePopUp";
-import PhoneNumberChangePopup from "../../../PhoneNumChangePopUp";
-import DeleteAccountPopup from "../../../DelPopUp";
+  StyledEditButton,
+} from './style/style';
+import PasswordChangePopup from '../../../PwChangePopUp';
+import PhoneNumberChangePopup from '../../../PhoneNumChangePopUp';
+import DeleteAccountPopup from '../../../DelPopUp';
 
 const UserProfileDetails = () => {
-  const [popupType, setPopupType] = useState(null); 
+  const [popupType, setPopupType] = useState(null);
 
   const handleClosePopup = () => setPopupType(null);
 
@@ -32,23 +32,17 @@ const UserProfileDetails = () => {
       </StyledDetailItemDiv>
       <StyledDetailItemDiv>
         <StyledDetailLabelSpan>비밀번호</StyledDetailLabelSpan>
-        <StyledEditButton onClick={() => setPopupType("password")}>수정</StyledEditButton>
+        <StyledEditButton onClick={() => setPopupType('password')}>수정</StyledEditButton>
       </StyledDetailItemDiv>
       <StyledDetailItemDiv>
         <StyledDetailLabelSpan>전화번호</StyledDetailLabelSpan>
-        <StyledEditButton onClick={() => setPopupType("phone")}>수정</StyledEditButton>
+        <StyledEditButton onClick={() => setPopupType('phone')}>수정</StyledEditButton>
       </StyledDetailItemDiv>
-      <StyledDeleteAccountButton onClick={() => setPopupType("del")} >회원탈퇴</StyledDeleteAccountButton>
+      <StyledDeleteAccountButton onClick={() => setPopupType('del')}>회원탈퇴</StyledDeleteAccountButton>
 
-      {popupType === "password" && (
-        <PasswordChangePopup onClose={handleClosePopup}/>
-      )}
-      {popupType === "phone" && (
-        <PhoneNumberChangePopup onClose={handleClosePopup}/>
-      )}
-      {popupType === "del" && (
-        <DeleteAccountPopup onClose={handleClosePopup}/>
-      )}
+      {popupType === 'password' && <PasswordChangePopup onClose={handleClosePopup} />}
+      {popupType === 'phone' && <PhoneNumberChangePopup onClose={handleClosePopup} />}
+      {popupType === 'del' && <DeleteAccountPopup onClose={handleClosePopup} />}
     </StyledDetailsContainerDiv>
   );
 };

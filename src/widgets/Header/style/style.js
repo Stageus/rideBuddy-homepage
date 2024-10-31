@@ -1,5 +1,5 @@
 // Header.styles.js
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
   position: fixed;

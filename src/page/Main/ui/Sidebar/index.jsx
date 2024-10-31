@@ -12,7 +12,7 @@ import {
   StyledResultsDiv,
   StyledRideStatusP,
   StyledMainDiv,
-  StyledSmileyDiv
+  StyledSmileyDiv,
 } from './style/style';
 import { StyledInputPrimary30 } from '../../../../style/styles';
 import GraphChart from './ui/GraphChart';
@@ -22,13 +22,13 @@ const MainTab = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [status, setStatus] = useState(null);
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     const value = event.target.value;
     setSearchTerm(value);
 
     if (value) {
       if (value === '에러') {
-        setStatus(500); 
+        setStatus(500);
         setSearchResults([]);
       } else if (value === '결과없음') {
         setStatus(404);
@@ -49,12 +49,7 @@ const MainTab = () => {
 
   return (
     <StyledMainDiv>
-      <StyledInputPrimary30 
-        type="text" 
-        placeholder="검색어를 입력해주세요" 
-        value={searchTerm}
-        onChange={handleSearch} 
-      />
+      <StyledInputPrimary30 type="text" placeholder="검색어를 입력해주세요" value={searchTerm} onChange={handleSearch} />
       {status === 500 ? (
         <StyledErrorMsgDiv>
           <StyledErrorIconDiv>🔄</StyledErrorIconDiv>
@@ -82,7 +77,7 @@ const MainTab = () => {
         </StyledInfoDiv>
       ) : (
         <StyledResultsDiv>
-          {searchResults.map((result) => (
+          {searchResults.map(result => (
             <StyledResultItemDiv key={result.id}>
               <span>{result.name}</span>
               <StyledLocIconDiv>📍</StyledLocIconDiv>

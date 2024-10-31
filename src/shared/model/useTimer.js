@@ -6,7 +6,7 @@ const useTimer = (initialTime, isActive) => {
   useEffect(() => {
     if (isActive && timeLeft > 0) {
       const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
+        setTimeLeft(prevTime => prevTime - 1);
       }, 1000);
 
       return () => clearInterval(timer);

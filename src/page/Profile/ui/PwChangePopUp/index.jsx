@@ -1,5 +1,12 @@
-import React from "react";
-import { StyledCloseButton, StyledInputContainerDiv, StyledPasswordInput, StyledPopupContainerDiv, StyledTitleH2, StyledUpdateButton } from "./style/style";
+import React from 'react';
+import {
+  StyledCloseButton,
+  StyledInputContainerDiv,
+  StyledPasswordInput,
+  StyledPopupContainerDiv,
+  StyledTitleH2,
+  StyledUpdateButton,
+} from './style/style';
 
 const PasswordChangePopup = ({ onClose, onUpdate }) => {
   return (

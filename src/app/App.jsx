@@ -7,12 +7,12 @@ import { theme } from '../style/theme';
 
 function App() {
   return (
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Page />
-        </ThemeProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Page />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

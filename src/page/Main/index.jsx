@@ -11,7 +11,7 @@ const Main = () => {
       <Header />
       <Aside />
       <Content>
-        <MainTab/>
+        <MainTab />
         <MapContainer>
           <MapComponent />
         </MapContainer>

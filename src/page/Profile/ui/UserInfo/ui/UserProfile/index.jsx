@@ -1,5 +1,14 @@
-import { Link } from "react-router-dom";
-import { StyledAvatarContainerDiv, StyledAvatarImg, StyledEditButtonButton, StyledProfileEmailP, StyledProfileInfoDiv, StyledProfileNameP, StyledProfilePhoneP, StyledUserProfileContainerDiv } from "./style/style";
+import { Link } from 'react-router-dom';
+import {
+  StyledAvatarContainerDiv,
+  StyledAvatarImg,
+  StyledEditButtonButton,
+  StyledProfileEmailP,
+  StyledProfileInfoDiv,
+  StyledProfileNameP,
+  StyledProfilePhoneP,
+  StyledUserProfileContainerDiv,
+} from './style/style';
 
 const UserProfile = () => {
   return (

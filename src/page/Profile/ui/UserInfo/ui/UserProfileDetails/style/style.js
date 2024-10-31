@@ -1,5 +1,5 @@
 // Details.styles.js
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledDetailsContainerDiv = styled.div`
   margin-bottom: 50px;
