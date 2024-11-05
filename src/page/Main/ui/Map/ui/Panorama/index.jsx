@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const NaverPanorama = ({ latitude, longitude }) => {
+const Panorama = ({ latitude, longitude }) => {
   useEffect(() => {
     const initPanorama = () => {
       const panoElement = document.getElementById('pano');
@@ -31,9 +31,9 @@ const NaverPanorama = ({ latitude, longitude }) => {
   return <div id="pano" style={{ width: '100%', height: '200px', overflow: 'hidden' }}></div>;
 };
 
-NaverPanorama.propTypes = {
+Panorama.propTypes = {
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
 };
 
-export default NaverPanorama;
+export default Panorama;

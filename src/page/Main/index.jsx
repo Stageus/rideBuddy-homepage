@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Header from '../../widgets/Header';
 import Aside from '../../widgets/Aside';
-import MapComponent from './model/MapComponent';
 import { Content, MapContainer, PageWrapper } from './style/style';
 import MainTab from './ui/Sidebar';
+import Map from './ui/Map';
 
 const Main = () => {
   const [selectedData, setSelectedData] = useState([]);
@@ -15,7 +15,7 @@ const Main = () => {
       <Content>
         <MainTab />
         <MapContainer>
-          <MapComponent selectedData={selectedData} />
+          <Map selectedData={selectedData} />
         </MapContainer>
       </Content>
     </PageWrapper>

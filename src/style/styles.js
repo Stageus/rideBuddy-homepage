@@ -59,7 +59,9 @@ export const StyledInputPrimary10 = styled.input`
   }
 `;
 
-export const StyledInputPrimary30 = styled.input`
+export const StyledInputPrimary30 = styled.input.withConfig({
+  shouldForwardProp: prop => !['status', 'isKeywordListOpen'].includes(prop),
+})`
   padding: 14px;
   border: 1px solid
     ${({ theme, status, isKeywordListOpen }) =>
