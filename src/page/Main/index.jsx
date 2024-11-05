@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../widgets/Header';
 import Aside from '../../widgets/Aside';
 import MapComponent from './model/MapComponent';
@@ -6,14 +6,16 @@ import { Content, MapContainer, PageWrapper } from './style/style';
 import MainTab from './ui/Sidebar';
 
 const Main = () => {
+  const [selectedData, setSelectedData] = useState([]);
+
   return (
     <PageWrapper>
       <Header />
-      <Aside />
+      <Aside setSelectedData={setSelectedData} />
       <Content>
         <MainTab />
         <MapContainer>
-          <MapComponent />
+          <MapComponent selectedData={selectedData} />
         </MapContainer>
       </Content>
     </PageWrapper>
