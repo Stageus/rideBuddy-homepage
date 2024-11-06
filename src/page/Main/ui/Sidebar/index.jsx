@@ -19,8 +19,8 @@ import {
 } from './style/style';
 import GraphChart from './ui/GraphChart';
 import { StyledInputPrimary30 } from '../../../../style/styles';
-import { dummyCenters } from '../../../../shared/asset/dummyCenters';
-import { dummyRoads } from '../../../../shared/asset/dummyRoads';
+import { dummyCenters } from '../../../../assets/dummyCenters';
+import { dummyRoads } from '../../../../assets/dummyRoads'; 
 import { selectedDataState, selectedDetailState, markerSourceState } from '../../../../shared/recoil/atoms/atomState';
 
 const MainTab = () => {

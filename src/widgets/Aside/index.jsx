@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { selectedDataState, markerSourceState } from '../../shared/recoil/atoms/atomState';
 import { StyledAside, StyledIcon, StyledIconContainer, StyledLogoutButton, StyledTriggerArea } from './style/style';
-import { dummyCenters } from './asset/dummyCenters';
-import { dummyRoads } from './asset/dummyRoads';
-
+import { dummyCenters } from '../../assets/dummyCenters';
+import { dummyRoads } from '../../assets/dummyRoads';
 const Aside = () => {
+  
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const [isCentersVisible, setIsCentersVisible] = useState(false); // 인증센터 마커 토글 상태

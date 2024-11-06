@@ -9,16 +9,18 @@ const Main = () => {
   const [selectedData, setSelectedData] = useState([]);
 
   return (
-    <PageWrapper>
+    <>
       <Header />
       <Aside setSelectedData={setSelectedData} />
-      <Content>
-        <MainTab />
-        <MapContainer>
-          <Map selectedData={selectedData} />
-        </MapContainer>
-      </Content>
-    </PageWrapper>
+      <PageWrapper>
+        <Content>
+          <MainTab />
+          <MapContainer>
+            <Map selectedData={selectedData} />
+          </MapContainer>
+        </Content>
+      </PageWrapper>
+    </>
   );
 };
 
