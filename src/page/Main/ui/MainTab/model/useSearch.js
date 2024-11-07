@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { selectedDataState, markerSourceState } from '../../../../../shared/recoil/atoms/atomState';
 import { dummyCenters } from '../../../../../assets/dummyCenters';
-import { dummyRoads } from '../../../../../assets/dummyRoads'; 
+import { dummyRoads } from '../../../../../assets/dummyRoads';
 
 const useSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,11 +24,8 @@ const useSearch = () => {
       setFilteredKeywords(keywords);
       setIsKeywordListOpen(keywords.length > 0);
       setStatus(keywords.length > 0 ? 200 : 404);
-
-      // 검색 결과에 따라 지도에 표시할 데이터 업데이트
-      const filteredResults = allData.filter(item => item.name.includes(value));
-      setSelectedData(filteredResults); // 검색 결과만 마커로 표시
-      setMarkerSource('search'); // 검색 소스로 마커 설정
+      
+      // 지도에 마커를 표시하지 않도록 selectedData와 markerSource 설정을 생략
     } else {
       setStatus(null);
       setFilteredKeywords([]);
@@ -43,8 +40,10 @@ const useSearch = () => {
     setFilteredKeywords([]);
     setIsKeywordListOpen(false);
     setStatus(200);
-    setSelectedData(allData.filter(item => item.name.includes(keyword))); // 검색 결과 마커 업데이트
-    setMarkerSource('search'); // 검색 소스로 마커 설정
+
+    // 키워드 클릭 시에만 지도에 마커 표시
+    setSelectedData(allData.filter(item => item.name.includes(keyword)));
+    setMarkerSource('search');
   };
 
   return {
@@ -55,7 +54,7 @@ const useSearch = () => {
     isKeywordListOpen,
     handleSearch,
     handleKeywordClick,
-    allData,
+    allData,setIsKeywordListOpen
   };
 };
 

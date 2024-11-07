@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const StyledErrorMsgDiv = styled.div`
   text-align: center;
   color: ${({ theme }) => theme.colors.primary60};

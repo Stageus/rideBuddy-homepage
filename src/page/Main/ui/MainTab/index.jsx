@@ -12,7 +12,17 @@ import InfoSection from './ui/InfoSection';
 import ResultsList from './ui/ResultsList';
 
 const MainTab = () => {
-  const { searchTerm, setSearchTerm, filteredKeywords, status, isKeywordListOpen, handleSearch, handleKeywordClick, allData } = useSearch();
+  const {
+    searchTerm,
+    setSearchTerm,
+    filteredKeywords,
+    status,
+    isKeywordListOpen,
+    handleSearch,
+    handleKeywordClick,
+    allData,
+    setIsKeywordListOpen,
+  } = useSearch();
 
   const { searchResults, ref, hasMore } = useInfiniteScroll(searchTerm, allData);
 
@@ -21,6 +31,7 @@ const MainTab = () => {
   const handleItemClick = item => {
     setSearchTerm(''); // 검색창 비우기
     setSelectedDetail(item); // 선택한 항목에 따라 지도 중심 이동
+    setIsKeywordListOpen(false);
   };
 
   return (

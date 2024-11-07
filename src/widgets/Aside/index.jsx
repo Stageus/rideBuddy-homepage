@@ -1,38 +1,50 @@
+// Aside.js
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { selectedDataState, markerSourceState } from '../../shared/recoil/atoms/atomState';
+import { selectedDataState, markerSourceState, selectedDetailState } from '../../shared/recoil/atoms/atomState';
 import { StyledAside, StyledIcon, StyledIconContainer, StyledLogoutButton, StyledTriggerArea } from './style/style';
 import { dummyCenters } from '../../assets/dummyCenters';
 import { dummyRoads } from '../../assets/dummyRoads';
+
 const Aside = () => {
-  
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const [isCentersVisible, setIsCentersVisible] = useState(false); // 인증센터 마커 토글 상태
   const [isRoadsVisible, setIsRoadsVisible] = useState(false); // 자전거길 마커 토글 상태
   const setSelectedData = useSetRecoilState(selectedDataState);
+  const setSelectedDetailState = useSetRecoilState(selectedDetailState)
   const setMarkerSource = useSetRecoilState(markerSourceState);
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
+  // selectedData를 초기화하는 함수
+  const clearSelectedData = () => {
+    setSelectedData([]);
+    setMarkerSource('');
+  };
+
   // Map Icon 클릭 시 인증센터 마커 토글
   const handleMapIconClick = () => {
+    clearSelectedData(); // 먼저 초기화
     const newCentersVisible = !isCentersVisible;
     setIsCentersVisible(newCentersVisible);
     setIsRoadsVisible(false); // 자전거길 마커 비활성화
     setMarkerSource(newCentersVisible ? 'aside' : ''); // 현재 마커 소스 설정
     setSelectedData(newCentersVisible ? dummyCenters : []); // 인증센터 마커 표시 또는 숨김
+    setSelectedDetailState([])
   };
 
   // Navigation Icon 클릭 시 자전거길 마커 토글
   const handleNavigationIconClick = () => {
+    clearSelectedData(); // 먼저 초기화
     const newRoadsVisible = !isRoadsVisible;
     setIsRoadsVisible(newRoadsVisible);
     setIsCentersVisible(false); // 인증센터 마커 비활성화
     setMarkerSource(newRoadsVisible ? 'aside' : ''); // 현재 마커 소스 설정
     setSelectedData(newRoadsVisible ? dummyRoads : []); // 자전거길 마커 표시 또는 숨김
+    setSelectedDetailState([])
   };
 
   return (

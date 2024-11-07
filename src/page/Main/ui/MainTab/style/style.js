@@ -13,13 +13,6 @@ export const StyledMainDiv = styled.div`
   padding: 20px;
 `;
 
-
-
-
-
-
-
-
 export const StyledGraphDiv = styled.div`
   width: 90%;
   height: 150px;
@@ -35,57 +28,4 @@ export const StyledBikeImageDiv = styled.div`
   background-size: cover;
   background-position: center;
   margin-top: 20px;
-`;
-
-
-
-
-
-
-
-export const StyledErrorMsgDiv = styled.div`
-  text-align: center;
-  color: ${({ theme }) => theme.colors.primary60};
-`;
-
-export const StyledErrorIconDiv = styled.div`
-  font-size: 3em;
-  margin-bottom: 10px;
-`;
-
-
-
-
-
-export const StyledInputContainerDiv = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-export const StyledKeywordList = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 99.5%;
-  background: ${({ theme }) => theme.colors.primary10};
-  border: 1px solid ${({ theme }) => theme.colors.primary30};
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-height: 200px;
-  overflow-y: auto;
-  margin: 0;
-  padding: 10px 0;
-  list-style: none;
-  z-index: 10;
-
-  li {
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: ${({ theme }) => theme.fontSizes.bodyS};
-    color: ${({ theme }) => theme.colors.text};
-
-    &:hover {
-      background: ${({ theme }) => theme.colors.coolGray20};
-    }
-  }
 `;
