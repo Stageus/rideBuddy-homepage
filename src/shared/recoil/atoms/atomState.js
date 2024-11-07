@@ -10,7 +10,7 @@ export const markerSourceState = atom({
   default: '',
 });
 
-export const selectedDetailState = atom({
-  key: 'selectedDetailState',
+export const selectedSearchState = atom({
+  key: 'selectedSearchState',
   default: null,
 });

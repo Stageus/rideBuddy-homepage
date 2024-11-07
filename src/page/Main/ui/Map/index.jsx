@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import MarkerDetail from './ui/MakerDetail';
-import { markerSourceState, selectedDataState, selectedDetailState } from '../../../../shared/recoil/atoms/atomState';
+import { markerSourceState, selectedDataState, selectedSearchState } from '../../../../shared/recoil/atoms/atomState';
 import useUserLocation from './model/useUserLocation';
 import useInitializeMap from './model/useInitializeMap'; 
 import useMarkers from './model/useMarkers'; 
@@ -12,10 +12,10 @@ const Map = () => {
   const map = useInitializeMap(mapRef, userLocation);
 
   const selectedData = useRecoilValue(selectedDataState);
-  const selectedDetail = useRecoilValue(selectedDetailState);
+  const selectedSearch = useRecoilValue(selectedSearchState);
   const markerSource = useRecoilValue(markerSourceState);
 
-  const { selectedMarker, setSelectedMarker } = useMarkers(map, selectedData, selectedDetail, markerSource);
+  const { selectedMarker, setSelectedMarker } = useMarkers(map, selectedData, selectedSearch, markerSource);
 
   const handleClose = () => {
     setSelectedMarker(null);

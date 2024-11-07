@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { selectedDataState, markerSourceState, selectedDetailState } from '../../shared/recoil/atoms/atomState';
+import { selectedDataState, markerSourceState, selectedSearchState } from '../../shared/recoil/atoms/atomState';
 import { StyledAside, StyledIcon, StyledIconContainer, StyledLogoutButton, StyledTriggerArea } from './style/style';
 import { dummyCenters } from '../../assets/dummyCenters';
 import { dummyRoads } from '../../assets/dummyRoads';
@@ -13,7 +13,7 @@ const Aside = () => {
   const [isCentersVisible, setIsCentersVisible] = useState(false); // 인증센터 마커 토글 상태
   const [isRoadsVisible, setIsRoadsVisible] = useState(false); // 자전거길 마커 토글 상태
   const setSelectedData = useSetRecoilState(selectedDataState);
-  const setSelectedDetailState = useSetRecoilState(selectedDetailState)
+  const setSelectedSearchlState = useSetRecoilState(selectedSearchState)
   const setMarkerSource = useSetRecoilState(markerSourceState);
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -33,7 +33,7 @@ const Aside = () => {
     setIsRoadsVisible(false); // 자전거길 마커 비활성화
     setMarkerSource(newCentersVisible ? 'aside' : ''); // 현재 마커 소스 설정
     setSelectedData(newCentersVisible ? dummyCenters : []); // 인증센터 마커 표시 또는 숨김
-    setSelectedDetailState([])
+    setSelectedSearchlState([])
   };
 
   // Navigation Icon 클릭 시 자전거길 마커 토글
@@ -44,7 +44,7 @@ const Aside = () => {
     setIsCentersVisible(false); // 인증센터 마커 비활성화
     setMarkerSource(newRoadsVisible ? 'aside' : ''); // 현재 마커 소스 설정
     setSelectedData(newRoadsVisible ? dummyRoads : []); // 자전거길 마커 표시 또는 숨김
-    setSelectedDetailState([])
+    setSelectedSearchlState([])
   };
 
   return (

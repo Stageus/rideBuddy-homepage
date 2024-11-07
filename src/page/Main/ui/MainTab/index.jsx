@@ -4,7 +4,7 @@ import useSearch from './model/useSearch';
 import useInfiniteScroll from './model/useInfiniteScroll';
 import { useSetRecoilState } from 'recoil';
 import { StyledMainDiv } from './style/style';
-import { selectedDetailState } from '../../../../shared/recoil/atoms/atomState';
+import { selectedSearchState } from '../../../../shared/recoil/atoms/atomState';
 import SearchInput from './ui/SearchInput';
 import ErrorMessage from './ui/ErrorMessage';
 import NoResultsMessage from './ui/NoResultsMessage';
@@ -26,11 +26,11 @@ const MainTab = () => {
 
   const { searchResults, ref, hasMore } = useInfiniteScroll(searchTerm, allData);
 
-  const setSelectedDetail = useSetRecoilState(selectedDetailState);
+  const selectedSearch = useSetRecoilState(selectedSearchState);
 
   const handleItemClick = item => {
     setSearchTerm(''); // 검색창 비우기
-    setSelectedDetail(item); // 선택한 항목에 따라 지도 중심 이동
+    selectedSearch(item); // 선택한 항목에 따라 지도 중심 이동
     setIsKeywordListOpen(false);
   };
 

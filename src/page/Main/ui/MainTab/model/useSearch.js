@@ -24,7 +24,7 @@ const useSearch = () => {
       setFilteredKeywords(keywords);
       setIsKeywordListOpen(keywords.length > 0);
       setStatus(keywords.length > 0 ? 200 : 404);
-      
+
       // 지도에 마커를 표시하지 않도록 selectedData와 markerSource 설정을 생략
     } else {
       setStatus(null);
@@ -54,7 +54,8 @@ const useSearch = () => {
     isKeywordListOpen,
     handleSearch,
     handleKeywordClick,
-    allData,setIsKeywordListOpen
+    allData,
+    setIsKeywordListOpen,
   };
 };
 
