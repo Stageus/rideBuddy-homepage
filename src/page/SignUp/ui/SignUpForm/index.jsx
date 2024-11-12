@@ -18,37 +18,37 @@ const SignUpForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [inputVerificationCode, setInputVerificationCode] = useState(''); // 사용자 입력 인증 코드
+  const [inputVerificationCode, setInputVerificationCode] = useState('');
   const [isEmailVisible, setIsEmailVisible] = useState(false);
 
   const { timeLeft, resetTimer } = useTimer(180, isEmailVisible);
   const {
     status,
+    setStatus,
     errorMessage,
+    setErrorMessage,
     succesMessage,
     signupClickEvent,
+    handleVerifyClick,
     checkIdDuplication,
-    handleVerifyEmail,
     confirmVerificationCode,
     isIdConfirmed,
     isVerificationSent,
     isEmailVerified,
   } = useSignUp();
 
-  const handleVerifyClick = () => {
-    if (!email) {
-      return;
+  const handleEmailVerificationClick = () => {
+    const isSuccess = handleVerifyClick(email);
+    if (isSuccess) {
+      setIsEmailVisible(true);
+      resetTimer();
     }
-    handleVerifyEmail(email);
-    setIsEmailVisible(true);
-    resetTimer();
   };
 
   const handleSignupClick = () => {
     signupClickEvent({ name, userId, password, confirmPassword, email, inputVerificationCode });
   };
 
-  // 모든 필드를 입력하지 않았을 때 전체 필드에 에러 표시
   const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';
 
   return (
@@ -63,6 +63,7 @@ const SignUpForm = () => {
       )}
 
       <StyledSignUpForm>
+        {/* 이름 입력 필드 */}
         <div>
           <label htmlFor="name">
             이름 <span>(최대 5글자 한글 입력)</span>
@@ -73,14 +74,20 @@ const SignUpForm = () => {
             maxLength="5"
             placeholder="이름 입력"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={e => {
+              setName(e.target.value);
+              setErrorMessage('');
+            }}
             required
             status={isAllFieldsRequiredError || (status === 400 && errorMessage === '이름 형식을 확인해주세요.' && status)}
           />
         </div>
 
+        {/* 아이디 입력 필드 */}
         <div>
-          <label htmlFor="userId">아이디</label>
+          <label htmlFor="userId">
+            아이디 <span>(최대 20글자 대소문자만 허용)</span>
+          </label>
           <StyledIdConfirmDiv>
             <StyledInputPrimary10
               type="text"
@@ -88,7 +95,10 @@ const SignUpForm = () => {
               maxLength="20"
               placeholder="아이디 입력"
               value={userId}
-              onChange={e => setUserId(e.target.value)}
+              onChange={e => {
+                setUserId(e.target.value);
+                setErrorMessage('');
+              }}
               required
               status={
                 isAllFieldsRequiredError ||
@@ -106,6 +116,7 @@ const SignUpForm = () => {
           </StyledIdConfirmDiv>
         </div>
 
+        {/* 비밀번호 입력 필드 */}
         <div>
           <label htmlFor="password">
             비밀번호 <span>(최대 20글자 영대소문자, 숫자, 특수문자 포함)</span>
@@ -116,7 +127,10 @@ const SignUpForm = () => {
             maxLength="20"
             placeholder="비밀번호 입력"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => {
+              setPassword(e.target.value);
+              setErrorMessage('');
+            }}
             required
             status={
               isAllFieldsRequiredError ||
@@ -127,6 +141,7 @@ const SignUpForm = () => {
           />
         </div>
 
+        {/* 비밀번호 확인 필드 */}
         <div>
           <label htmlFor="confirmPassword">비밀번호 확인</label>
           <StyledInputPrimary10
@@ -134,12 +149,16 @@ const SignUpForm = () => {
             id="confirmPassword"
             placeholder="비밀번호 확인 입력"
             value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
+            onChange={e => {
+              setConfirmPassword(e.target.value);
+              setErrorMessage('');
+            }}
             required
             status={isAllFieldsRequiredError || (status === 400 && errorMessage === '비밀번호가 일치하지 않습니다.' && status)}
           />
         </div>
 
+        {/* 이메일 입력 및 인증 버튼 */}
         <div>
           <label htmlFor="email">이메일</label>
           <StyledEmailDiv>
@@ -148,17 +167,21 @@ const SignUpForm = () => {
               id="email"
               placeholder="이메일 입력"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => {
+                setEmail(e.target.value);
+                setErrorMessage('');
+              }}
               required
               status={isAllFieldsRequiredError || (status === 400 && errorMessage === '이메일 형식을 확인해주세요.' && status)}
               disabled={isEmailVerified}
             />
-            <StyledButton type="button" onClick={handleVerifyClick} disabled={isEmailVerified}>
+            <StyledButton type="button" onClick={handleEmailVerificationClick} disabled={isEmailVerified}>
               {isVerificationSent ? '재전송' : '인증'}
             </StyledButton>
           </StyledEmailDiv>
         </div>
 
+        {/* 이메일 인증 코드 입력 필드 */}
         {isEmailVisible && (
           <StyledHiddenEmailDiv isvisible={isEmailVisible}>
             <label htmlFor="hiddenEmail">이메일 인증 코드</label>
@@ -168,9 +191,12 @@ const SignUpForm = () => {
                 id="hiddenEmail"
                 placeholder="인증코드 입력"
                 value={inputVerificationCode}
-                onChange={e => setInputVerificationCode(e.target.value)}
+                onChange={e => {
+                  setInputVerificationCode(e.target.value);
+                  setErrorMessage('');
+                }}
                 required
-                disabled={isEmailVerified} // 이메일 인증 성공 시 비활성화
+                disabled={isEmailVerified}
                 status={
                   isAllFieldsRequiredError ||
                   (status === 400 &&
@@ -180,12 +206,7 @@ const SignUpForm = () => {
                     status)
                 }
               />
-
-              <StyledButton
-                type="button"
-                onClick={() => confirmVerificationCode(inputVerificationCode)}
-                disabled={isEmailVerified} // 이메일 인증 성공 시 버튼 비활성화
-              >
+              <StyledButton type="button" onClick={() => confirmVerificationCode(inputVerificationCode)} disabled={isEmailVerified}>
                 인증 확인
               </StyledButton>
               {!isEmailVerified && <span>{formatTime(timeLeft)}</span>}
@@ -193,6 +214,7 @@ const SignUpForm = () => {
           </StyledHiddenEmailDiv>
         )}
 
+        {/* 회원가입 버튼 */}
         <StyledLink to="/Login">로그인페이지 이동</StyledLink>
         <StyledButton width="100%" type="button" onClick={handleSignupClick}>
           회원가입
