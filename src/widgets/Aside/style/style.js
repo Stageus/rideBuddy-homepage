@@ -30,6 +30,7 @@ export const StyledTriggerArea = styled.div`
   z-index: 998;
 `;
 
+
 export const StyledIconContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,15 +38,10 @@ export const StyledIconContainer = styled.div`
   gap: 20px;
 `;
 
+
 export const StyledIcon = styled.img`
   width: 25px;
   height: 25px;
   cursor: pointer;
 `;
 
-export const StyledLogoutButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-`;
