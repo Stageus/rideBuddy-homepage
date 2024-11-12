@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { StyledButton, StyledInput, StyledLink, StyledErrorMessage } from '../../../../style/styles';
-import { SpaceBetweenDiv, StyledInputDiv, StyledLoginForm, StyledSignUpDiv, StyledSNSLoginBtn, StyledSNSLoginDiv } from './style/style';
+import React, { useState, useCallback } from 'react';
+import { StyledButton, StyledLink } from '../../../../style/styles';
+import { StyledLoginForm, StyledSNSLoginDiv, StyledSignUpDiv } from './style/style';
 import { SiNaver } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
 import useTestLogin from './api/useTestLogin';
+import SNSLoginButton from './ui/SNSLogin';
+import InputField from './ui/InputField';
 
 const LoginForm = () => {
   const [userId, setUserId] = useState('');
@@ -14,67 +16,33 @@ const LoginForm = () => {
     loginClickEvent(userId, password);
   };
 
-  const handleGoogleLogin = () => {
-    console.log('구글 로그인');
-  };
-
-  const handleNaverLogin = () => {
-    console.log('네이버 로그인');
-  };
-
   return (
     <StyledLoginForm>
       <h1>Hello!</h1>
       <p>만나서 반갑습니다.</p>
 
-      <StyledInputDiv>
-        <label htmlFor="user-id">아이디 입력</label>
-        <div>
-          <StyledInput
-            type="text"
-            id="user-id"
-            name="user-id"
-            placeholder="아이디 입력"
-            value={userId}
-            onChange={e => setUserId(e.target.value)} // 입력 변경 시 상태 업데이트
-            required
-            status={status}
-          />
+      <InputField
+        label="아이디 입력"
+        id="user-id"
+        placeholder="아이디 입력"
+        value={userId}
+        onChange={setUserId}
+        errorMessage={errorMessage}
+        link={{ to: '/FindId', text: '아이디 찾기' }}
+        status={status}
+      />
 
-          <SpaceBetweenDiv padding="1px">
-            {errorMessage ? (
-              <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
-            ) : (
-              <StyledErrorMessage style={{ opacity: 0 }}>메세지 출력</StyledErrorMessage>
-            )}
-            <StyledLink to="/FindId">아이디 찾기</StyledLink>
-          </SpaceBetweenDiv>
-        </div>
-      </StyledInputDiv>
-
-      <StyledInputDiv padding="1px">
-        <label htmlFor="password">비밀번호 입력</label>
-        <div>
-          <StyledInput
-            type="password"
-            id="password"
-            name="password"
-            placeholder="비밀번호 입력"
-            value={password}
-            onChange={e => setPassword(e.target.value)} // 입력 변경 시 상태 업데이트
-            required
-            status={status}
-          />
-          <SpaceBetweenDiv padding="1px">
-            {errorMessage && status != 500 && status != 400 && status != 404 ? (
-              <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
-            ) : (
-              <div></div>
-            )}
-            <StyledLink to="/FindPw">비밀번호 찾기</StyledLink>
-          </SpaceBetweenDiv>
-        </div>
-      </StyledInputDiv>
+      <InputField
+        label="비밀번호 입력"
+        type="password"
+        id="password"
+        placeholder="비밀번호 입력"
+        value={password}
+        onChange={setPassword}
+        errorMessage={status !== 404 && status !== 400 && status !== 500 ? errorMessage : ''}
+        link={{ to: '/FindPw', text: '비밀번호 찾기' }}
+        status={status}
+      />
 
       <StyledButton width="100%" type="button" onClick={handleLoginClick}>
         로그인
@@ -83,12 +51,8 @@ const LoginForm = () => {
       <span>SNS 로그인 하기</span>
 
       <StyledSNSLoginDiv>
-        <StyledSNSLoginBtn aria-label="구글로 로그인" onClick={handleGoogleLogin}>
-          <FcGoogle />
-        </StyledSNSLoginBtn>
-        <StyledSNSLoginBtn logo="naver" aria-label="네이버로 로그인" onClick={handleNaverLogin}>
-          <SiNaver />
-        </StyledSNSLoginBtn>
+        <SNSLoginButton icon={<FcGoogle />} label="구글로 로그인" onClick={() => console.log('구글 로그인')} />
+        <SNSLoginButton logo="naver" icon={<SiNaver />} label="네이버로 로그인" onClick={() => console.log('네이버 로그인')} />
       </StyledSNSLoginDiv>
 
       <StyledSignUpDiv>
