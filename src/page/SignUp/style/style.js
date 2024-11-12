@@ -10,4 +10,13 @@ export const PageWrapper = styled(StyledContainer)`
   margin: 0 auto;
   color: ${({ theme }) => theme.colors.primary60};
   background-color: ${({ theme }) => theme.colors.primary30};
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media screen and (max-height: 900px) {
+    height: 100vh;
+  }
 `;

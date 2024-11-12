@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const StyledLoginBanner = styled.div`
-  width: 64%;
+  width: 50%;
   img {
-    width: 90%;
+    width: 100%;
     box-sizing: border-box;
   }
 

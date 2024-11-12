@@ -8,7 +8,7 @@ export const StyledButton = styled.button`
   border: none;
   padding: 14px;
   text-align: center;
-  font-size: ${({ theme }) => theme.fontSizes.buttonM};
+  font-size: ${({ fontSize, theme }) => fontSize || theme.fontSizes.buttonM}; /* fontSize prop 사용, 기본값은 theme */
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   cursor: pointer;
   border-radius: 5px;

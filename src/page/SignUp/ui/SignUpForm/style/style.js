@@ -62,7 +62,7 @@ export const StyledEmailDiv = styled.div`
   }
 `;
 
-export const StyledPwConfirmDiv = styled.div`
+export const StyledIdConfirmDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,7 +74,7 @@ export const StyledPwConfirmDiv = styled.div`
 
   button {
     margin-left: 10px;
-    width: 90px;
+    width: 120px;
     height: 46px;
     display: flex;
     justify-content: center;
@@ -88,7 +88,28 @@ export const StyledHiddenEmailDiv = styled.div`
   position: relative;
   span {
     position: absolute;
-    top: 48.5%;
-    right: 15px;
+    top: 44px;
+    right: 115px;
+  }
+`;
+
+export const StyledEmailConfirmDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  input {
+    margin-bottom: 0px;
+  }
+
+  button {
+    margin-left: 10px;
+    width: 120px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSizes.bodyS};
   }
 `;

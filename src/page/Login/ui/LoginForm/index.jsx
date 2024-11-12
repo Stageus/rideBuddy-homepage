@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { StyledButton, StyledLink } from '../../../../style/styles';
 import { StyledLoginForm, StyledSNSLoginDiv, StyledSignUpDiv } from './style/style';
 import { SiNaver } from 'react-icons/si';

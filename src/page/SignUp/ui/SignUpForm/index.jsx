@@ -1,70 +1,201 @@
 import React, { useState } from 'react';
-import { StyledButton, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
-import { StyledEmailDiv, StyledSignUpForm, StyledHiddenEmailDiv, StyledSignUpSection, StyledPwConfirmDiv } from './style/style';
+import { StyledButton, StyledErrorMessage, StyledInputPrimary10, StyledLink } from '../../../../style/styles';
+import {
+  StyledEmailDiv,
+  StyledSignUpForm,
+  StyledHiddenEmailDiv,
+  StyledSignUpSection,
+  StyledIdConfirmDiv,
+  StyledEmailConfirmDiv,
+} from './style/style';
 import useTimer from '../../../../shared/model/useTimer';
 import formatTime from '../../../../shared/util/formatTime';
+import useSignUp from './api/useSignup/useSignUp';
 
 const SignUpForm = () => {
+  const [name, setName] = useState('');
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [inputVerificationCode, setInputVerificationCode] = useState(''); // 사용자 입력 인증 코드
   const [isEmailVisible, setIsEmailVisible] = useState(false);
-  const [isVerificationSent, setIsVerificationSent] = useState(false);
 
   const { timeLeft, resetTimer } = useTimer(180, isEmailVisible);
+  const {
+    status,
+    errorMessage,
+    succesMessage,
+    signupClickEvent,
+    checkIdDuplication,
+    handleVerifyEmail,
+    confirmVerificationCode,
+    isIdConfirmed,
+    isVerificationSent,
+    isEmailVerified,
+  } = useSignUp();
 
   const handleVerifyClick = () => {
+    if (!email) {
+      return;
+    }
+    handleVerifyEmail(email);
     setIsEmailVisible(true);
     resetTimer();
-    setIsVerificationSent(true);
   };
+
+  const handleSignupClick = () => {
+    signupClickEvent({ name, userId, password, confirmPassword, email, inputVerificationCode });
+  };
+
+  // 모든 필드를 입력하지 않았을 때 전체 필드에 에러 표시
+  const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';
 
   return (
     <StyledSignUpSection>
       <h1>회원가입</h1>
-      <p>빠르고 쉽게 가입하세요.</p>
+      {errorMessage ? (
+        <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
+      ) : succesMessage ? (
+        <p>{succesMessage}</p>
+      ) : (
+        <p>빠르고 쉽게 가입하세요.</p>
+      )}
+
       <StyledSignUpForm>
         <div>
           <label htmlFor="name">
             이름 <span>(최대 5글자 한글 입력)</span>
           </label>
-          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="이름 입력" required />
+          <StyledInputPrimary10
+            type="text"
+            id="name"
+            maxLength="5"
+            placeholder="이름 입력"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+            status={isAllFieldsRequiredError || (status === 400 && errorMessage === '이름 형식을 확인해주세요.' && status)}
+          />
         </div>
+
         <div>
-          <label htmlFor="name">
-            아이디 <span>(최대 20글자 영대소문자 입력)</span>
+          <label htmlFor="userId">아이디</label>
+          <StyledIdConfirmDiv>
+            <StyledInputPrimary10
+              type="text"
+              id="userId"
+              maxLength="20"
+              placeholder="아이디 입력"
+              value={userId}
+              onChange={e => setUserId(e.target.value)}
+              required
+              status={
+                isAllFieldsRequiredError ||
+                (status === 400 &&
+                  (errorMessage === '아이디 중복 확인을 완료해주세요.' ||
+                    errorMessage === '아이디 형식을 확인해주세요.' ||
+                    errorMessage === '이미 사용 중인 아이디입니다.') &&
+                  status)
+              }
+            />
+
+            <StyledButton type="button" onClick={() => checkIdDuplication(userId)}>
+              중복 체크
+            </StyledButton>
+          </StyledIdConfirmDiv>
+        </div>
+
+        <div>
+          <label htmlFor="password">
+            비밀번호 <span>(최대 20글자 영대소문자, 숫자, 특수문자 포함)</span>
           </label>
-          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="아이디 입력" required />
+          <StyledInputPrimary10
+            type="password"
+            id="password"
+            maxLength="20"
+            placeholder="비밀번호 입력"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            status={
+              isAllFieldsRequiredError ||
+              (status === 400 &&
+                (errorMessage === '비밀번호 형식을 확인해주세요.' || errorMessage === '비밀번호가 일치하지 않습니다.') &&
+                status)
+            }
+          />
         </div>
+
         <div>
-          <label htmlFor="name">
-            비밀번호 <span>(최대 5글자 한글 입력)</span>
-          </label>
-          <StyledInputPrimary10 type="text" id="name" name="name" maxLength="5" placeholder="비밀번호 입력" required />
+          <label htmlFor="confirmPassword">비밀번호 확인</label>
+          <StyledInputPrimary10
+            type="password"
+            id="confirmPassword"
+            placeholder="비밀번호 확인 입력"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            required
+            status={isAllFieldsRequiredError || (status === 400 && errorMessage === '비밀번호가 일치하지 않습니다.' && status)}
+          />
         </div>
-        <div>
-          <label htmlFor="email">비밀번호 확인</label>
-          <StyledPwConfirmDiv>
-            <StyledInputPrimary10 type="email" id="email" name="email" placeholder="비밀번호 확인 입력" required />
-            <StyledButton type="button">확인</StyledButton>
-          </StyledPwConfirmDiv>
-        </div>
+
         <div>
           <label htmlFor="email">이메일</label>
           <StyledEmailDiv>
-            <StyledInputPrimary10 type="email" id="email" name="email" placeholder="이메일 입력" required />
-            <StyledButton type="button" onClick={handleVerifyClick}>
+            <StyledInputPrimary10
+              type="email"
+              id="email"
+              placeholder="이메일 입력"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              status={isAllFieldsRequiredError || (status === 400 && errorMessage === '이메일 형식을 확인해주세요.' && status)}
+              disabled={isEmailVerified}
+            />
+            <StyledButton type="button" onClick={handleVerifyClick} disabled={isEmailVerified}>
               {isVerificationSent ? '재전송' : '인증'}
             </StyledButton>
           </StyledEmailDiv>
         </div>
 
-        <StyledHiddenEmailDiv isvisible={isEmailVisible}>
-          <label htmlFor="hiddenEmail">이메일 인증</label>
-          <StyledInputPrimary10 type="email" id="hiddenEmail" name="hiddenEmail" placeholder="이메일 입력" required />
-          <span>{formatTime(timeLeft)}</span>
-        </StyledHiddenEmailDiv>
+        {isEmailVisible && (
+          <StyledHiddenEmailDiv isvisible={isEmailVisible}>
+            <label htmlFor="hiddenEmail">이메일 인증 코드</label>
+            <StyledEmailConfirmDiv>
+              <StyledInputPrimary10
+                type="text"
+                id="hiddenEmail"
+                placeholder="인증코드 입력"
+                value={inputVerificationCode}
+                onChange={e => setInputVerificationCode(e.target.value)}
+                required
+                disabled={isEmailVerified} // 이메일 인증 성공 시 비활성화
+                status={
+                  isAllFieldsRequiredError ||
+                  (status === 400 &&
+                    (errorMessage === '인증 코드를 입력해주세요.' ||
+                      errorMessage === '인증 코드는 6자리 숫자여야 합니다.' ||
+                      errorMessage === '인증 코드가 일치하지 않습니다.') &&
+                    status)
+                }
+              />
+
+              <StyledButton
+                type="button"
+                onClick={() => confirmVerificationCode(inputVerificationCode)}
+                disabled={isEmailVerified} // 이메일 인증 성공 시 버튼 비활성화
+              >
+                인증 확인
+              </StyledButton>
+              {!isEmailVerified && <span>{formatTime(timeLeft)}</span>}
+            </StyledEmailConfirmDiv>
+          </StyledHiddenEmailDiv>
+        )}
 
         <StyledLink to="/Login">로그인페이지 이동</StyledLink>
-        <StyledButton width="100%" type="submit">
-          비밀번호 찾기
+        <StyledButton width="100%" type="button" onClick={handleSignupClick}>
+          회원가입
         </StyledButton>
       </StyledSignUpForm>
     </StyledSignUpSection>

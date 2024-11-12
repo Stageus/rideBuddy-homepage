@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledLoginForm = styled.div`
-  width: 360px;
+  width: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
