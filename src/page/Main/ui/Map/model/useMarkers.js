@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useMarkers = (map, selectedData, selectedDetail, markerSource) => {
+const useMarkers = (map, selectedData, selectedSearch, markerSource) => {
   const markersRef = useRef([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
 
@@ -37,30 +37,30 @@ const useMarkers = (map, selectedData, selectedDetail, markerSource) => {
 
   useEffect(() => {
     const { naver } = window;
-    if (map && selectedDetail) {
-      const selectedLocation = new naver.maps.LatLng(selectedDetail.latitude, selectedDetail.longitude);
+    if (map && selectedSearch) {
+      const selectedLocation = new naver.maps.LatLng(selectedSearch.latitude, selectedSearch.longitude);
       map.setCenter(selectedLocation);
 
       const detailMarker = new naver.maps.Marker({
         position: selectedLocation,
         map,
-        title: selectedDetail.name,
+        title: selectedSearch.name,
         icon: {
-          content: `<div style="width: 50px; height: 50px; background-color: #FF0000; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                      <img src="/img/Marker_P.png" style="width: 100%; height: 100%;" alt="Detail Marker" />
+          content: `<div style="width: 35px; height: 35px; background-color: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                      <img src="/img/Marker_Y.png" style="width: 100%; height: 100%;" alt="Detail Marker" />
                     </div>`,
         },
       });
 
       naver.maps.Event.addListener(detailMarker, 'click', () => {
-        setSelectedMarker(selectedDetail);
+        setSelectedMarker(selectedSearch);
       });
 
       return () => {
         detailMarker.setMap(null);
       };
     }
-  }, [map, selectedDetail]);
+  }, [map, selectedSearch]);
 
   return { selectedMarker, setSelectedMarker };
 };
