@@ -10,7 +10,7 @@ import {
 } from './style/style';
 import useTimer from '../../../../shared/model/useTimer';
 import formatTime from '../../../../shared/util/formatTime';
-import useSignUp from './api/useSignup/useSignUp';
+import useSignUp from './api/useSignUp';
 
 const SignUpForm = () => {
   const [name, setName] = useState('');
@@ -22,12 +22,13 @@ const SignUpForm = () => {
   const [isEmailVisible, setIsEmailVisible] = useState(false);
 
   const { timeLeft, resetTimer } = useTimer(180, isEmailVisible);
+  
   const {
     status,
     setStatus,
     errorMessage,
     setErrorMessage,
-    succesMessage,
+    successMessage,
     signupClickEvent,
     handleVerifyClick,
     checkIdDuplication,
@@ -51,19 +52,22 @@ const SignUpForm = () => {
 
   const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';
 
+  const renderMessage = () => {
+    if (errorMessage) {
+      return <StyledErrorMessage>{errorMessage}</StyledErrorMessage>;
+    }
+    if (successMessage) {
+      return <p>{successMessage}</p>;
+    }
+    return <p>빠르고 쉽게 가입하세요.</p>;
+  };
+
   return (
     <StyledSignUpSection>
       <h1>회원가입</h1>
-      {errorMessage ? (
-        <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
-      ) : succesMessage ? (
-        <p>{succesMessage}</p>
-      ) : (
-        <p>빠르고 쉽게 가입하세요.</p>
-      )}
+      {renderMessage()}
 
       <StyledSignUpForm>
-        {/* 이름 입력 필드 */}
         <div>
           <label htmlFor="name">
             이름 <span>(최대 5글자 한글 입력)</span>
@@ -83,7 +87,6 @@ const SignUpForm = () => {
           />
         </div>
 
-        {/* 아이디 입력 필드 */}
         <div>
           <label htmlFor="userId">
             아이디 <span>(최대 20글자 대소문자만 허용)</span>
@@ -116,7 +119,6 @@ const SignUpForm = () => {
           </StyledIdConfirmDiv>
         </div>
 
-        {/* 비밀번호 입력 필드 */}
         <div>
           <label htmlFor="password">
             비밀번호 <span>(최대 20글자 영대소문자, 숫자, 특수문자 포함)</span>
@@ -141,7 +143,6 @@ const SignUpForm = () => {
           />
         </div>
 
-        {/* 비밀번호 확인 필드 */}
         <div>
           <label htmlFor="confirmPassword">비밀번호 확인</label>
           <StyledInputPrimary10
@@ -158,7 +159,6 @@ const SignUpForm = () => {
           />
         </div>
 
-        {/* 이메일 입력 및 인증 버튼 */}
         <div>
           <label htmlFor="email">이메일</label>
           <StyledEmailDiv>
@@ -181,9 +181,8 @@ const SignUpForm = () => {
           </StyledEmailDiv>
         </div>
 
-        {/* 이메일 인증 코드 입력 필드 */}
         {isEmailVisible && (
-          <StyledHiddenEmailDiv isvisible={isEmailVisible}>
+          <StyledHiddenEmailDiv>
             <label htmlFor="hiddenEmail">이메일 인증 코드</label>
             <StyledEmailConfirmDiv>
               <StyledInputPrimary10
@@ -214,7 +213,6 @@ const SignUpForm = () => {
           </StyledHiddenEmailDiv>
         )}
 
-        {/* 회원가입 버튼 */}
         <StyledLink to="/Login">로그인페이지 이동</StyledLink>
         <StyledButton width="100%" type="button" onClick={handleSignupClick}>
           회원가입

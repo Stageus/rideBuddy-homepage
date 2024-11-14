@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { idRegex, mailRegex, nameRegex, pwRegex, codeRegex } from '../../../../../../assets/regex';
+import { idRegex, mailRegex, nameRegex, pwRegex, codeRegex } from '../../../../../assets/regex';
 
 const useSignUp = () => {
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [succesMessage, setSuccesMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [isIdConfirmed, setIsIdConfirmed] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
@@ -16,7 +16,7 @@ const useSignUp = () => {
     const generatedCode = '588393';
     setVerificationCode(generatedCode);
     setErrorMessage('');
-    setSuccesMessage('인증 코드가 발송되었습니다.');
+    setSuccessMessage('인증 코드가 발송되었습니다.');
     setIsEmailVerified(false);
     console.log(`발급된 인증 코드: ${generatedCode}`);
   };
@@ -30,7 +30,7 @@ const useSignUp = () => {
     generateVerificationCode();
     setIsVerificationSent(true);
     setErrorMessage('');
-    setSuccesMessage('인증 코드가 발송되었습니다.');
+    setSuccessMessage('인증 코드가 발송되었습니다.');
     return true;
   };
 
@@ -49,7 +49,7 @@ const useSignUp = () => {
     } else {
       setStatus(null);
       setErrorMessage('');
-      setSuccesMessage('사용 가능한 아이디입니다.');
+      setSuccessMessage('사용 가능한 아이디입니다.');
       setIsIdConfirmed(true);
     }
   };
@@ -69,7 +69,7 @@ const useSignUp = () => {
 
     if (inputVerificationCode === verificationCode) {
       setIsEmailVerified(true);
-      setSuccesMessage('이메일 인증이 완료되었습니다.');
+      setSuccessMessage('이메일 인증이 완료되었습니다.');
       setErrorMessage('');
     } else {
       setIsEmailVerified(false);
@@ -132,7 +132,7 @@ const useSignUp = () => {
     } else {
       setStatus(201);
       setErrorMessage('');
-      setSuccesMessage('회원가입이 완료되었습니다.');
+      setSuccessMessage('회원가입이 완료되었습니다.');
       resetSignupForm();
       navigate('/Login');
     }
@@ -141,7 +141,7 @@ const useSignUp = () => {
   const resetSignupForm = () => {
     setStatus(null);
     setErrorMessage('');
-    setSuccesMessage('');
+    setSuccessMessage('');
     setIsIdConfirmed(false);
     setIsEmailVerified(false);
     setIsVerificationSent(false);
@@ -153,7 +153,7 @@ const useSignUp = () => {
     setStatus,
     errorMessage,
     setErrorMessage,
-    succesMessage,
+    successMessage,
     signupClickEvent,
     handleVerifyClick,
     checkIdDuplication,

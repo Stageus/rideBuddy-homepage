@@ -29,8 +29,8 @@ const MainTab = () => {
   const selectedSearch = useSetRecoilState(selectedSearchState);
 
   const handleItemClick = item => {
-    setSearchTerm(''); // 검색창 비우기
-    selectedSearch(item); // 선택한 항목에 따라 지도 중심 이동
+    setSearchTerm(''); 
+    selectedSearch(item);
     setIsKeywordListOpen(false);
   };
 
@@ -51,12 +51,12 @@ const MainTab = () => {
       ) : searchTerm === '' ? (
         <InfoSection />
       ) : (
-        // MainTab.js
+        
         <ResultsList
           searchResults={searchResults}
           handleItemClick={handleItemClick}
           hasMore={hasMore}
-          scrollRef={ref} // 'ref'를 'scrollRef'로 변경
+          scrollRef={ref}
         />
       )}
     </StyledMainDiv>

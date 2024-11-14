@@ -14,9 +14,9 @@ import Panorama from '../Panorama';
 const MarkerDetail = ({ name, address, distance, imageUrl, onLike, onClose, latitude, longitude }) => {
   return (
     <StyledMarkerDetailDiv>
-      <StyledCloseButtonDiv onClick={onClose}></StyledCloseButtonDiv> {/* 닫기 버튼 */}
+      <StyledCloseButtonDiv onClick={onClose}></StyledCloseButtonDiv>
       <StyledMarkerImageContainerDiv>
-        <Panorama latitude={latitude} longitude={longitude} /> {/* 파노라마 뷰 추가 */}
+        <Panorama latitude={latitude} longitude={longitude} />
         <StyledLikeIconDiv onClick={onLike}>💖</StyledLikeIconDiv>
       </StyledMarkerImageContainerDiv>
       <StyledMarkerTitleH4>{name}</StyledMarkerTitleH4>

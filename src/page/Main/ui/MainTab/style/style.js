@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledMainDiv = styled.div`
+  position: relative;
   width: 330px;
   background-color: ${({ theme }) => {
     const primary10 = theme.colors.primary10;

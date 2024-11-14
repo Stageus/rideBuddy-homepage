@@ -84,7 +84,7 @@ export const StyledIdConfirmDiv = styled.div`
 `;
 
 export const StyledHiddenEmailDiv = styled.div`
-  display: ${({ isvisible }) => (isvisible ? 'block' : 'none')};
+  display: block;
   position: relative;
   span {
     position: absolute;
