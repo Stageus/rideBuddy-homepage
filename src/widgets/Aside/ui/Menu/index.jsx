@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-
 import { markerSourceState, selectedDataState, selectedSearchState } from '../../../../shared/recoil/atoms/atomState';
 import { StyledIcon } from '../../style/style';
 import { dummyCenters } from '../../../../assets/dummyCenters';
@@ -8,7 +7,7 @@ import { dummyRoads } from '../../../../assets/dummyRoads';
 
 
 const Menu = () => {
-  const [visibleMarker, setVisibleMarker] = useState(null); // 'centers' 또는 'roads' 상태로 관리
+  const [visibleMarker, setVisibleMarker] = useState(null);
   const setSelectedData = useSetRecoilState(selectedDataState);
   const setSelectedSearchState = useSetRecoilState(selectedSearchState);
   const setMarkerSource = useSetRecoilState(markerSourceState);
@@ -22,7 +21,7 @@ const Menu = () => {
   const toggleMarkers = (type) => {
     clearSelectedData();
     if (visibleMarker === type) {
-      setVisibleMarker(null); // 마커 숨기기
+      setVisibleMarker(null);
     } else {
       setVisibleMarker(type);
       setMarkerSource('aside');

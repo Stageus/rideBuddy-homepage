@@ -17,7 +17,7 @@ const Aside = () => {
       <StyledAside $isHovered={isHovered} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <StyledIconContainer>
           <UserProfile />
-          {location.pathname !== '/profile' && <Menu />}
+          {location.pathname !== '/profile' && location.pathname !== '/history' && <Menu />}
         </StyledIconContainer>
         <LogoutButton />
       </StyledAside>
