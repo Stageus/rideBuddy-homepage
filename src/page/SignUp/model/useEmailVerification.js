@@ -4,14 +4,14 @@ import { validateEmail, validateVerificationCode } from '../utill/validators';
 import useVerificationCode from './useVerificationCode';
 import useTimer from '../../../shared/model/useTimer';
 
-const useEmailVerification = (status,errorMessage,successMessage,setErrorMessage,setSuccessMessage,setStatus ) => {
+const useEmailVerification = (status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus) => {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [isEmailVisible, setIsEmailVisible] = useState(false);
   const { verificationCode, generateVerificationCode, setVerificationCode } = useVerificationCode();
   const { timeLeft, resetTimer } = useTimer(180, isEmailVisible);
 
-  const handleEmailVerificationClick = (email) => {
+  const handleEmailVerificationClick = email => {
     const error = validateEmail(email);
     if (error) {
       setStatus(400);
@@ -27,7 +27,7 @@ const useEmailVerification = (status,errorMessage,successMessage,setErrorMessage
     resetTimer();
   };
 
-  const confirmVerificationCode = (inputVerificationCode) => {
+  const confirmVerificationCode = inputVerificationCode => {
     const error = validateVerificationCode(inputVerificationCode);
     if (error) {
       setStatus(400);

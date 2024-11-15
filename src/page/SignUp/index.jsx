@@ -36,10 +36,9 @@ const SignUp = () => {
     isEmailVerified,
     isEmailVisible,
     timeLeft,
-    resetTimer
+    resetTimer,
+    isAllFieldsRequiredError,
   } = useSignUp();
-
-  const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';
 
   return (
     <PageWrapper>
@@ -50,7 +49,7 @@ const SignUp = () => {
         <StyledSignUpForm>
           <NameInput
             name={formState.name}
-            setName={(value) => setField('name', value)}
+            setName={value => setField('name', value)}
             errorMessage={errorMessage}
             setErrorMessage={setErrorMessage}
             status={status}
@@ -59,7 +58,7 @@ const SignUp = () => {
 
           <UserIdInput
             userId={formState.userId}
-            setUserId={(value) => setField('userId', value)} 
+            setUserId={value => setField('userId', value)}
             errorMessage={errorMessage}
             setErrorMessage={setErrorMessage}
             status={status}
@@ -69,9 +68,9 @@ const SignUp = () => {
 
           <PasswordInput
             password={formState.password}
-            setPassword={(value) => setField('password', value)}
+            setPassword={value => setField('password', value)}
             confirmPassword={formState.confirmPassword}
-            setConfirmPassword={(value) => setField('confirmPassword', value)}
+            setConfirmPassword={value => setField('confirmPassword', value)}
             errorMessage={errorMessage}
             setErrorMessage={setErrorMessage}
             status={status}
@@ -80,7 +79,7 @@ const SignUp = () => {
 
           <EmailInput
             email={formState.email}
-            setEmail={(value) => setField('email', value)}
+            setEmail={value => setField('email', value)}
             errorMessage={errorMessage}
             setErrorMessage={setErrorMessage}
             status={status}
@@ -93,7 +92,7 @@ const SignUp = () => {
           {isEmailVisible && (
             <EmailVerificationInput
               inputVerificationCode={formState.inputVerificationCode}
-              setInputVerificationCode={(value) => setField('inputVerificationCode', value)}
+              setInputVerificationCode={value => setField('inputVerificationCode', value)}
               errorMessage={errorMessage}
               setErrorMessage={setErrorMessage}
               status={status}
@@ -105,7 +104,7 @@ const SignUp = () => {
           )}
 
           <StyledLink to="/Login">로그인페이지 이동</StyledLink>
-          <StyledButton width="100%" type="button" onClick={()=>signupClickEvent({ ...formState })}>
+          <StyledButton width="100%" type="button" onClick={() => signupClickEvent({ ...formState })}>
             회원가입
           </StyledButton>
         </StyledSignUpForm>
@@ -115,4 +114,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

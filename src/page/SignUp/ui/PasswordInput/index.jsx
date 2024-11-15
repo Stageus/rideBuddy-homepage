@@ -49,9 +49,7 @@ const PasswordInput = ({
           setErrorMessage('');
         }}
         required
-        status={
-          isAllFieldsRequiredError || (status === 400 && errorMessage === '비밀번호가 일치하지 않습니다.' && status)
-        }
+        status={isAllFieldsRequiredError || (status === 400 && errorMessage === '비밀번호가 일치하지 않습니다.' && status)}
       />
     </div>
   </>

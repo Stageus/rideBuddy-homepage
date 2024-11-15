@@ -21,7 +21,6 @@ export const PageWrapper = styled(StyledContainer)`
   }
 `;
 
-
 export const StyledSignUpSection = styled.section`
   padding: 16px;
   background: #fff;
@@ -135,4 +134,3 @@ export const StyledEmailConfirmDiv = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.bodyS};
   }
 `;
-

@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import { validateUserId } from '../utill/validators';
 
-const useIdDuplicationCheck = (status,errorMessage,successMessage,setErrorMessage,setSuccessMessage,setStatus) => {
+const useIdDuplicationCheck = (status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus) => {
   const [isIdConfirmed, setIsIdConfirmed] = useState(false);
 
-  const checkIdDuplication = (userId) => {
+  const checkIdDuplication = userId => {
     const error = validateUserId(userId);
     if (error) {
       setStatus(400);

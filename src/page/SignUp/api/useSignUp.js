@@ -5,27 +5,24 @@ import { validateName, validatePassword, validateEmail, validateUserId } from '.
 import useEmailVerification from '../model/useEmailVerification';
 import useIdDuplicationCheck from '../model/useIdDuplicationCheck';
 
-
 const useSignUp = () => {
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';
   const navigate = useNavigate();
 
-  const {
-    isEmailVerified,
-    isVerificationSent,
-    isEmailVisible,
-    timeLeft,
-    handleEmailVerificationClick,
-    confirmVerificationCode,
-  } = useEmailVerification(status,errorMessage,successMessage,setErrorMessage,setSuccessMessage,setStatus );
+  const { isEmailVerified, isVerificationSent, isEmailVisible, timeLeft, handleEmailVerificationClick, confirmVerificationCode } =
+    useEmailVerification(status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus);
 
-  const {
-    isIdConfirmed,
-    checkIdDuplication,
-    resetIdDuplicationCheck,
-  } = useIdDuplicationCheck(status,errorMessage,successMessage,setErrorMessage,setSuccessMessage,setStatus);
+  const { isIdConfirmed, checkIdDuplication, resetIdDuplicationCheck } = useIdDuplicationCheck(
+    status,
+    errorMessage,
+    successMessage,
+    setErrorMessage,
+    setSuccessMessage,
+    setStatus,
+  );
 
   const signupClickEvent = ({ name, userId, password, confirmPassword, email }) => {
     if (!name && !userId && !password && !confirmPassword && !email) {
@@ -112,7 +109,8 @@ const useSignUp = () => {
     isEmailVerified,
     isEmailVisible,
     timeLeft,
-    setErrorMessage
+    setErrorMessage,
+    isAllFieldsRequiredError,
   };
 };
 

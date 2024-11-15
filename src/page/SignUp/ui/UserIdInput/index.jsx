@@ -3,15 +3,7 @@ import React from 'react';
 import { StyledButton, StyledInputPrimary10 } from '../../../../style/styles';
 import { StyledIdConfirmDiv } from '../../style/style';
 
-const UserIdInput = ({
-  userId,
-  setUserId,
-  errorMessage,
-  setErrorMessage,
-  status,
-  isAllFieldsRequiredError,
-  checkIdDuplication,
-}) => (
+const UserIdInput = ({ userId, setUserId, errorMessage, setErrorMessage, status, isAllFieldsRequiredError, checkIdDuplication }) => (
   <div>
     <label htmlFor="userId">
       아이디 <span>(최대 20글자 대소문자만 허용)</span>

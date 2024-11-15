@@ -38,11 +38,7 @@ const EmailVerificationInput = ({
             status)
         }
       />
-      <StyledButton
-        type="button"
-        onClick={() => confirmVerificationCode(inputVerificationCode)}
-        disabled={isEmailVerified}
-      >
+      <StyledButton type="button" onClick={() => confirmVerificationCode(inputVerificationCode)} disabled={isEmailVerified}>
         인증 확인
       </StyledButton>
       {!isEmailVerified && <span>{formatTime(timeLeft)}</span>}
