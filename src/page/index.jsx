@@ -3,8 +3,8 @@ import Main from './Main';
 import Profile from './Profile';
 import Login from './Login';
 import History from './History';
-import FindId from './FindId';
-import FindPw from './FindPw';
+import Find_Id from './FindId';
+import Find_Pw from './FindPw';
 import SignUp from './SignUp';
 
 const Page = () => {
@@ -17,8 +17,8 @@ const Page = () => {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/History" element={<History />} />
-        <Route path="/FindId" element={<FindId />} />
-        <Route path="/FindPw" element={<FindPw />} />
+        <Route path="/FindId" element={<Find_Id />} />
+        <Route path="/FindPw" element={<Find_Pw />} />
       </Routes>
     </>
   );

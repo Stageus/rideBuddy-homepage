@@ -6,17 +6,15 @@ import MainTab from './ui/MainTab';
 import Map from './ui/Map';
 
 const Main = () => {
-  const [selectedData, setSelectedData] = useState([]);
-
   return (
     <>
       <Header />
-      <Aside setSelectedData={setSelectedData} />
+      <Aside />
       <PageWrapper>
         <Content>
           <MainTab />
           <MapContainer>
-            <Map selectedData={selectedData} />
+            <Map />
           </MapContainer>
         </Content>
       </PageWrapper>

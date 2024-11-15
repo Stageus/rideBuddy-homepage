@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { idRegex, mailRegex, nameRegex, pwRegex, codeRegex } from '../../../../../assets/regex';
+import { idRegex, mailRegex, nameRegex, pwRegex, codeRegex } from '../../../assets/regex';
 
 const useSignUp = () => {
   const [status, setStatus] = useState(null);
