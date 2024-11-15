@@ -65,6 +65,7 @@ const useTestLogin = () => {
     if (userId === 'TestUser' && password === 'Test1234!') {
       setStatus(200);
       setErrorMessage('');
+      localStorage.setItem("token", "1234");
       navigate('/Main');
     } else if (userId === 'Server' && password === 'Server1234!') {
       setStatus(500);
