@@ -1,6 +1,6 @@
 // PasswordInput.js
 import React from 'react';
-import { StyledInputPrimary10 } from '../../../../style/styles';
+import { StyledInputPrimary10 } from '../../../style/styles';
 
 const PasswordInput = ({
   password,

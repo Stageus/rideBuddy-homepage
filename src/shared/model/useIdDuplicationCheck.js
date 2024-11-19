@@ -1,6 +1,7 @@
 // useIdDuplicationCheck.js
 import { useState } from 'react';
-import { validateUserId } from '../utill/validators';
+import { validateUserId } from '../util/validators';
+
 
 const useIdDuplicationCheck = (status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus) => {
   const [isIdConfirmed, setIsIdConfirmed] = useState(false);

@@ -3,13 +3,13 @@ import React from 'react';
 import { StyledButton, StyledLink } from '../../style/styles';
 import { StyledSignUpForm, StyledSignUpSection, PageWrapper } from './style/style';
 import useSignUp from './api/useSignUp';
-import NameInput from './ui/NameInput';
-import UserIdInput from './ui/UserIdInput';
-import PasswordInput from './ui/PasswordInput';
-import EmailInput from './ui/EmailInput';
-import EmailVerificationInput from './ui/EmailVerificationInput';
-import Messages from './ui/Messages';
-import useFormState from './model/useFormState';
+import NameInput from '../../widgets/Inputs/NameInput';
+import UserIdInput from '../../widgets/Inputs/UserIdInput'; 
+import PasswordInput from '../../widgets/Inputs/PasswordInput'; 
+import EmailVerificationInput from '../../widgets/Inputs/EmailVerificationInput';
+import Messages from '../../widgets/Inputs/Messages';
+import useFormState from '../../shared/model/useFormState';
+import EmailInput from '../../widgets/Inputs/EmailInput';
 
 const SignUp = () => {
   const [formState, setField] = useFormState({

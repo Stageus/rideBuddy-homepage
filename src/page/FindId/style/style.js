@@ -37,7 +37,7 @@ export const StyledFindIdFormSection = styled.section`
 `;
 
 export const StyledFindIdForm = styled.div`
-  input {
+  div {
     margin-bottom: 15px;
   }
   a {
@@ -80,12 +80,33 @@ export const StyledEmailDiv = styled.div`
   }
 `;
 
+export const StyledEmailConfirmDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  input {
+    margin-bottom: 0px;
+  }
+
+  button {
+    margin-left: 10px;
+    width: 120px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSizes.bodyS};
+  }
+`;
+
 export const StyledHiddenEmailDiv = styled.div`
-  display: ${({ isvisible }) => (isvisible ? 'block' : 'none')};
+  display: block;
   position: relative;
   span {
     position: absolute;
-    top: 48.5%;
-    right: 15px;
+    top: 44px;
+    right: 115px;
   }
 `;

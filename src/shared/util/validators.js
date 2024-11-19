@@ -1,5 +1,4 @@
-// validators.js
-import { idRegex, mailRegex, nameRegex, pwRegex, codeRegex } from '../../../assets/regex';
+import { idRegex, mailRegex, nameRegex, pwRegex, codeRegex } from "../../assets/regex";
 
 export const validateName = name => {
   if (!name || !nameRegex.test(name)) {

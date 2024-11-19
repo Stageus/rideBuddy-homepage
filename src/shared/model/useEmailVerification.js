@@ -1,8 +1,9 @@
 // useEmailVerification.js
 import { useState } from 'react';
-import { validateEmail, validateVerificationCode } from '../utill/validators';
 import useVerificationCode from './useVerificationCode';
-import useTimer from '../../../shared/model/useTimer';
+import useTimer from './useTimer';
+import { validateEmail, validateVerificationCode } from '../util/validators';
+
 
 const useEmailVerification = (status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus) => {
   const [isEmailVerified, setIsEmailVerified] = useState(false);

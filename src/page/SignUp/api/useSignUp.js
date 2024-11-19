@@ -1,12 +1,12 @@
 // useSignUp.js
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { validateName, validatePassword, validateEmail, validateUserId } from '../utill/validators';
-import useEmailVerification from '../model/useEmailVerification';
-import useIdDuplicationCheck from '../model/useIdDuplicationCheck';
+import useEmailVerification from '../../../shared/model/useEmailVerification';
+import useIdDuplicationCheck from '../../../shared/model/useIdDuplicationCheck';
+import { validateName, validatePassword, validateEmail, validateUserId } from '../../../shared/util/validators';
 
 const useSignUp = () => {
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';

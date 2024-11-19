@@ -1,7 +1,7 @@
 // UserIdInput.js
 import React from 'react';
-import { StyledButton, StyledInputPrimary10 } from '../../../../style/styles';
-import { StyledIdConfirmDiv } from '../../style/style';
+import { StyledIdConfirmDiv } from './style';
+import { StyledButton, StyledInputPrimary10 } from '../../../style/styles';
 
 const UserIdInput = ({ userId, setUserId, errorMessage, setErrorMessage, status, isAllFieldsRequiredError, checkIdDuplication }) => (
   <div>
