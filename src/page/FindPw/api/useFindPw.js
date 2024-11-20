@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import useEmailVerification from '../../../shared/model/useEmailVerification';
-import { validateEmail, validateName } from '../../../shared/util/validators';
+import { validateUserId, validateEmail } from '../../../shared/util/validators';
 
-const useFind_Id = () => {
+const useFind_Pw = () => {
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -17,17 +17,17 @@ const useFind_Id = () => {
     confirmVerificationCode,
   } = useEmailVerification(status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus);
 
-  const findIdClickEvent = ({ name, email }) => {
-    if (!name && !email) {
+  const findPwClickEvent = ({ userId, email }) => {
+    if (!userId && !email) {
       setStatus(400);
       setErrorMessage('모든 필드를 입력해주세요.');
       return;
     }
 
-    const nameError = validateName(name);
-    if (nameError) {
+    const userIdError = validateUserId(userId);
+    if (userIdError) {
       setStatus(400);
-      setErrorMessage(nameError);
+      setErrorMessage(userIdError);
       return;
     }
 
@@ -44,17 +44,17 @@ const useFind_Id = () => {
       return;
     }
 
-    if (email === 'example@example.com') {
+    if (userId === 'user123' && email === 'example@example.com') {
       setStatus(200);
       setErrorMessage('');
-      setSuccessMessage(`아이디는 'user123'입니다.`);
+      setSuccessMessage(`임시 비밀번호는 'tempPassword123!'입니다.`);
     } else {
       setStatus(404);
-      setErrorMessage('등록된 아이디가 없습니다.');
+      setErrorMessage('등록된 사용자 정보가 없습니다.');
     }
   };
 
-  const resetFindIdForm = () => {
+  const resetFindPwForm = () => {
     setStatus(null);
     setErrorMessage('');
     setSuccessMessage('');
@@ -64,7 +64,7 @@ const useFind_Id = () => {
     status,
     errorMessage,
     successMessage,
-    findIdClickEvent,
+    findPwClickEvent,
     handleEmailVerificationClick,
     confirmVerificationCode,
     isVerificationSent,
@@ -73,8 +73,8 @@ const useFind_Id = () => {
     timeLeft,
     setErrorMessage,
     isAllFieldsRequiredError,
-    resetFindIdForm,
+    resetFindPwForm,
   };
 };
 
-export default useFind_Id;
+export default useFind_Pw;

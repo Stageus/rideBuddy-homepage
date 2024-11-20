@@ -36,7 +36,7 @@ export const StyledFindPwFormSection = styled.section`
 `;
 
 export const StyledFindPwForm = styled.div`
-  input {
+  div {
     margin-bottom: 15px;
   }
   a {
@@ -55,36 +55,5 @@ export const StyledFindPwForm = styled.div`
       color: ${({ theme }) => theme.colors.coolGray40};
       font-size: ${({ theme }) => theme.fontSizes.bodyXXS};
     }
-  }
-`;
-
-export const StyledEmailDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 15px;
-  input {
-    margin-bottom: 0px;
-  }
-
-  button {
-    margin-left: 10px;
-    width: 90px;
-    height: 46px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.bodyS};
-  }
-`;
-
-export const StyledHiddenEmailDiv = styled.div`
-  display: ${({ isvisible }) => (isvisible ? 'block' : 'none')};
-  position: relative;
-  span {
-    position: absolute;
-    top: 48.5%;
-    right: 15px;
   }
 `;

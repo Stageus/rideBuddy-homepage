@@ -26,7 +26,8 @@ const Find_Id = () => {
     isEmailVerified,
     isEmailVisible,
     timeLeft,
-    isAllFieldsRequiredError
+    isAllFieldsRequiredError,
+    setErrorMessage,
   } = useFind_Id();
 
   return (
@@ -41,15 +42,18 @@ const Find_Id = () => {
             errorMessage={errorMessage}
             status={status}
             isAllFieldsRequiredError={isAllFieldsRequiredError}
+            setErrorMessage={setErrorMessage}
           />
           <EmailInput
             email={formState.email}
             setEmail={value => setField('email', value)}
             errorMessage={errorMessage}
             status={status}
-            handleEmailVerificationClick={() => handleEmailVerificationClick(formState.email)}
+            handleEmailVerificationClick={!isEmailVerified ? () => handleEmailVerificationClick(formState.email) : undefined}
             isVerificationSent={isVerificationSent}
             isAllFieldsRequiredError={isAllFieldsRequiredError}
+            setErrorMessage={setErrorMessage}
+            isEmailVerified={isEmailVerified}
           />
           {isEmailVisible && (
             <EmailVerificationInput
@@ -61,6 +65,7 @@ const Find_Id = () => {
               isEmailVerified={isEmailVerified}
               timeLeft={timeLeft}
               isAllFieldsRequiredError={isAllFieldsRequiredError}
+              setErrorMessage={setErrorMessage}
             />
           )}
           <StyledLink to="/Login">로그인페이지 이동</StyledLink>

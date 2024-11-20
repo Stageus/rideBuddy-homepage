@@ -27,7 +27,10 @@ const EmailInput = ({
           setErrorMessage('');
         }}
         required
-        status={isAllFieldsRequiredError || (status === 400 && errorMessage === '이메일 형식을 확인해주세요.' && status)}
+        status={
+          isAllFieldsRequiredError || 
+          (status === 400 && (errorMessage === '이메일 형식을 확인해주세요.' || errorMessage === '이메일 인증을 완료해주세요.') && status)
+        }
         disabled={isEmailVerified}
       />
       <StyledButton type="button" onClick={() => handleEmailVerificationClick(email)} disabled={isEmailVerified}>
