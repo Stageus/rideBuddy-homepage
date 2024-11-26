@@ -18,21 +18,17 @@ export const StyledCloseButtonDiv = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 20px;
-  height: 20px;
-  background-color: red;
+  width: 12px;
+  height: 12px;
+  background-color: #da1e28;
+  border: none;
   border-radius: 50%;
-  color: white;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 `;
 
 export const StyledMarkerImageContainerDiv = styled.div`
   position: relative;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 
 export const StyledMarkerImage = styled.img`
