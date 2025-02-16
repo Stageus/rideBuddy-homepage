@@ -14,7 +14,7 @@ const useUserLocation = () => {
         },
         error => {
           console.error('위치를 가져오는 데 실패했습니다:', error);
-        }
+        },
       );
     }
   }, []);

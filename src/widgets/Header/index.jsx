@@ -1,22 +1,25 @@
-// Header.js
 import React from 'react';
 import { StyledHeader, StyledLeftIcon, StyledLogo, StyledTitle, StyledTitleContainer } from './style/style';
-import { Link } from 'react-router-dom';
 import { StyledLink } from '../../style/styles';
 
 const Header = () => {
+  const handleNavigation = e => {
+    e.preventDefault();
+    window.location.href = '/main';
+  };
+
   return (
     <StyledHeader>
       <StyledLeftIcon>
-        <Link to="/main">
+        <a href="/main" onClick={handleNavigation}>
           <StyledLogo src="img/Logo_header.png" alt="Bike Icon" />
-        </Link>
+        </a>
       </StyledLeftIcon>
 
       <StyledTitleContainer>
-        <StyledLink to="/main">
+        <a href="/main" onClick={handleNavigation}>
           <StyledTitle>ride buddy</StyledTitle>
-        </StyledLink>
+        </a>
       </StyledTitleContainer>
     </StyledHeader>
   );

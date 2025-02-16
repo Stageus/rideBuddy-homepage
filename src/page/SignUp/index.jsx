@@ -2,14 +2,14 @@
 import React from 'react';
 import { StyledButton, StyledLink } from '../../style/styles';
 import { StyledSignUpForm, StyledSignUpSection, PageWrapper } from './style/style';
-import useSignUp from './api/useSignUp';
+import useSignUp from './model/useSignUp';
 import NameInput from '../../widgets/Inputs/NameInput';
-import UserIdInput from '../../widgets/Inputs/UserIdInput'; 
-import PasswordInput from '../../widgets/Inputs/PasswordInput'; 
+import PasswordInput from '../../widgets/Inputs/PasswordInput';
 import EmailVerificationInput from '../../widgets/Inputs/EmailVerificationInput';
 import Messages from '../../widgets/Inputs/Messages';
 import useFormState from '../../shared/model/useFormState';
 import EmailInput from '../../widgets/Inputs/EmailInput';
+import UserIdCheckInput from '../../widgets/Inputs/UserIdCheckInput';
 
 const SignUp = () => {
   const [formState, setField] = useFormState({
@@ -56,7 +56,7 @@ const SignUp = () => {
             isAllFieldsRequiredError={isAllFieldsRequiredError}
           />
 
-          <UserIdInput
+          <UserIdCheckInput
             userId={formState.userId}
             setUserId={value => setField('userId', value)}
             errorMessage={errorMessage}

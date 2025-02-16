@@ -1,11 +1,14 @@
+// useTestLogin.js
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { idRegex, pwRegex } from '../../../../../assets/regex';
+import useLoginApi from './useLoginApi';
 
 const useTestLogin = () => {
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { loginUser } = useLoginApi();
 
   // 에러 처리 함수
   const handleErrorResponse = status => {
@@ -25,22 +28,18 @@ const useTestLogin = () => {
   };
 
   // 로그인 처리 함수
-  const loginClickEvent = (userId, password) => {
-    // 아이디 또는 비밀번호가 비어있을 때
+  const loginClickEvent = async (userId, password) => {
+    // 아이디와 비밀번호 입력 여부 검사
     if (!userId && !password) {
       setStatus(400);
       setErrorMessage('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
-
-    // 아이디가 비어있을 때
     if (!userId) {
       setStatus(400);
       setErrorMessage('아이디를 입력해주세요.');
       return;
     }
-
-    // 비밀번호가 비어있을 때
     if (!password) {
       setStatus(400);
       setErrorMessage('비밀번호를 입력해주세요.');
@@ -53,7 +52,6 @@ const useTestLogin = () => {
       setErrorMessage('아이디 또는 비밀번호 형식을 확인해주세요.');
       return;
     }
-
     // 비밀번호 정규식 검사
     if (!pwRegex.test(password)) {
       setStatus(400);
@@ -61,18 +59,20 @@ const useTestLogin = () => {
       return;
     }
 
-    // 로그인 성공/실패 로직
-    if (userId === 'TestUser' && password === 'Test1234!') {
+    // API 호출
+    const { status: apiStatus, data } = await loginUser(userId, password);
+
+    if (apiStatus === 200) {
       setStatus(200);
       setErrorMessage('');
-      localStorage.setItem("token", "1234");
+      // API에서 반환한 access_token을 localStorage에 저장
+      localStorage.setItem('token', data.access_token);
       navigate('/Main');
-    } else if (userId === 'Server' && password === 'Server1234!') {
-      setStatus(500);
-      handleErrorResponse(500);
     } else {
-      setStatus(404);
-      handleErrorResponse(404);
+      setStatus(apiStatus);
+      // 서버에서 주는 메시지를 콘솔에 출력
+      console.log('서버 응답 메시지:', data.message);
+      handleErrorResponse(apiStatus);
     }
   };
 

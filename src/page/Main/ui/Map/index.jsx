@@ -3,8 +3,8 @@ import { useRecoilValue } from 'recoil';
 import MarkerDetail from './ui/MakerDetail';
 import { markerSourceState, selectedDataState, selectedSearchState } from '../../../../shared/recoil/atoms/atomState';
 import useUserLocation from './model/useUserLocation';
-import useInitializeMap from './model/useInitializeMap'; 
-import useMarkers from './model/useMarkers'; 
+import useInitializeMap from './model/useInitializeMap';
+import useMarkers from './model/useMarkers';
 
 const Map = () => {
   const mapRef = useRef(null);

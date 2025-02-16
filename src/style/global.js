@@ -98,6 +98,9 @@ const GlobalStyle = createGlobalStyle`
   label {
     display: none;
   }
+  html, body, #root {
+  height: 100%;
+}
 `;
 
 export default GlobalStyle;
