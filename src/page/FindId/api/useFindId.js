@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useEmailVerification from '../../../shared/model/useEmailVerification';
 import { validateEmail, validateName } from '../../../shared/util/validators';
+import useFindIdAPI from './useFindIdAPI';
 
 const useFind_Id = () => {
   const [status, setStatus] = useState(null);
@@ -15,9 +16,20 @@ const useFind_Id = () => {
     timeLeft,
     handleEmailVerificationClick,
     confirmVerificationCode,
-  } = useEmailVerification(status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus);
+  } = useEmailVerification(
+    status,
+    errorMessage,
+    successMessage,
+    setErrorMessage,
+    setSuccessMessage,
+    setStatus
+  );
 
-  const findIdClickEvent = ({ name, email }) => {
+  // API 훅에서 findId 함수를 받아옴
+  const { findId } = useFindIdAPI();
+
+  const findIdClickEvent = async ({ name, email }) => {
+    // 필드 검증
     if (!name && !email) {
       setStatus(400);
       setErrorMessage('모든 필드를 입력해주세요.');
@@ -44,13 +56,25 @@ const useFind_Id = () => {
       return;
     }
 
-    if (email === 'example@example.com') {
-      setStatus(200);
-      setErrorMessage('');
-      setSuccessMessage(`아이디는 'user123'입니다.`);
-    } else {
-      setStatus(404);
-      setErrorMessage('등록된 아이디가 없습니다.');
+    // API 호출 (로컬 테스트 로직 제거)
+    try {
+      const response = await findId({ name, mail: email });
+      console.log('findId API response:', response); // 응답 결과 디버그 로그
+      if (response.status === 200) {
+        setStatus(200);
+        setErrorMessage('');
+        setSuccessMessage(`아이디는 '${response.data.id}'입니다.`);
+      } else {
+        console.log('API responded with error:', response);
+        setStatus(response.status);
+        setErrorMessage(response.data.message);
+        setSuccessMessage('');
+      }
+    } catch (error) {
+      console.error('Error during findId API call:', error); // 에러 디버그 로그
+      setStatus(500);
+      setErrorMessage('내부 서버 에러');
+      setSuccessMessage('');
     }
   };
 

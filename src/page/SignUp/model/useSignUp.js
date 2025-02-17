@@ -35,7 +35,7 @@ const useSignUp = () => {
   const { registerUser } = useRegister();
 
   const signupClickEvent = async ({ name, userId, password, confirmPassword, email }) => {
-    if (!name || !userId || !password || !confirmPassword || !email) {
+    if (!name && !userId && !password && !confirmPassword && !email) {
       setStatus(400);
       setErrorMessage('모든 필드를 입력해주세요.');
       return;
@@ -96,7 +96,7 @@ const useSignUp = () => {
     };
 
     const { status: apiStatus, data } = await registerUser(payload);
-    console.log('회원가입 API 응답:', { apiStatus, data }); // <-- 이 부분 추가
+    console.log('회원가입 API 응답:', { apiStatus, data });
 
     if (apiStatus === 200) {
       setStatus(200);

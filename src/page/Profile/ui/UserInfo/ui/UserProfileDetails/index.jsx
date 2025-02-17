@@ -11,24 +11,26 @@ import PasswordChangePopup from '../../../PwChangePopUp';
 import PhoneNumberChangePopup from '../../../PhoneNumChangePopUp';
 import DeleteAccountPopup from '../../../DelPopUp';
 
-const UserProfileDetails = () => {
+const UserProfileDetails = ({ user }) => {
   const [popupType, setPopupType] = useState(null);
 
   const handleClosePopup = () => setPopupType(null);
+
+  if (!user) return null; // user 정보가 없으면 렌더링하지 않음
 
   return (
     <StyledDetailsContainerDiv>
       <StyledDetailItemDiv>
         <StyledDetailLabelSpan>이름</StyledDetailLabelSpan>
-        <StyledDetailValueSpan>홍길동</StyledDetailValueSpan>
+        <StyledDetailValueSpan>{user.account_name || '이름 정보 없음'}</StyledDetailValueSpan>
       </StyledDetailItemDiv>
       <StyledDetailItemDiv>
         <StyledDetailLabelSpan>이메일 계정</StyledDetailLabelSpan>
-        <StyledDetailValueSpan>TEST_ID@gmail.com</StyledDetailValueSpan>
+        <StyledDetailValueSpan>{user.mail || '이메일 정보 없음'}</StyledDetailValueSpan>
       </StyledDetailItemDiv>
       <StyledDetailItemDiv>
         <StyledDetailLabelSpan>아이디</StyledDetailLabelSpan>
-        <StyledDetailValueSpan>TEST_ID</StyledDetailValueSpan>
+        <StyledDetailValueSpan>{user.id || '아이디 정보 없음'}</StyledDetailValueSpan>
       </StyledDetailItemDiv>
       <StyledDetailItemDiv>
         <StyledDetailLabelSpan>비밀번호</StyledDetailLabelSpan>
@@ -38,7 +40,9 @@ const UserProfileDetails = () => {
         <StyledDetailLabelSpan>전화번호</StyledDetailLabelSpan>
         <StyledEditButton onClick={() => setPopupType('phone')}>수정</StyledEditButton>
       </StyledDetailItemDiv>
-      <StyledDeleteAccountButton onClick={() => setPopupType('del')}>회원탈퇴</StyledDeleteAccountButton>
+      <StyledDeleteAccountButton onClick={() => setPopupType('del')}>
+        회원탈퇴
+      </StyledDeleteAccountButton>
 
       {popupType === 'password' && <PasswordChangePopup onClose={handleClosePopup} />}
       {popupType === 'phone' && <PhoneNumberChangePopup onClose={handleClosePopup} />}
