@@ -48,7 +48,7 @@ export const StyledProfileContainer = styled.div`
   z-index: 1;
 `;
 
-export const StyledProfileImage = styled.div`
+export const StyledProfileImage = styled.img`
   width: 24px;
   height: 24px;
   border-radius: 50%;

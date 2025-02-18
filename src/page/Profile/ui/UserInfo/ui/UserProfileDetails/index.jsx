@@ -36,10 +36,6 @@ const UserProfileDetails = ({ user }) => {
         <StyledDetailLabelSpan>비밀번호</StyledDetailLabelSpan>
         <StyledEditButton onClick={() => setPopupType('password')}>수정</StyledEditButton>
       </StyledDetailItemDiv>
-      <StyledDetailItemDiv>
-        <StyledDetailLabelSpan>전화번호</StyledDetailLabelSpan>
-        <StyledEditButton onClick={() => setPopupType('phone')}>수정</StyledEditButton>
-      </StyledDetailItemDiv>
       <StyledDeleteAccountButton onClick={() => setPopupType('del')}>
         회원탈퇴
       </StyledDeleteAccountButton>

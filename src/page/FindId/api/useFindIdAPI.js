@@ -31,24 +31,24 @@ const useFindIdAPI = () => {
       } else if (response.status === 400) {
         // Response 400: 정규표현식 에러
         setStatus(400);
-        setErrorMessage(data.message);
+        setErrorMessage('올바른 양식으로 다시 시도해주세요.');
         return { status: 400, data };
       } else if (response.status === 404) {
         // Response 404: 해당하는 id를 찾을 수 없음
         setStatus(404);
-        setErrorMessage(data.message);
+        setErrorMessage('해당하는 아이디를 찾을수 없습니다.');
         return { status: 404, data };
       } else {
         // 그 외 에러(500 등)
         setStatus(500);
-        setErrorMessage('내부 서버 에러');
-        return { status: 500, data: { message: '내부 서버 에러' } };
+        setErrorMessage('서버 오류입니다. 다시 시도해주세요');
+        return { status: 500, data: { message: '서버 오류입니다. 다시 시도해주세요' } };
       }
     } catch (error) {
       setStatus(500);
-      setErrorMessage('내부 서버 에러');
+      setErrorMessage('서버 오류입니다. 다시 시도해주세요');
       console.error('Error in useFindIdAPI:', error);
-      return { status: 500, data: { message: '내부 서버 에러' } };
+      return { status: 500, data: { message: '서버 오류입니다. 다시 시도해주세요' } };
     } finally {
       setLoading(false);
     }

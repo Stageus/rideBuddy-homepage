@@ -11,11 +11,10 @@ export const StyledAvatarContainerDiv = styled.div`
   margin-right: 15px;
 `;
 
-export const StyledAvatarImg = styled.div`
+export const StyledAvatarImg = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #ddd;
 `;
 
 export const StyledEditButtonButton = styled.button`

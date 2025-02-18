@@ -9,9 +9,11 @@ import {
   StyledWarningMessageP,
 } from './style/style';
 import { useDeleteAccount } from './api/deleteAccount';
+import { useNavigate } from "react-router-dom";
 
 
 const DeleteAccountPopup = ({ onClose }) => {
+  const navigate = useNavigate();
   const { deleteAccount, loading, error } = useDeleteAccount();
 
   const handleConfirm = async () => {
