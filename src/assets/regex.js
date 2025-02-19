@@ -3,3 +3,4 @@ export const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\*\&\^\@\!])[A-Za-z
 export const nameRegex = /^[가-힣]{1,5}$/; // 이름: 한글만 허용, 1~5글자
 export const mailRegex = /^[\w\-\.]+@[a-zA-Z\d\-]+\.[a-zA-Z]{2,4}$/; // 이메일: 최대 30글자, '@' 포함, 연속된 문자 형식
 export const codeRegex = /^\d{6}$/; // 인증 코드: 숫자 6자리 고정
+export const imgIdxRegex = /^\d+$/; // 인증 코드: 숫자 6자리 고정

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledButton, StyledLink } from '../../style/styles';
 import { StyledFindIdForm, StyledFindIdFormSection, PageWrapper } from './style/style';
-import useFind_Id from './api/useFindId';
+import useFind_Id from './model/useFindId';
 import useFormState from '../../shared/model/useFormState';
 import NameInput from '../../widgets/Inputs/NameInput';
 import EmailInput from '../../widgets/Inputs/EmailInput';

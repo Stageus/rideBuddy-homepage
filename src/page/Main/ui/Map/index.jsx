@@ -9,7 +9,8 @@ import useMarkers from './model/useMarkers';
 const Map = () => {
   const mapRef = useRef(null);
   const userLocation = useUserLocation();
-  const map = useInitializeMap(mapRef, userLocation);
+
+  const { map, toggleBicycleLayer } = useInitializeMap(mapRef, userLocation);
 
   const selectedData = useRecoilValue(selectedDataState);
   const selectedSearch = useRecoilValue(selectedSearchState);

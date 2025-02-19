@@ -34,3 +34,10 @@ export const validateVerificationCode = code => {
   }
   return null;
 };
+
+export const imgIdxVerificationCode = code => {
+  if (!code || !imgIdxRegex.test(code)) {
+    return '숫자입력 하세요.';
+  }
+  return null;
+};

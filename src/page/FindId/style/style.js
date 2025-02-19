@@ -17,7 +17,6 @@ export const PageWrapper = styled(StyledContainer)`
   }
 `;
 
-
 export const StyledFindIdFormSection = styled.section`
   padding: 16px;
   background: #fff;

@@ -1,10 +1,9 @@
-// ResultsList.js
+// components/ResultsList.js
 import React from 'react';
 import ResultItem from './ui/ResultItem';
 import { StyledResultsDiv } from './style/style';
 
-
-const ResultsList = ({ searchResults, handleItemClick, hasMore, scrollRef}) => {
+const ResultsList = ({ searchResults, handleItemClick, hasMore, scrollRef }) => {
   return (
     <StyledResultsDiv>
       {searchResults.map(result => (

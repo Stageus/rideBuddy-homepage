@@ -15,27 +15,26 @@ import {
 } from './style/style';
 
 import EditProfilePopup from './ui/EditProfilePopup';
-import useProfileUpload from '../../shared/api/useProfileUpload';
-import useProfileList from '../../shared/api/useProfileList ';
+import useProfileUpload from './api/useProfileUpload';
+import useProfileList from './api/useProfileList ';
+import useDeleteProfileImage from './api/useProfileDel';
+import useUserInfo from '../../shared/api/useUserInfo';
+
 
 const HistoryForm = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
-  
   const [selectedFile, setSelectedFile] = useState(null);
 
   const { uploadProfile, isLoading, error } = useProfileUpload();
-
-
-  const {
-    profileList,     
-    isLoading: listLoading,
-    error: listError,
-    fetchProfileList,
-  } = useProfileList();
-
+  const { profileList, isLoading: listLoading, error: listError, fetchProfileList } = useProfileList();
+  const { deleteProfileImage, loading: deleteLoading, error: deleteError } = useDeleteProfileImage();
+  const { user, fetchUserInfo } = useUserInfo();
 
   useEffect(() => {
-    console.log('[HistoryForm] 마운트: fetchProfileList 호출');
+    fetchUserInfo();
+  }, [fetchUserInfo]);
+
+  useEffect(() => {
     fetchProfileList();
   }, []);
 
@@ -47,8 +46,7 @@ const HistoryForm = () => {
     setPopupVisible(false);
   };
 
- 
-  const handleFileSelect = (file) => {
+  const handleFileSelect = file => {
     setSelectedFile(file);
   };
 
@@ -59,25 +57,24 @@ const HistoryForm = () => {
     }
 
     try {
-      const response = await uploadProfile(selectedFile);
-      console.log('업로드 성공:', response);
-
-      alert('업로드가 성공적으로 완료되었습니다.');
+      await uploadProfile(selectedFile);
       setPopupVisible(false);
       setSelectedFile(null);
-
       fetchProfileList();
     } catch (err) {
       console.error('업로드 실패:', err.message);
     }
   };
 
-  if (listLoading) {
-    return <p>리스트를 불러오는 중입니다...</p>;
-  }
-  if (listError) {
-    return <p style={{ color: 'red' }}>에러 발생: {listError}</p>;
-  }
+  // 삭제 API 호출 함수 (토큰 로직은 훅 내부에 있음)
+  const handleDelete = async (img_idx) => {
+    try {
+      await deleteProfileImage(img_idx);
+      fetchProfileList();
+    } catch (err) {
+      console.error('삭제 실패:', err.message);
+    }
+  };
 
   return (
     <>
@@ -88,13 +85,16 @@ const HistoryForm = () => {
           {profileList.length === 0 ? (
             <p>등록된 사진이 없습니다.</p>
           ) : (
-            profileList.map((item) => (
+            profileList.map(item => (
               <StyledStoryCard key={item.img_idx}>
                 <StyledProfileContainer>
-                  <StyledProfileImage />
-                  <StyledTitle>홍길동님의 히스토리</StyledTitle>
+                  <StyledProfileImage src={user.img_url} />
+                  <StyledTitle>{user.account_name}님의 히스토리</StyledTitle>
                 </StyledProfileContainer>
-                <StyledCloseButton>×</StyledCloseButton>
+                {/* 삭제 버튼 클릭 시 해당 이미지의 삭제 API 호출 */}
+                <StyledCloseButton onClick={() => handleDelete(item.img_idx)}>
+                  ×
+                </StyledCloseButton>
                 <StyledImage src={item.img_url} alt="Story Image" />
               </StyledStoryCard>
             ))
