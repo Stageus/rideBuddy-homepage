@@ -1,4 +1,4 @@
-// MainTab.js
+// components/MainTab.js
 import React from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import useSearch from './model/useSearch';
@@ -24,16 +24,15 @@ const MainTab = () => {
     setIsKeywordListOpen,
   } = useSearch();
 
-  // Infinite scroll로 검색 결과를 구함 (검색어 기반)
+  // 검색어 기반 무한 스크롤 결과
   const { searchResults, ref, hasMore } = useInfiniteScroll(searchTerm, allData);
 
-  // Recoil 상태 구독 (aside에서 설정한 값)
+  // Menu에서 설정한 aside 데이터 구독
   const selectedData = useRecoilValue(selectedDataState);
   const markerSource = useRecoilValue(markerSourceState);
   const selectedSearch = useSetRecoilState(selectedSearchState);
 
   const handleItemClick = item => {
-    // 검색 결과 아이템 클릭 시, 검색어 초기화 및 Recoil 상태 업데이트
     setSearchTerm('');
     selectedSearch(item);
     setIsKeywordListOpen(false);
@@ -45,28 +44,19 @@ const MainTab = () => {
   } else if (status === 404) {
     content = <NoResultsMessage />;
   } else if (markerSource === 'aside') {
-    // 메뉴(aside)에서 설정한 데이터가 있을 경우: dummyCenters나 API로 받아온 roads 데이터 등
+    // 메뉴(aside)에서 설정한 데이터가 있을 경우 우선 출력
     content = (
       <ResultsList
         searchResults={selectedData}
         handleItemClick={handleItemClick}
-        hasMore={false} // aside 데이터는 무한스크롤이 필요하지 않을 수 있음
+        hasMore={false} // aside 데이터는 무한스크롤 필요 없음
         scrollRef={ref}
       />
     );
   } else if (searchTerm === '') {
-    // 검색어가 없고 aside 상태가 아닐 때
     content = <InfoSection />;
   } else {
-    // 검색어 입력 시
-    content = (
-      <ResultsList
-        searchResults={searchResults}
-        handleItemClick={handleItemClick}
-        hasMore={hasMore}
-        scrollRef={ref}
-      />
-    );
+    content = <ResultsList searchResults={searchResults} handleItemClick={handleItemClick} hasMore={hasMore} scrollRef={ref} />;
   }
 
   return (

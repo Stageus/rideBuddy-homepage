@@ -1,3 +1,4 @@
+// shared/recoil/atoms/atomState.js
 import { atom } from 'recoil';
 
 export const selectedDataState = atom({
@@ -12,5 +13,5 @@ export const markerSourceState = atom({
 
 export const selectedSearchState = atom({
   key: 'selectedSearchState',
-  default: null,
+  default: {},
 });

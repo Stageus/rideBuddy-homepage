@@ -11,15 +11,15 @@ const useRoads = () => {
     setLoading(true);
     setError(null);
 
-    const accessToken = localStorage.getItem("token");
+    const accessToken = localStorage.getItem('token');
     if (!accessToken) {
-      setError("올바른 access token이 아님");
+      setError('올바른 access token이 아님');
       setLoading(false);
       return;
     }
 
     const requestBody = {
-      page: page, 
+      page,
       longitude,
       latitude,
     };
@@ -29,34 +29,46 @@ const useRoads = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(requestBody),
       });
 
       if (response.ok) {
         const data = await response.json();
-        // 여기서 roads_name을 name으로 매핑
-        const transformedResults = data.body.result.map(item => ({
-          id: item.roads_point_idx,
-          name: item.roads_name, // 추가된 부분
-          ...item,
-        }));
+        // 예시 응답 구조에 맞게 변환
+        const resultArray = data.resultData;
+        if (!resultArray) {
+          // 데이터 없음 처리
+        } else {
+          const transformedResults = resultArray.map(item => ({
+            id: item.road_point_idx,
+            name: item.road_name,
+            address: item.road_address,
+            distance: item.cal,
+            type: item.road_type,
+          }));
 
-        setResults(prev => [...prev, ...transformedResults]);
-        setPage(prev => prev + 1);
+          setResults(prev => [...prev, ...transformedResults]);
+          setPage(prev => prev + 1);
+        }
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "알 수 없는 오류가 발생했습니다.");
+        setError(errorData.message || '알 수 없는 오류 발생');
       }
     } catch (err) {
-      setError("네트워크 오류가 발생했습니다.");
+      setError('네트워크 오류 발생');
     } finally {
       setLoading(false);
     }
   };
 
-  return { results, loading, error, fetchRoads };
+  const resetResults = () => {
+    setResults([]);
+    setPage(0);
+  };
+
+  return { results, loading, error, fetchRoads, resetResults };
 };
 
 export default useRoads;
