@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const useCenters = () => {
   const [results, setResults] = useState([]);
-  const [page, setPage] = useState(0); // 초기 페이지 값(필요시 조정)
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasMore, setHasMore] = useState(true);

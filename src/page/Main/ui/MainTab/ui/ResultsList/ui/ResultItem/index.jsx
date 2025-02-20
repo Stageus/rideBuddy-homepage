@@ -3,10 +3,10 @@ import React from 'react';
 import { StyledLocIconDiv, StyledResultItemDiv } from './style/style';
 import { HiLocationMarker } from 'react-icons/hi';
 
-const ResultItem = ({ result, onClick }) => {
+const ResultItem = () => {
   return (
-    <StyledResultItemDiv onClick={() => onClick(result)}>
-      <span>{result.name}</span> {/* road_name → name */}
+    <StyledResultItemDiv>
+      <span></span>
       <StyledLocIconDiv>
         <HiLocationMarker />
       </StyledLocIconDiv>

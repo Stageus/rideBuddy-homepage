@@ -6,40 +6,32 @@ const useInitializeMap = (mapRef, userLocation) => {
 
   useEffect(() => {
     const { naver } = window;
-    if (mapRef.current && naver && userLocation.lat && userLocation.lng) {
-      // 지도 생성
-      const location = new naver.maps.LatLng(userLocation.lat, userLocation.lng);
-      const mapInstance = new naver.maps.Map(mapRef.current, {
-        center: location,
-        zoom: 15,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: naver.maps.MapTypeControlStyle.DROPDOWN,
-        },
-      });
-      setMap(mapInstance);
+    if (!mapRef.current || !naver || !userLocation.lat || !userLocation.lng) return;
 
-      // 마커 표시
-      new naver.maps.Marker({
-        position: location,
-        map: mapInstance,
-        icon: {
-          content: `<div style="background: #A6C8FF; color: white; padding: 5px 10px; border-radius: 50%; font-weight: bold; font-size:32px">🚴‍♂️</div>`,
-        },
-      });
+    // 사용자의 위치를 중심으로 지도 생성
+    const location = new naver.maps.LatLng(userLocation.lat, userLocation.lng);
+    const mapInstance = new naver.maps.Map(mapRef.current, {
+      center: location,
+      zoom: 15,
+    });
+    setMap(mapInstance);
 
-      // 자전거 레이어 생성
-      const newBicycleLayer = new naver.maps.BicycleLayer();
-      setBicycleLayer(newBicycleLayer);
+    // 사용자의 위치에 마커 표시
+    new naver.maps.Marker({
+      position: location,
+      map: mapInstance,
+      icon: {
+        content: `<div style="background:#A6C8FF; color:white; padding:5px 10px; border-radius:50%; font-weight:bold; font-size:32px">🚴‍♂️</div>`,
+      },
+    });
 
-      // 지도가 초기화되면 자전거 레이어를 지도에 추가
-      naver.maps.Event.once(mapInstance, 'init', () => {
-        newBicycleLayer.setMap(mapInstance);
-      });
-    }
+    // 자전거 레이어 생성 및 지도에 추가
+    const bikeLayer = new naver.maps.BicycleLayer();
+    setBicycleLayer(bikeLayer);
+    bikeLayer.setMap(mapInstance);
   }, [mapRef, userLocation]);
 
-  // 자전거 레이어 토글 함수
+  // 자전거 레이어 토글 기능
   const toggleBicycleLayer = () => {
     if (!map || !bicycleLayer) return;
     if (bicycleLayer.getMap()) {
