@@ -15,3 +15,13 @@ export const selectedSearchState = atom({
   key: 'selectedSearchState',
   default: {},
 });
+
+export const centersState = atom({
+  key: 'centersState',
+  default: [],
+});
+
+export const roadsState = atom({
+  key: 'roadsState',
+  default: [],
+});

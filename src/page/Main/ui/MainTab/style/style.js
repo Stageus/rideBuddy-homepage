@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledMainDiv = styled.div`
+export const StyledMainTabDiv = styled.div`
   position: relative;
   width: 330px;
   background-color: ${({ theme }) => {
@@ -13,6 +13,7 @@ export const StyledMainDiv = styled.div`
   align-items: center;
   padding: 20px;
 `;
+
 
 export const StyledGraphDiv = styled.div`
   width: 90%;

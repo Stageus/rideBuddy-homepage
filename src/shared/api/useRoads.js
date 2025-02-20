@@ -6,8 +6,10 @@ const useRoads = () => {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchRoads = async ({ longitude, latitude }) => {
+    if (loading || !hasMore) return;
     setLoading(true);
     setError(null);
 
@@ -36,10 +38,9 @@ const useRoads = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // 예시 응답 구조에 맞게 변환
         const resultArray = data.resultData;
-        if (!resultArray) {
-          // 데이터 없음 처리
+        if (!resultArray || resultArray.length === 0) {
+          setHasMore(false);
         } else {
           const transformedResults = resultArray.map(item => ({
             id: item.road_point_idx,
@@ -66,9 +67,10 @@ const useRoads = () => {
   const resetResults = () => {
     setResults([]);
     setPage(0);
+    setHasMore(true);
   };
 
-  return { results, loading, error, fetchRoads, resetResults };
+  return { results, loading, error, fetchRoads, hasMore, resetResults };
 };
 
 export default useRoads;

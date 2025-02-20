@@ -9,6 +9,8 @@ const useCenters = () => {
   const [hasMore, setHasMore] = useState(true);
 
   const fetchCenters = async ({ longitude, latitude }) => {
+    // 중복 요청 방지
+    if (loading || !hasMore) return;
     setLoading(true);
     setError(null);
 
@@ -19,8 +21,9 @@ const useCenters = () => {
       return;
     }
 
+    // 페이지 번호를 동적으로 전달
     const requestBody = {
-      page,
+      page, // 이전 페이지 상태 사용
       longitude,
       latitude,
     };
@@ -37,22 +40,21 @@ const useCenters = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // 실제 응답: { "resultData": [ { "center_idx": ..., "center_name": ... }, ... ] }
         const resultArray = data.resultData;
+        // 결과가 없으면 더 이상 불러올 데이터가 없다고 처리
         if (!resultArray || resultArray.length === 0) {
-          // 더 이상 데이터가 없거나 null일 경우
           setHasMore(false);
         } else {
-          // 필드명을 UI에 맞게 변환
           const transformedResults = resultArray.map(item => ({
             id: item.center_idx,
             name: item.center_name,
             address: item.center_address,
-            distance: item.cal, // cal -> distance (km)
+            distance: item.cal,
           }));
 
-          // 기존 데이터에 추가 (무한 스크롤 고려 시)
+          // 기존 결과에 누적하여 추가
           setResults(prev => [...prev, ...transformedResults]);
+          // 페이지 번호 증가
           setPage(prev => prev + 1);
         }
       } else {
@@ -66,14 +68,14 @@ const useCenters = () => {
     }
   };
 
-  // resetResults 함수 추가: 결과와 페이지 상태를 초기화
+  // 새 검색 시 결과 초기화: 페이지 번호도 초기화
   const resetResults = () => {
     setResults([]);
-    setPage(0); // 초기 페이지 값(필요에 따라 0 또는 다른 값으로 변경)
+    setPage(0);
     setHasMore(true);
   };
 
-  return { results, loading, error, fetchCenters, hasMore, resetResults };
+  return { results, loading, error, fetchCenters, hasMore, resetResults};
 };
 
 export default useCenters;

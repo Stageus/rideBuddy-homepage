@@ -1,17 +1,16 @@
 // components/MainTab.js
 import React from 'react';
-import { StyledMainDiv } from './style/style';
+import { StyledMainTabDiv } from './style/style';
 import SearchInput from './ui/SearchInput';
-import InfoSection from './ui/InfoSection';
 import ResultsList from './ui/ResultsList';
 
 const MainTab = () => {
   return (
-    <StyledMainDiv>
+    <StyledMainTabDiv>
       <SearchInput />
-      <InfoSection />
-      {/* <ResultsList /> */}
-    </StyledMainDiv>
+      {/* <InfoSection /> */}
+      <ResultsList />
+    </StyledMainTabDiv>
   );
 };
 
