@@ -1,40 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  StyledMarkerDetailDiv,
-  StyledMarkerImageContainerDiv,
-  StyledLikeIconDiv,
-  StyledMarkerTitleH4,
-  StyledMarkerAddressP,
-  StyledMarkerLikeButton,
-  StyledCloseButtonDiv,
-} from './style/style';
-import Panorama from '../Panorama';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { selectedResultState } from '../../../../../../shared/recoil/atoms/atomState';
+import MarkerDetail from './ui';
 
-const MarkerDetail = ({ name, address, distance, imageUrl, onLike, onClose, latitude, longitude }) => {
+const MarkerDetailContainer = () => {
+  const selectedResult = useRecoilValue(selectedResultState);
+  const setSelectedResult = useSetRecoilState(selectedResultState);
+
+  if (!selectedResult) return null;
+
+  // 닫기 버튼 클릭 시 상세 정보를 제거합니다.
+  const handleClose = () => {
+    setSelectedResult(null);
+  };
+
+  // 좋아요 버튼 클릭 시 처리할 기능을 구현하세요.
+  const handleLike = () => {
+    console.log('좋아요 클릭됨');
+    // 예: 좋아요 수 증가 API 호출 또는 상태 업데이트 등
+  };
+
   return (
-    <StyledMarkerDetailDiv>
-      <StyledCloseButtonDiv onClick={onClose}></StyledCloseButtonDiv>
-      <StyledMarkerImageContainerDiv>
-        <Panorama latitude={latitude} longitude={longitude} />
-        <StyledLikeIconDiv onClick={onLike}>💖</StyledLikeIconDiv>
-      </StyledMarkerImageContainerDiv>
-      <StyledMarkerTitleH4>{name}</StyledMarkerTitleH4>
-      {/* <StyledMarkerAddressP>{address}</StyledMarkerAddressP> */}
-      <StyledMarkerLikeButton>좋아요</StyledMarkerLikeButton>
-    </StyledMarkerDetailDiv>
+    <MarkerDetail
+      name={selectedResult.road_name || selectedResult.name}
+      address={selectedResult.road_address || selectedResult.address}
+      distance={selectedResult.cal || selectedResult.distance}
+      latitude={parseFloat(selectedResult.latitude)}
+      longitude={parseFloat(selectedResult.longitude)}
+      onClose={handleClose}
+      onLike={handleLike}
+    />
   );
 };
 
-MarkerDetail.propTypes = {
-  name: PropTypes.string.isRequired,
-  //   address: PropTypes.string.isRequired,
-  distance: PropTypes.string,
-  //   imageUrl: PropTypes.string,
-  onLike: PropTypes.func,
-  onClose: PropTypes.func.isRequired,
-  latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired,
-};
-
-export default MarkerDetail;
+export default MarkerDetailContainer;

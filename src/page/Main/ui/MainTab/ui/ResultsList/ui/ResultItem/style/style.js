@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledResultItemDiv = styled.div`
   background-color: ${({ theme }) => theme.colors.primary30};
   border-radius: 10px;
-  padding: 15px;
+  padding: 15px 10px 15px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -11,6 +11,7 @@ export const StyledResultItemDiv = styled.div`
   color: ${({ theme }) => theme.colors.white};
   width: 90%;
   margin: 0 auto;
+  border: 1px solid  ${({ theme }) => theme.colors.primary60};;
 `;
 
 export const StyledLocIconDiv = styled.div`

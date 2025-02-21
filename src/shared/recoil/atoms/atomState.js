@@ -25,3 +25,14 @@ export const roadsState = atom({
   key: 'roadsState',
   default: [],
 });
+
+export const selectedResultState = atom({
+  key: 'selectedResultState',
+  default: null,
+});
+
+export const currentMarkerState = atom({
+  key: 'currentMarkerState',
+  default: null,
+});
+

@@ -6,8 +6,25 @@ export const StyledResultsDiv = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
-  height: 100vh;      /* 고정 높이 설정 */
-  overflow-y: auto;   /* 세로 스크롤 활성화 */
+  height: 100vh;  
+  overflow-y: auto;   
+  overflow-x: hidden;
   scroll-behavior: smooth;
+
+  /* 웹킷 스크롤바 스타일링 */
+  &::-webkit-scrollbar {
+    width: 6px; /* 스크롤바 너비 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background:${({ theme }) => theme.colors.primary10};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.primary30};
+    border-radius: 10px;
+  }
 `;
+
 

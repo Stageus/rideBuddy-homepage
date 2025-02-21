@@ -8,15 +8,39 @@ const useInitializeMap = (mapRef, userLocation) => {
     const { naver } = window;
     if (!mapRef.current || !naver || !userLocation.lat || !userLocation.lng) return;
 
-    // 사용자의 위치를 중심으로 지도 생성
     const location = new naver.maps.LatLng(userLocation.lat, userLocation.lng);
+    // 대한민국 경계 (대략적인 값)
+    const southWest = new naver.maps.LatLng(33.0, 124.0);
+    const northEast = new naver.maps.LatLng(39.0, 132.0);
+    const bounds = new naver.maps.LatLngBounds(southWest, northEast);
+
     const mapInstance = new naver.maps.Map(mapRef.current, {
       center: location,
       zoom: 15,
+      minZoom: 10,
+      maxZoom: 21,
+      mapTypeId: naver.maps.MapTypeId.NORMAL,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT,
+      },
+      scaleControl: true,
+      scrollWheel: true,
+      keyboardShortcuts: true,
+      disableDoubleClickZoom: false,
+      draggable: true,
+      tileTransition: true,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        position: naver.maps.Position.TOP_LEFT,
+        style: naver.maps.MapTypeControlStyle.DEFAULT,
+      },
+      disableKineticPan: true,
+      // 대한민국 범위로 이동 제한
+      maxBounds: bounds,
     });
     setMap(mapInstance);
 
-    // 사용자의 위치에 마커 표시
     new naver.maps.Marker({
       position: location,
       map: mapInstance,
@@ -25,13 +49,11 @@ const useInitializeMap = (mapRef, userLocation) => {
       },
     });
 
-    // 자전거 레이어 생성 및 지도에 추가
     const bikeLayer = new naver.maps.BicycleLayer();
     setBicycleLayer(bikeLayer);
     bikeLayer.setMap(mapInstance);
   }, [mapRef, userLocation]);
 
-  // 자전거 레이어 토글 기능
   const toggleBicycleLayer = () => {
     if (!map || !bicycleLayer) return;
     if (bicycleLayer.getMap()) {

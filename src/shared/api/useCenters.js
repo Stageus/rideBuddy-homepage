@@ -50,6 +50,8 @@ const useCenters = () => {
             name: item.center_name,
             address: item.center_address,
             distance: item.cal,
+            latitude: item.latitude,   
+            longitude: item.longitude, 
           }));
 
           // 기존 결과에 누적하여 추가

@@ -48,6 +48,8 @@ const useRoads = () => {
             address: item.road_address,
             distance: item.cal,
             type: item.road_type,
+            latitude: item.latitude,    
+            longitude: item.longitude,
           }));
 
           setResults(prev => [...prev, ...transformedResults]);
