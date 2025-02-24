@@ -8,7 +8,6 @@ const MainTab = () => {
   return (
     <StyledMainTabDiv>
       <SearchInput />
-      {/* <InfoSection /> */}
       <ResultsList />
     </StyledMainTabDiv>
   );
