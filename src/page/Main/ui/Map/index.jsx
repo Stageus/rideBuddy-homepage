@@ -1,38 +1,44 @@
 import React, { useRef, useEffect } from 'react';
 import useInitializeMap from './model/useInitializeMap';
 import useUserLocation from '../../../../shared/api/useUserLocation';
-import useResultMarker from './model/useMarkers';
+import useResultMarker from './model/useMarkers'; // 기존 훅
 import useMapBounds from './model/useMapBounds';
 import useFetchInfoPin from './model/useFetchInfoPin';
 import MarkerDetailContainer from './ui/MakerDetail';
 import { StyledMapWrap } from './style/style';
+import usePinMarkers from './model/usePinMarkers';
 
 const Map = () => {
   const mapRef = useRef(null);
   const userLocation = useUserLocation();
   const mapWrapper = useInitializeMap(mapRef, userLocation);
 
-  // 마커 생성/업데이트 (Recoil 상태 기반)
+  // 기존 마커 관련 로직 (Recoil 상태 기반)
   useResultMarker(mapWrapper);
 
-  // 지도 좌표 경계(SW, NE)를 저장하는 커스텀 훅 적용
+  // 지도 좌표 경계
   const { sw, ne } = useMapBounds(mapWrapper);
   console.log('Current Map Bounds:', sw, ne);
 
   // API 호출 훅
   const { data, error, loading, fetchInfoPin } = useFetchInfoPin();
 
-  // SW, NE 좌표가 준비되면 API 호출 (좌표 형식을 API 스펙에 맞게 변환)
+  // 지도 범위 변경될 때마다 API 호출
   useEffect(() => {
     if (sw && ne) {
-      fetchInfoPin(
-        { longitude: sw.lng, latitude: sw.lat },
-        { longitude: ne.lng, latitude: ne.lat }
-      );
+      const timeoutId = setTimeout(() => {
+        fetchInfoPin(
+          { longitude: sw.lng, latitude: sw.lat },
+          { longitude: ne.lng, latitude: ne.lat }
+        );
+      }, 500);
+  
+      // 의존성이 변경되거나 컴포넌트 언마운트 시 타이머 제거
+      return () => clearTimeout(timeoutId);
     }
-  }, [sw, ne, fetchInfoPin]);
+  }, [sw, ne, fetchInfoPin]);  
 
-  // API 응답값이나 에러가 있으면 콘솔에 출력
+  // (디버그용) API 응답 상태 확인
   useEffect(() => {
     if (data) {
       console.log('API Response:', data);
@@ -42,11 +48,13 @@ const Map = () => {
     }
   }, [data, error]);
 
+  usePinMarkers(mapWrapper, data);
+
   return (
     <StyledMapWrap>
       <div ref={mapRef} style={{ width: '100%', height: '100vh' }} />
       <MarkerDetailContainer />
-      {/* 디버깅용: 현재 지도 경계 좌표 표시 */}
+      {/* 지도 경계 디버그 */}
       {sw && ne && (
         <div
           style={{
@@ -57,7 +65,7 @@ const Map = () => {
             padding: '10px',
             zIndex: 1000,
             borderRadius: '4px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
           }}
         >
           <div>

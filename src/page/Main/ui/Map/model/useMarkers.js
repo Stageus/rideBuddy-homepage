@@ -1,15 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { currentMarkerState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
+import { currentMarkerState, markerSourceState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
 
 const useResultMarker = (mapWrapper) => {
   const markerRef = useRef(null);
   const currentMarker = useRecoilValue(currentMarkerState);
   const setSelectedResult = useSetRecoilState(selectedResultState);
+  // Add a setter to clear the current marker state
+  const setCurrentMarker = useSetRecoilState(currentMarkerState);
+  const setMarkerSourceState = useSetRecoilState(markerSourceState)
 
+  // Effect to create and update the marker when currentMarker changes
   useEffect(() => {
     const { naver } = window;
-    // 기존 마커 제거
+    // Remove existing marker if it exists
     if (markerRef.current) {
       markerRef.current.setMap(null);
       markerRef.current = null;
@@ -38,11 +42,11 @@ const useResultMarker = (mapWrapper) => {
       markerRef.current = marker;
       // 지도 중심 이동 (부드럽게)
       if (actualMap && typeof actualMap.panTo === 'function') {
-        actualMap.panTo(position);
-        console.log('지도 중심 이동 (panTo):', position);
-      } else if (actualMap && typeof actualMap.setCenter === 'function') {
         actualMap.setCenter(position);
-        console.log('지도 중심 이동 (setCenter):', position);
+        // console.log('지도 중심 이동 (panTo):', position);
+      } else if (actualMap && typeof actualMap.setCenter === 'function') {
+        // actualMap.setCenter(position);
+        // console.log('지도 중심 이동 (setCenter):', position);
       } else {
         console.warn('지도 중심 이동 함수가 없습니다:', actualMap);
       }
@@ -52,6 +56,31 @@ const useResultMarker = (mapWrapper) => {
       });
     }
   }, [mapWrapper, currentMarker, setSelectedResult]);
+
+  // New effect: clear currentMarker when the map is dragged or zoomed
+  useEffect(() => {
+    if (!mapWrapper) return;
+    const { naver } = window;
+    const actualMap = mapWrapper.map ? mapWrapper.map : mapWrapper;
+    if (!actualMap) return;
+
+    // Handler to clear the marker state
+    const clearMarkerState = () => {
+      setCurrentMarker(null);
+      setSelectedResult(null);
+      setMarkerSourceState(null)
+    };
+
+    // Add event listeners for drag and zoom events
+    const dragListener = naver.maps.Event.addListener(actualMap, 'dragstart', clearMarkerState);
+    const zoomListener = naver.maps.Event.addListener(actualMap, 'zoom_changed', clearMarkerState);
+
+    // Cleanup the event listeners when the component unmounts or dependencies change
+    return () => {
+      naver.maps.Event.removeListener(dragListener);
+      naver.maps.Event.removeListener(zoomListener);
+    };
+  }, [mapWrapper, setCurrentMarker, setSelectedResult]);
 
   return markerRef.current;
 };
