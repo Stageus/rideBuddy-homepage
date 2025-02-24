@@ -32,12 +32,13 @@ const useResultMarker = (mapWrapper) => {
         map: actualMap,
         title: currentMarker.road_name || currentMarker.name,
         icon: {
-          content: `
-            <div style="width: 45px; height: 45px; background-color: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <img src="/img/Marker_Y.png" style="width: 100%; height: 100%;" alt="Detail Marker" />
-            </div>
-          `,
-        },
+          content: [
+            '<div style="width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">',
+            '  <img src="/img/Marker_Y.png" style="width: 100%; height: 100%;" alt="Marker" />',
+            '</div>'
+          ].join(''),
+          anchor: new naver.maps.Point(22.5, 45)
+        }
       });
       markerRef.current = marker;
       // 지도 중심 이동 (부드럽게)

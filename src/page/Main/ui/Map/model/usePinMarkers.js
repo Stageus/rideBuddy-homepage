@@ -30,12 +30,13 @@ function usePinMarkers(mapWrapper, data) {
         map: mapWrapper.map,
         title: name,
         icon: {
-          content: `
-            <div style="width: 45px; height: 45px; background-color: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <img src="/img/Marker_Y.png" style="width: 100%; height: 100%;" alt="Detail Marker" />
-            </div>
-          `,
-        },
+          content: [
+            '<div style="width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">',
+            '  <img src="/img/Marker_Y.png" style="width: 100%; height: 100%;" alt="Marker" />',
+            '</div>'
+          ].join(''),
+          anchor: new naver.maps.Point(22.5, 45)
+        }
       });
 
       // ★ 마커 클릭 시 -> Recoil State 업데이트

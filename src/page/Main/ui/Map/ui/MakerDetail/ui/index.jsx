@@ -21,7 +21,7 @@ const MarkerDetail = ({ name, address, distance, onLike, onClose, latitude, long
         <StyledLikeIconDiv onClick={onLike}>💖</StyledLikeIconDiv>
       </StyledMarkerImageContainerDiv>
       <StyledMarkerTitleH4>{name}</StyledMarkerTitleH4>
-      {/* <StyledMarkerAddressP>{address}</StyledMarkerAddressP> */}
+      <StyledMarkerAddressP>{address}</StyledMarkerAddressP>
       <StyledMarkerLikeButton>좋아요</StyledMarkerLikeButton>
     </StyledMarkerDetailDiv>
   );

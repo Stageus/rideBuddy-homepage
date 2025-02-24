@@ -27,16 +27,13 @@ const Map = () => {
   useEffect(() => {
     if (sw && ne) {
       const timeoutId = setTimeout(() => {
-        fetchInfoPin(
-          { longitude: sw.lng, latitude: sw.lat },
-          { longitude: ne.lng, latitude: ne.lat }
-        );
+        fetchInfoPin({ longitude: sw.lng, latitude: sw.lat }, { longitude: ne.lng, latitude: ne.lat });
       }, 500);
-  
+
       // 의존성이 변경되거나 컴포넌트 언마운트 시 타이머 제거
       return () => clearTimeout(timeoutId);
     }
-  }, [sw, ne, fetchInfoPin]);  
+  }, [sw, ne, fetchInfoPin]);
 
   // (디버그용) API 응답 상태 확인
   useEffect(() => {
@@ -55,7 +52,7 @@ const Map = () => {
       <div ref={mapRef} style={{ width: '100%', height: '100vh' }} />
       <MarkerDetailContainer />
       {/* 지도 경계 디버그 */}
-      {sw && ne && (
+    {/*   {sw && ne && (
         <div
           style={{
             position: 'absolute',
@@ -75,7 +72,7 @@ const Map = () => {
             <strong>NE:</strong> {ne.lat}, {ne.lng}
           </div>
         </div>
-      )}
+      )} */}
     </StyledMapWrap>
   );
 };
