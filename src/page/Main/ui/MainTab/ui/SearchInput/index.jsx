@@ -10,6 +10,7 @@ const SearchInput = () => {
   const [query, setQuery] = useState('');
   const [showList, setShowList] = useState(false);
   const [isKeywordSelected, setIsKeywordSelected] = useState(false);
+  const containerRef = useRef(null);
 
   // 자동완성 훅
   const { data, loading, error, searchKeyWord } = useSearchKeyWord();
@@ -47,6 +48,22 @@ const SearchInput = () => {
     }
   }, [searchResultsData]);
 
+  // 외부 클릭 감지 및 처리 - click 이벤트로 변경
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setShowList(false);
+      }
+    };
+
+    // mousedown 대신 click 이벤트 사용
+    document.addEventListener('click', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   // 입력 변경 시 자동완성 호출
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -62,6 +79,7 @@ const SearchInput = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
+      setShowList(false);
       search({
         search: query,
         page: 0,
@@ -71,31 +89,38 @@ const SearchInput = () => {
     }
   };
 
-  // **키워드 클릭 시, 즉시 검색**
+  // 키워드 클릭 시, 즉시 검색
   const handleKeywordClick = (keyword) => {
     setQuery(keyword);
     setShowList(false);
     setIsKeywordSelected(true);
-    console.log(userLocation)
+    console.log(userLocation);
     // 바로 검색 호출
     search({
       search: String(keyword),
-      page: 1,
+      page: 0,
       longitude: userLocation.lng,
       latitude: userLocation.lat,
     });
   };
 
+  // 입력 필드 클릭 시 이벤트 전파 중지
+  const handleInputClick = (e) => {
+    e.stopPropagation();
+  };
+
   const keywords = data ? Object.values(data) : [];
 
   return (
-    <StyledInputContainerDiv>
+    <StyledInputContainerDiv ref={containerRef}>
       <StyledInputPrimary30
         type="text"
         placeholder="검색어를 입력해주세요"
         value={query}
         onChange={handleInputChange}
-        onKeyDown={handleKeyDown} // (필요 없다면 주석 처리 가능)
+        onKeyDown={handleKeyDown}
+        onClick={handleInputClick}
+        onFocus={() => query.trim() && data && setShowList(true)}
       />
       {showList && keywords.length > 0 && (
         <KeywordList
