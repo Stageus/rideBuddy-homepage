@@ -68,7 +68,7 @@ const ResultsList = () => {
       if (listRef.current) {
         listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }, 100); // 100ms 정도의 딜레이를 줍니다.
+    }, 100); 
     return () => clearTimeout(timer);
   }, [markerSource]);
   

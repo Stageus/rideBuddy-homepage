@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-const useSearch = () => {
+const useSearchKeyWord = () => {
   const [data, setData] = useState(null);       
   const [loading, setLoading] = useState(false);  
   const [error, setError] = useState(null);      
 
-  const search = async (searchTerm) => {
+  const searchKeyWord = async (searchTerm) => {
     const regex = /^[가-힣]{2,20}$/;
     if (!regex.test(searchTerm)) {
       if (searchTerm.length < 2) {
@@ -19,26 +19,27 @@ const useSearch = () => {
     setError(null);
     setLoading(true);
 
-    const accessToken = localStorage.getItem("token");
-    if (!accessToken) {
+    const token = localStorage.getItem("token");
+    if (!token) {
       setError("올바른 access token이 아님");
       setLoading(false);
       return;
     }
 
     try {
+      const searchPayload = { search: searchTerm };
       const response = await fetch("http://3.35.94.179/info/search", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`
+          "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ search: searchTerm })
+        body: JSON.stringify(searchPayload)
       });
 
       if (response.ok) {
         const result = await response.json();
-        setData(result.body.data);
+        setData(result.Data);
       } else if (response.status === 400 || response.status === 401) {
         const result = await response.json();
         setError(result.message);
@@ -54,7 +55,7 @@ const useSearch = () => {
     }
   };
 
-  return { data, loading, error, search };
+  return { data, loading, error, searchKeyWord };
 };
 
-export default useSearch;
+export default useSearchKeyWord;

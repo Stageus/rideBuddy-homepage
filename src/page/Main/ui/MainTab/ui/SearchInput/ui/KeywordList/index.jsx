@@ -1,12 +1,17 @@
 import React from 'react';
 import { StyledKeywordList } from './style/style';
 
-const KeywordList = () => {
+const KeywordList = ({ keywords, onClickKeyword }) => {
   return (
     <StyledKeywordList>
-      <li>키워드1</li>
-      <li>키워드2</li>
-      <li>키워드3</li>
+      {keywords.map((keyword, index) => (
+        <li
+          key={index}
+          onMouseDown={() => onClickKeyword(keyword)}
+        >
+          {keyword}
+        </li>
+      ))}
     </StyledKeywordList>
   );
 };
