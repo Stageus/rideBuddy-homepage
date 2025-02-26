@@ -1,3 +1,4 @@
+// ResultItem.js
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { StyledLocIconDiv, StyledResultItemDiv } from './style/style';
@@ -13,7 +14,6 @@ const ResultItem = ({ data }) => {
       console.error('data가 없습니다.', data);
       return;
     }
-    // ResultItem 클릭 시, 현재 마커를 업데이트하고 팝업은 닫음
     setCurrentMarker(data);
     setSelectedResult(null);
   };
@@ -22,6 +22,7 @@ const ResultItem = ({ data }) => {
 
   return (
     <StyledResultItemDiv onClick={handleClick}>
+      {/* 검색 결과일 경우 data.name / data.address / data.type 등을 자유롭게 표시 */}
       <span>{data.name}</span>
       <StyledLocIconDiv>
         <HiLocationMarker />

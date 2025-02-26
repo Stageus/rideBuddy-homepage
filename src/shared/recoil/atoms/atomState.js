@@ -36,3 +36,7 @@ export const currentMarkerState = atom({
   default: null,
 });
 
+export const searchResultsState = atom({
+  key: 'searchResultsState',
+  default: [],
+});

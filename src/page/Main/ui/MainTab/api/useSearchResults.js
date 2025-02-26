@@ -55,8 +55,8 @@ const useSearchResults = () => {
         const result = await response.json();
         console.log("✅ API 응답 데이터:", result);
 
-        if (result.body && result.body.result) {
-          setData(result.body.result);
+        if (result.resultData) {
+          setData(result.resultData);
         } else {
           setError("올바른 데이터 형식이 아님");
         }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { markerSourceState, searchResultsState } from '../../../../../../shared/recoil/atoms/atomState'; // 이미 있는 Atom이라 가정
 import { StyledInputContainerDiv } from './style/style';
 import { StyledInputPrimary30 } from '../../../../../../style/styles';
 import KeywordList from './ui/KeywordList';
@@ -26,6 +28,10 @@ const SearchInput = () => {
   // 위치 훅 (위경도)
   const userLocation = useUserLocation();
 
+  // **검색 결과 전역 상태, markerSource 상태**
+  const [searchResults, setSearchResults] = useRecoilState(searchResultsState);
+  const setMarkerSource = useSetRecoilState(markerSourceState);
+
   useEffect(() => {
     // 자동완성 응답이 있고, 아직 키워드 선택 안 했으면 리스트 열기
     if (data && !isKeywordSelected) {
@@ -41,24 +47,25 @@ const SearchInput = () => {
     }
   }, [error]);
 
-  // 최종 검색 결과 콘솔 출력
+  // 최종 검색 결과 받아오면 -> Recoil에 저장 & markerSource를 'search'로 전환
   useEffect(() => {
     if (searchResultsData) {
       console.log('최종 검색 API 응답:', searchResultsData);
+      setSearchResults(searchResultsData);       // ★ 검색결과 전역 상태 세팅
+      setMarkerSource('search');                // ★ markerSource -> 'search'
     }
-  }, [searchResultsData]);
+  }, [searchResultsData, setSearchResults, setMarkerSource]);
 
-  // 외부 클릭 감지 및 처리 - click 이벤트로 변경
+  // 외부 클릭 감지 처리
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setShowList(false);
+        setQuery('');
       }
     };
 
-    // mousedown 대신 click 이벤트 사용
     document.addEventListener('click', handleClickOutside);
-    
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
@@ -77,6 +84,7 @@ const SearchInput = () => {
     searchKeyWord(value);
   };
 
+  // 엔터 입력 시 최종 검색 API 호출
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       setShowList(false);
@@ -89,13 +97,12 @@ const SearchInput = () => {
     }
   };
 
-  // 키워드 클릭 시, 즉시 검색
+  // 키워드 클릭 시 최종 검색 API 바로 호출
   const handleKeywordClick = (keyword) => {
     setQuery(keyword);
     setShowList(false);
     setIsKeywordSelected(true);
-    console.log(userLocation);
-    // 바로 검색 호출
+
     search({
       search: String(keyword),
       page: 0,
@@ -104,7 +111,7 @@ const SearchInput = () => {
     });
   };
 
-  // 입력 필드 클릭 시 이벤트 전파 중지
+  // 인풋 클릭 시 이벤트 전파 중지
   const handleInputClick = (e) => {
     e.stopPropagation();
   };
@@ -123,10 +130,7 @@ const SearchInput = () => {
         onFocus={() => query.trim() && data && setShowList(true)}
       />
       {showList && keywords.length > 0 && (
-        <KeywordList
-          keywords={keywords}
-          onClickKeyword={handleKeywordClick}
-        />
+        <KeywordList keywords={keywords} onClickKeyword={handleKeywordClick} />
       )}
     </StyledInputContainerDiv>
   );

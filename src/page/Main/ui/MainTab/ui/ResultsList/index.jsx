@@ -1,7 +1,11 @@
-// components/ui/ResultsList.js
 import React, { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-import { centersState, roadsState, markerSourceState } from '../../../../../../shared/recoil/atoms/atomState';
+import {
+  centersState,
+  roadsState,
+  markerSourceState,
+  searchResultsState,
+} from '../../../../../../shared/recoil/atoms/atomState';
 import { StyledResultsDiv } from './style/style';
 import ResultItem from './ui/ResultItem';
 import useUserLocation from '../../../../../../shared/api/useUserLocation';
@@ -13,7 +17,7 @@ const ResultsList = () => {
   const markerSource = useRecoilValue(markerSourceState);
   const userLocation = useUserLocation();
 
-  // 훅에서 결과와 추가 API 호출 함수를 가져옵니다.
+  // 1) centers, roads 훅
   const {
     results: centers,
     loading: centersLoading,
@@ -30,6 +34,9 @@ const ResultsList = () => {
     hasMore: roadsHasMore,
   } = useRoads();
 
+  // 2) 검색 결과 (Recoil에서 단순 배열로 관리한다고 가정)
+  const searchResults = useRecoilValue(searchResultsState);
+
   let dataToDisplay = [];
   let hasMore = false;
   let loading = false;
@@ -38,10 +45,18 @@ const ResultsList = () => {
     dataToDisplay = centers;
     hasMore = centersHasMore;
     loading = centersLoading;
+    console.log(searchResults);
   } else if (markerSource === 'roads') {
     dataToDisplay = roads;
     hasMore = roadsHasMore;
     loading = roadsLoading;
+    console.log(searchResults);
+  } else if (markerSource === 'search') {
+    // 'search' 모드일 때는 Recoil에 저장된 배열을 그대로 사용합니다.
+    dataToDisplay = searchResults || [];
+    hasMore = false;
+    loading = false;
+    console.log(searchResults);
   }
 
   // 스크롤 감지를 위한 ref 생성
@@ -50,32 +65,29 @@ const ResultsList = () => {
   const handleScroll = () => {
     if (!listRef.current) return;
     const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-    // scrollTop + clientHeight가 scrollHeight에 가까워지면 (예: 10px 이내)
     if (scrollTop + clientHeight >= scrollHeight - 10) {
-      // 이미 로딩 중이거나 추가 데이터가 없으면 호출하지 않음
       if (loading || !hasMore) return;
-
       if (markerSource === 'centers') {
         fetchCenters({ longitude: userLocation.lng, latitude: userLocation.lat });
       } else if (markerSource === 'roads') {
         fetchRoads({ longitude: userLocation.lng, latitude: userLocation.lat });
       }
+      // markerSource === 'search'에서는 추가 로딩 로직 생략
     }
   };
 
+  // markerSource가 바뀔 때마다 스크롤을 맨 위로 이동
   useEffect(() => {
     const timer = setTimeout(() => {
       if (listRef.current) {
         listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }, 100); 
+    }, 100);
     return () => clearTimeout(timer);
   }, [markerSource]);
-  
 
-  // 컴포넌트가 마운트되면 최초 데이터 로딩을 할 수 있습니다.
+  // 컴포넌트 마운트 시 최초 데이터 로딩 (검색은 SearchInput에서 진행)
   useEffect(() => {
-    // 예: 컴포넌트 로딩 시 첫 페이지 호출 (조건에 따라 resetResults 등 추가 고려)
     if (markerSource === 'centers' && centers.length === 0) {
       fetchCenters({ longitude: userLocation.lng, latitude: userLocation.lat });
     } else if (markerSource === 'roads' && roads.length === 0) {
@@ -86,9 +98,17 @@ const ResultsList = () => {
   return (
     <StyledResultsDiv ref={listRef} onScroll={handleScroll}>
       {dataToDisplay.length > 0 ? (
-        dataToDisplay.map(item => <ResultItem key={item.id} data={item} />)
+        dataToDisplay.map(item => (
+          <ResultItem key={item.id ?? item.idx} data={item} />
+        ))
+      ) : markerSource === 'search' ? (
+        // 검색 모드인데 결과가 없을 경우 보여줄 UI
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+          검색 결과가 없습니다.
+        </div>
       ) : (
-        <InfoSection/>
+        // 센터나 로드 모드에서 결과가 없을 경우 기본 InfoSection을 표시
+        <InfoSection />
       )}
     </StyledResultsDiv>
   );
