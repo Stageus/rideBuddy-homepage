@@ -5,109 +5,97 @@ import {
   roadsState,
   markerSourceState,
   searchResultsState,
+  searchQueryState,
 } from '../../../../../../shared/recoil/atoms/atomState';
 import { StyledResultsDiv } from './style/style';
 import ResultItem from './ui/ResultItem';
 import useUserLocation from '../../../../../../shared/api/useUserLocation';
 import useCenters from '../../../../../../shared/api/useCenters';
 import useRoads from '../../../../../../shared/api/useRoads';
+import useSearchResults from '../../api/useSearchResults';
 import InfoSection from './ui/InfoSection';
 
 const ResultsList = () => {
   const markerSource = useRecoilValue(markerSourceState);
   const userLocation = useUserLocation();
+  const searchResults = useRecoilValue(searchResultsState) || [];
+  const searchQuery = useRecoilValue(searchQueryState);
+  const listRef = useRef(null);
 
-  // 1) centers, roads 훅
-  const {
-    results: centers,
-    loading: centersLoading,
-    error: centersError,
-    fetchCenters,
-    hasMore: centersHasMore,
-  } = useCenters();
-
-  const {
-    results: roads,
-    loading: roadsLoading,
-    error: roadsError,
-    fetchRoads,
-    hasMore: roadsHasMore,
-  } = useRoads();
-
-  // 2) 검색 결과 (Recoil에서 단순 배열로 관리한다고 가정)
-  const searchResults = useRecoilValue(searchResultsState);
+  const { results: centers, loading: centersLoading, fetchCenters, hasMore: centersHasMore } = useCenters();
+  const { results: roads, loading: roadsLoading, fetchRoads, hasMore: roadsHasMore } = useRoads();
+  const { loading: searchLoading, search, hasMore: searchHasMore, page: searchPage } = useSearchResults();
 
   let dataToDisplay = [];
   let hasMore = false;
   let loading = false;
 
   if (markerSource === 'centers') {
-    dataToDisplay = centers;
+    dataToDisplay = centers || [];
     hasMore = centersHasMore;
     loading = centersLoading;
-    console.log(searchResults);
+    console.log('centers:', centers);
   } else if (markerSource === 'roads') {
-    dataToDisplay = roads;
+    dataToDisplay = roads || [];
     hasMore = roadsHasMore;
     loading = roadsLoading;
-    console.log(searchResults);
+    console.log('roads:', roads);
   } else if (markerSource === 'search') {
-    // 'search' 모드일 때는 Recoil에 저장된 배열을 그대로 사용합니다.
-    dataToDisplay = searchResults || [];
-    hasMore = false;
-    loading = false;
-    console.log(searchResults);
+    dataToDisplay = searchResults; // Recoil 상태 사용
+    hasMore = searchHasMore;
+    loading = searchLoading;
+    console.log('searchResults:', searchResults);
   }
 
-  // 스크롤 감지를 위한 ref 생성
-  const listRef = useRef(null);
-
   const handleScroll = () => {
-    if (!listRef.current) return;
+    if (!listRef.current || loading || !hasMore) return;
     const { scrollTop, scrollHeight, clientHeight } = listRef.current;
     if (scrollTop + clientHeight >= scrollHeight - 10) {
-      if (loading || !hasMore) return;
       if (markerSource === 'centers') {
         fetchCenters({ longitude: userLocation.lng, latitude: userLocation.lat });
       } else if (markerSource === 'roads') {
         fetchRoads({ longitude: userLocation.lng, latitude: userLocation.lat });
+      } else if (markerSource === 'search' && searchResults.length > 0) {
+        console.log('Fetching next page for search:', { searchQuery, page: searchPage + 1 });
+        search({
+          search: searchQuery,
+          page: searchPage + 1,
+          longitude: userLocation.lng,
+          latitude: userLocation.lat,
+          append: true,
+        });
       }
-      // markerSource === 'search'에서는 추가 로딩 로직 생략
     }
   };
 
-  // markerSource가 바뀔 때마다 스크롤을 맨 위로 이동
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (listRef.current) {
-        listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
     return () => clearTimeout(timer);
   }, [markerSource]);
 
-  // 컴포넌트 마운트 시 최초 데이터 로딩 (검색은 SearchInput에서 진행)
   useEffect(() => {
-    if (markerSource === 'centers' && centers.length === 0) {
+    if (markerSource === 'centers' && (!centers || centers.length === 0)) {
       fetchCenters({ longitude: userLocation.lng, latitude: userLocation.lat });
-    } else if (markerSource === 'roads' && roads.length === 0) {
+    } else if (markerSource === 'roads' && (!roads || roads.length === 0)) {
       fetchRoads({ longitude: userLocation.lng, latitude: userLocation.lat });
     }
-  }, [markerSource, userLocation]);
+  }, [markerSource, userLocation, centers, roads, fetchCenters, fetchRoads]);
 
   return (
     <StyledResultsDiv ref={listRef} onScroll={handleScroll}>
-      {dataToDisplay.length > 0 ? (
+      {loading ? (
+        <div style={{ padding: '20px', textAlign: 'center' }}>로딩 중...</div>
+      ) : dataToDisplay.length > 0 ? (
         dataToDisplay.map(item => (
           <ResultItem key={item.id ?? item.idx} data={item} />
         ))
       ) : markerSource === 'search' ? (
-        // 검색 모드인데 결과가 없을 경우 보여줄 UI
         <div style={{ padding: '20px', textAlign: 'center' }}>
           검색 결과가 없습니다.
         </div>
       ) : (
-        // 센터나 로드 모드에서 결과가 없을 경우 기본 InfoSection을 표시
         <InfoSection />
       )}
     </StyledResultsDiv>
