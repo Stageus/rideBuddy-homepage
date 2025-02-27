@@ -10,29 +10,41 @@ import {
   StyledCloseButtonDiv,
 } from '../style/style';
 import Panorama from './Panorama';
+import useLikeRoad from '../api/useLikeRoad';
 
+const MarkerDetail = ({ name, address, distance, idx, onClose, latitude, longitude }) => {
+  const { likeRoad, loading, error, likeCount } = useLikeRoad();
 
-const MarkerDetail = ({ name, address, distance, onLike, onClose, latitude, longitude }) => {
+  const handleLike = () => {
+    if (!loading) {
+      likeRoad(idx);
+    }
+  };
+
   return (
     <StyledMarkerDetailDiv>
       <StyledCloseButtonDiv onClick={onClose}></StyledCloseButtonDiv>
       <StyledMarkerImageContainerDiv>
         <Panorama latitude={latitude} longitude={longitude} />
-        <StyledLikeIconDiv onClick={onLike}>💖</StyledLikeIconDiv>
+        <StyledLikeIconDiv onClick={handleLike}>
+          {loading ? '⏳' : '💖'}
+        </StyledLikeIconDiv>
       </StyledMarkerImageContainerDiv>
       <StyledMarkerTitleH4>{name}</StyledMarkerTitleH4>
       <StyledMarkerAddressP>{address}</StyledMarkerAddressP>
-      <StyledMarkerLikeButton>좋아요</StyledMarkerLikeButton>
+      <StyledMarkerLikeButton onClick={handleLike}>
+        {loading ? '좋아요 중...' : `좋아요 (${likeCount !== null ? likeCount : '0'})`}
+      </StyledMarkerLikeButton>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </StyledMarkerDetailDiv>
   );
 };
 
 MarkerDetail.propTypes = {
   name: PropTypes.string.isRequired,
-  //   address: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
   distance: PropTypes.string,
-  //   imageUrl: PropTypes.string,
-  onLike: PropTypes.func,
+  roadIdx: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
