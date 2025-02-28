@@ -1,58 +1,60 @@
 import { useState } from 'react';
 
-const useLikeRoad = () => {
-  const [likeCount, setLikeCount] = useState(null); 
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(null); 
+const useLikeCenters = () => {
+  const [likeCount, setLikeCount] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const likeRoad = async (roadIdx) => {
+  const likeCenter = async (centerIdx) => {
     setLoading(true);
-    setError(null); 
+    setError(null);
 
-    const token = localStorage.getItem("token"); 
-    console.log('사용된 토큰:', token); 
+    const token = localStorage.getItem("token");
+    console.log('사용된 토큰:', token);
 
     if (!token) {
-      setError("로그인이 필요합니다."); 
+      setError("로그인이 필요합니다.");
       setLoading(false);
       return;
     }
 
-    const url = `http://3.35.94.179/info/roads/${roadIdx}/like`; 
+    // 센터 좋아요 API 엔드포인트 (요청 스펙에 맞게 수정)
+    const url = `http://3.35.94.179/info/centers/${centerIdx}/like`;
 
     try {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json', 
-          'Authorization': `Bearer ${token}`, 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 
       console.log('응답 상태 코드:', response.status);
       const contentType = response.headers.get('Content-Type');
-      const responseText = await response.text(); 
-      console.log('서버 응답 내용:', responseText); 
+      const responseText = await response.text();
+      console.log('서버 응답 내용:', responseText);
 
       if (!contentType || !contentType.includes('application/json')) {
         throw new Error(`예상치 못한 응답 형식: ${contentType || '알 수 없음'}`);
       }
 
-      const data = JSON.parse(responseText); 
+      const data = JSON.parse(responseText);
 
       if (response.ok) {
-        setLikeCount(data["rode likeCount"]); 
+        // API 명세에 따른 key: "center likeCount"
+        setLikeCount(data["center likeCount"]);
         return data;
       } else {
         switch (response.status) {
           case 400:
-            setError(data.message || "roadIdx에서 정규표현식 에러");
+            setError(data.message || "centerIdx에서 정규표현식 에러");
             break;
           case 401:
             setError(data.message || "올바른 access token이 아님");
             break;
           case 404:
-            setError(data.message || "알맞은 roadName이 아님."); 
+            setError(data.message || "알맞은 centerIdx값이 아님.");
             break;
           case 500:
             setError("내부 서버 오류가 발생했습니다.");
@@ -75,7 +77,7 @@ const useLikeRoad = () => {
     }
   };
 
-  return { likeCount, loading, error, likeRoad,setLikeCount };
+  return { likeCount, loading, error, likeCenter, setLikeCount };
 };
 
-export default useLikeRoad;
+export default useLikeCenters;
