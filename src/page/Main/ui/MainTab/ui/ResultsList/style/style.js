@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledResultsDiv = styled.div`
   width: 100%;
@@ -6,10 +6,9 @@ export const StyledResultsDiv = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
-  height: 100vh;  
-  overflow-y: auto;   
+  height: 100vh;
+  overflow-y: auto;
   overflow-x: hidden;
-  scroll-behavior: smooth;
 
   /* 웹킷 스크롤바 스타일링 */
   &::-webkit-scrollbar {
@@ -17,7 +16,7 @@ export const StyledResultsDiv = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background:${({ theme }) => theme.colors.primary10};
+    background: ${({ theme }) => theme.colors.primary10};
     border-radius: 10px;
   }
 
@@ -26,5 +25,3 @@ export const StyledResultsDiv = styled.div`
     border-radius: 10px;
   }
 `;
-
-
