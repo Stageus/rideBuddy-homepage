@@ -1,11 +1,10 @@
-// ResultItem.js
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { StyledLocIconDiv, StyledResultItemDiv } from './style/style';
 import { HiLocationMarker } from 'react-icons/hi';
 import { currentMarkerState, selectedResultState } from '../../../../../../../../shared/recoil/atoms/atomState';
 
-const ResultItem = ({ data }) => {
+const ResultItem = ({ data, onClick }) => { // onClick prop 추가
   const setCurrentMarker = useSetRecoilState(currentMarkerState);
   const setSelectedResult = useSetRecoilState(selectedResultState);
 
@@ -16,13 +15,13 @@ const ResultItem = ({ data }) => {
     }
     setCurrentMarker(data);
     setSelectedResult(null);
+    if (onClick) onClick(data); // 상위 컴포넌트에서 전달된 onClick 호출
   };
 
   if (!data) return null;
 
   return (
     <StyledResultItemDiv onClick={handleClick}>
-      {/* 검색 결과일 경우 data.name / data.address / data.type 등을 자유롭게 표시 */}
       <span>{data.name}</span>
       <StyledLocIconDiv>
         <HiLocationMarker />

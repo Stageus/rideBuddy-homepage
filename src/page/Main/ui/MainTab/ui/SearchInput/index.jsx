@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { markerSourceState, searchResultsState, searchQueryState } from '../../../../../../shared/recoil/atoms/atomState';
+import { markerSourceState, searchResultsState, searchQueryState, selectedResultState } from '../../../../../../shared/recoil/atoms/atomState';
 import { StyledInputContainerDiv } from './style/style';
 import { StyledInputPrimary30 } from '../../../../../../style/styles';
 import KeywordList from './ui/KeywordList';
@@ -19,6 +19,8 @@ const SearchInput = () => {
   const userLocation = useUserLocation();
   const setMarkerSource = useSetRecoilState(markerSourceState);
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
+  const setSelectedResultState = useSetRecoilState(selectedResultState);
+
 
   useEffect(() => {
     if (keywordData && !isKeywordSelected) {
@@ -62,6 +64,7 @@ const SearchInput = () => {
         append: false,
       });
       setMarkerSource('search');
+      setSelectedResultState(null)
     }
   };
 
@@ -69,6 +72,7 @@ const SearchInput = () => {
     setQuery(keyword);
     setShowList(false);
     setIsKeywordSelected(true);
+    setSelectedResultState(null)
     setSearchQuery(keyword);
     console.log('검색 시작 (Keyword):', keyword);
     search({

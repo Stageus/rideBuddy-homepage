@@ -1,8 +1,8 @@
 // components/Menu.js
 import React, { useEffect } from 'react';
 import { StyledIcon } from '../../style/style';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { centersState, markerSourceState, roadsState, selectedResultState } from '../../../../shared/recoil/atoms/atomState';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import { centersState, markerSourceState, roadsState, selectedItemState, selectedResultState } from '../../../../shared/recoil/atoms/atomState';
 import useUserLocation from '../../../../shared/api/useUserLocation';
 import useCenters from '../../../../shared/api/useCenters';
 import useRoads from '../../../../shared/api/useRoads';
@@ -19,6 +19,8 @@ const Menu = () => {
   const setRoads = useSetRecoilState(roadsState);
   const setMarkerSource = useSetRecoilState(markerSourceState);
   const setSelectedResultState = useSetRecoilState(selectedResultState);
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState);
+  
 
   // 현재 활성화된 markerSource 값 읽기
   const currentMarkerSource = useRecoilValue(markerSourceState);
@@ -41,6 +43,7 @@ const Menu = () => {
   const handleCentersClick = () => {
     const { lat, lng } = userLocation;
     setSelectedResultState(null)
+    setSelectedItem(null)
     if (lat && lng) {
       // 이미 centers 데이터가 활성화되어 있다면 => 토글하여 데이터 클리어
       if (currentMarkerSource === 'centers') {
@@ -61,6 +64,7 @@ const Menu = () => {
   const handleRoadsClick = () => {
     const { lat, lng } = userLocation;
     setSelectedResultState(null);
+    setSelectedItem(null)
     if (lat && lng) {
       if (currentMarkerSource === 'roads') {
         setMarkerSource(null); // markerSource 해제

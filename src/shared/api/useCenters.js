@@ -51,7 +51,8 @@ const useCenters = () => {
             address: item.center_address,
             distance: item.cal,
             latitude: item.latitude,   
-            longitude: item.longitude, 
+            longitude: item.longitude,
+            like: item.center_like,
           }));
 
           // 기존 결과에 누적하여 추가

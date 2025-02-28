@@ -45,3 +45,8 @@ export const searchQueryState = atom({
   key: 'searchQueryState',
   default: [],
 });
+
+export const selectedItemState = atom({
+  key: 'selectedItemState',
+  default: null,
+});

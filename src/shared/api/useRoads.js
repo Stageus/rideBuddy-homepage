@@ -44,12 +44,14 @@ const useRoads = () => {
         } else {
           const transformedResults = resultArray.map(item => ({
             id: item.road_point_idx,
+            idx: item.road_idx,
             name: item.road_name,
             address: item.road_address,
             distance: item.cal,
             type: item.road_type,
             latitude: item.latitude,    
             longitude: item.longitude,
+            like: item.road_like,
           }));
 
           setResults(prev => [...prev, ...transformedResults]);

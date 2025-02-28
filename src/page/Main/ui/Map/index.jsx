@@ -7,11 +7,15 @@ import useFetchInfoPin from './model/useFetchInfoPin';
 import MarkerDetailContainer from './ui/MakerDetail';
 import { StyledMapWrap } from './style/style';
 import usePinMarkers from './model/usePinMarkers';
+import { centersState, markerSourceState, roadsState, searchResultsState, selectedItemState } from '../../../../shared/recoil/atoms/atomState';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const Map = () => {
   const mapRef = useRef(null);
   const userLocation = useUserLocation();
   const mapWrapper = useInitializeMap(mapRef, userLocation);
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState);
+  const markerSource = useRecoilValue(markerSourceState);
 
   // 기존 마커 관련 로직 (Recoil 상태 기반)
   useResultMarker(mapWrapper);
@@ -27,8 +31,11 @@ const Map = () => {
   useEffect(() => {
     if (sw && ne) {
       const timeoutId = setTimeout(() => {
-        fetchInfoPin({ longitude: sw.lng, latitude: sw.lat }, { longitude: ne.lng, latitude: ne.lat });
-      }, 500);
+        if (markerSource !== 'search' && markerSource !== 'centers' && markerSource !== 'roads') {
+          fetchInfoPin({ longitude: sw.lng, latitude: sw.lat }, { longitude: ne.lng, latitude: ne.lat });
+          setSelectedItem(null)
+        }
+      }, 300);
 
       // 의존성이 변경되거나 컴포넌트 언마운트 시 타이머 제거
       return () => clearTimeout(timeoutId);

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-import { useRecoilValue } from 'recoil';
 import {
   centersState,
   roadsState,
   markerSourceState,
   searchResultsState,
   searchQueryState,
+  selectedItemState, // 새로 추가
 } from '../../../../../../shared/recoil/atoms/atomState';
 import { StyledResultsDiv } from './style/style';
 import ResultItem from './ui/ResultItem';
@@ -14,6 +14,7 @@ import useCenters from '../../../../../../shared/api/useCenters';
 import useRoads from '../../../../../../shared/api/useRoads';
 import useSearchResults from '../../api/useSearchResults';
 import InfoSection from './ui/InfoSection';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const ResultsList = () => {
   const markerSource = useRecoilValue(markerSourceState);
@@ -21,11 +22,14 @@ const ResultsList = () => {
   const searchResults = useRecoilValue(searchResultsState) || [];
   const searchQuery = useRecoilValue(searchQueryState);
   const listRef = useRef(null);
-  const prevScrollHeight = useRef(0); // 이전 스크롤 높이 저장
+  const prevScrollHeight = useRef(0);
 
   const { results: centers, loading: centersLoading, fetchCenters, hasMore: centersHasMore } = useCenters();
   const { results: roads, loading: roadsLoading, fetchRoads, hasMore: roadsHasMore } = useRoads();
   const { loading: searchLoading, search, hasMore: searchHasMore, page: searchPage } = useSearchResults();
+
+  // Recoil 상태로 selectedItem 관리
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState); // useState 대신 useRecoilState 사용
 
   let dataToDisplay = [];
   let hasMore = false;
@@ -45,12 +49,11 @@ const ResultsList = () => {
     loading = searchLoading;
   }
 
-  // 스크롤 핸들러 (디바운싱 적용)
   const handleScroll = useCallback(() => {
-    if (!listRef.current || loading || !hasMore) return;
+    if (!listRef.current || loading || !hasMore || selectedItem) return;
     const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-    if (scrollTop + clientHeight >= scrollHeight - 50) { // 트리거 범위 조정
-      prevScrollHeight.current = scrollHeight; // 현재 높이 저장
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      prevScrollHeight.current = scrollHeight;
       if (markerSource === 'centers') {
         fetchCenters({ longitude: userLocation.lng, latitude: userLocation.lat });
       } else if (markerSource === 'roads') {
@@ -66,9 +69,8 @@ const ResultsList = () => {
         });
       }
     }
-  }, [markerSource, loading, hasMore, userLocation, searchQuery, searchPage, searchResults.length, fetchCenters, fetchRoads, search]);
+  }, [markerSource, loading, hasMore, userLocation, searchQuery, searchPage, searchResults.length, fetchCenters, fetchRoads, search, selectedItem]);
 
-  // 초기 데이터 로드
   useEffect(() => {
     if (markerSource === 'centers' && (!centers || centers.length === 0)) {
       fetchCenters({ longitude: userLocation.lng, latitude: userLocation.lat });
@@ -77,27 +79,34 @@ const ResultsList = () => {
     }
   }, [markerSource, userLocation, centers, roads, fetchCenters, fetchRoads]);
 
-  // 데이터 추가 후 스크롤 위치 유지
   useEffect(() => {
     if (listRef.current && prevScrollHeight.current && !loading) {
       const { scrollHeight } = listRef.current;
-      // 새로운 데이터가 추가된 경우, 이전 위치에서 추가된 높이만큼 유지
       listRef.current.scrollTop = scrollHeight - prevScrollHeight.current;
     }
   }, [dataToDisplay.length, loading]);
 
-  // markerSource 변경 시 스크롤 초기화 (최초 검색 시에만)
   useEffect(() => {
     if (listRef.current && dataToDisplay.length === 0) {
       listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [markerSource]);
 
+  const handleItemClick = (item) => {
+    setSelectedItem(item); // Recoil 상태 업데이트
+  };
+
   return (
     <StyledResultsDiv ref={listRef} onScroll={handleScroll}>
-      {dataToDisplay.length > 0 ? (
+      {selectedItem ? (
+        <ResultItem key={selectedItem.id ?? selectedItem.idx} data={selectedItem} />
+      ) : dataToDisplay.length > 0 ? (
         dataToDisplay.map(item => (
-          <ResultItem key={item.id ?? item.idx} data={item} />
+          <ResultItem
+            key={item.id ?? item.idx}
+            data={item}
+            onClick={() => handleItemClick(item)}
+          />
         ))
       ) : markerSource === 'search' ? (
         <div style={{ padding: '20px', textAlign: 'center' }}>
@@ -106,7 +115,7 @@ const ResultsList = () => {
       ) : (
         <InfoSection />
       )}
-      {loading && (
+      {loading && !selectedItem && (
         <div style={{ padding: '20px', textAlign: 'center', opacity: 0.7 }}>
           로딩 중...
         </div>
