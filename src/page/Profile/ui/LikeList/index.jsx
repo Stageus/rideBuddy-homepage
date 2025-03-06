@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
   StyledListButton,
   StyledActionButtonContainerDiv,
@@ -7,25 +8,57 @@ import {
   StyledLikeListImg,
   StyledLikeListTitleH2,
   StyledListUl,
-  StyledListItemLi, // 추가된 리스트 아이템 스타일
+  StyledListItemLi,
 } from './style/style';
-
-// 예시 리스트 데이터
-const CERTIFICATION_CENTER_LIST = [
-  { id: 1, icon: '💙', name: '아라 자전거길' },
-  { id: 2, icon: '💙', name: '한강 자전거길' },
-];
-
-const NATIONAL_TOUR_LIST = [
-  { id: 1, icon: '💙', name: '낙동강 자전거길' },
-  { id: 2, icon: '💙', name: '섬진강 자전거길' },
-];
+import useLikedCenters from './api/useLikedCenters';
+import useLikedRoads from './api/useLikedBikePaths';
 
 const LikeList = () => {
   const [activeTab, setActiveTab] = useState('certification');
+  const page = 0; 
+  const {
+    data: centersData,
+    loading: centersLoading,
+    error: centersError,
+    refetch: refetchCenters,
+  } = useLikedCenters(page);
 
-  // 탭에 따라 보여줄 리스트 데이터 선택
-  const currentList = activeTab === 'certification' ? CERTIFICATION_CENTER_LIST : NATIONAL_TOUR_LIST;
+  const {
+    data: roadsData,
+    loading: roadsLoading,
+    error: roadsError,
+    refetch: refetchRoads,
+  } = useLikedRoads(page);
+
+  const renderCenters = () => {
+    if (centersLoading) return <div>Loading...</div>;
+    if (centersError) return <div>Error: {centersError}</div>;
+    return (
+      <StyledListUl>
+        {centersData.map((center, index) => (
+          <StyledListItemLi key={index}>
+            <span className="icon">💙</span>
+            <span>{center.center_name}</span>
+          </StyledListItemLi>
+        ))}
+      </StyledListUl>
+    );
+  };
+
+  const renderRoads = () => {
+    if (roadsLoading) return <div>Loading...</div>;
+    if (roadsError) return <div>Error: {roadsError}</div>;
+    return (
+      <StyledListUl>
+        {roadsData.map((road, index) => (
+          <StyledListItemLi key={index}>
+            <span className="icon">💙</span>
+            <span>{road.road_name}</span>
+          </StyledListItemLi>
+        ))}
+      </StyledListUl>
+    );
+  };
 
   return (
     <StyledLikeListContainerDiv>
@@ -36,23 +69,24 @@ const LikeList = () => {
 
       {/* 탭 버튼 */}
       <StyledActionButtonContainerDiv>
-        <StyledListButton width={'110px'} onClick={() => setActiveTab('certification')} active={activeTab === 'certification'}>
+        <StyledListButton
+          width={'110px'}
+          onClick={() => setActiveTab('certification')}
+          active={activeTab === 'certification'}
+        >
           인증 센터
         </StyledListButton>
-        <StyledListButton width={'110px'} onClick={() => setActiveTab('tour')} active={activeTab === 'tour'}>
+        <StyledListButton
+          width={'110px'}
+          onClick={() => setActiveTab('tour')}
+          active={activeTab === 'tour'}
+        >
           국토 종주
         </StyledListButton>
       </StyledActionButtonContainerDiv>
 
-      {/* 리스트 출력 */}
-      <StyledListUl>
-        {currentList.map(item => (
-          <StyledListItemLi key={item.id}>
-            <span className="icon">{item.icon}</span>
-            <span>{item.name}</span>
-          </StyledListItemLi>
-        ))}
-      </StyledListUl>
+      {/* 탭에 따른 리스트 출력 */}
+      {activeTab === 'certification' ? renderCenters() : renderRoads()}
     </StyledLikeListContainerDiv>
   );
 };
