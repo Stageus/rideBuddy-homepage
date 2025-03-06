@@ -1,22 +1,32 @@
+// src/page/FindPw/api/useFind_Pw.js
 import { useState } from 'react';
-import useEmailVerification from '../../../shared/model/useEmailVerification';
 import { validateUserId, validateEmail } from '../../../shared/util/validators';
+import useEmailVerificationPw from '../../../shared/model/useEmailVerificationPw';
 
 const useFind_Pw = () => {
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const isAllFieldsRequiredError = status === 400 && errorMessage === '모든 필드를 입력해주세요.';
+  const isAllFieldsRequiredError = (status === 400 && errorMessage === '모든 필드를 입력해주세요.');
 
   const {
     isEmailVerified,
     isVerificationSent,
     isEmailVisible,
     timeLeft,
+    mailToken,
     handleEmailVerificationClick,
     confirmVerificationCode,
-  } = useEmailVerification(status, errorMessage, successMessage, setErrorMessage, setSuccessMessage, setStatus);
+  } = useEmailVerificationPw(
+    status,
+    errorMessage,
+    successMessage,
+    setErrorMessage,
+    setSuccessMessage,
+    setStatus
+  );
 
+ 
   const findPwClickEvent = ({ userId, email }) => {
     if (!userId && !email) {
       setStatus(400);
@@ -44,14 +54,7 @@ const useFind_Pw = () => {
       return;
     }
 
-    if (userId === 'user123' && email === 'example@example.com') {
-      setStatus(200);
-      setErrorMessage('');
-      setSuccessMessage(`임시 비밀번호는 'tempPassword123!'입니다.`);
-    } else {
-      setStatus(404);
-      setErrorMessage('등록된 사용자 정보가 없습니다.');
-    }
+
   };
 
   const resetFindPwForm = () => {
@@ -74,6 +77,7 @@ const useFind_Pw = () => {
     setErrorMessage,
     isAllFieldsRequiredError,
     resetFindPwForm,
+    mailToken
   };
 };
 

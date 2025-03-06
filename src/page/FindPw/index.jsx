@@ -1,4 +1,5 @@
-import React from 'react';
+// src/page/FindPw/Find_Pw.js
+import React, { useState } from 'react';
 import { StyledButton, StyledLink } from '../../style/styles';
 import useFind_Pw from './api/useFindPw';
 import useFormState from '../../shared/model/useFormState';
@@ -7,6 +8,7 @@ import EmailVerificationInput from '../../widgets/Inputs/EmailVerificationInput'
 import Messages from '../../widgets/Inputs/Messages';
 import { PageWrapper, StyledFindPwForm, StyledFindPwFormSection } from './style/style';
 import IdInput from '../../widgets/Inputs/IdInput';
+import PasswordChangeModal from './ui';
 
 const Find_Pw = () => {
   const [formState, setField] = useFormState({
@@ -27,16 +29,29 @@ const Find_Pw = () => {
     isEmailVisible,
     timeLeft,
     isAllFieldsRequiredError,
-    setErrorMessage
+    setErrorMessage,
+    mailToken
   } = useFind_Pw();
+
+  const [showPasswordChangeModal, setShowPasswordChangeModal] = useState(false);
+
+  const handleFindPwButtonClick = () => {
+    if (isEmailVerified) {
+      setShowPasswordChangeModal(true);
+    } else {
+      findPwClickEvent({ ...formState });
+    }
+  };
 
   return (
     <PageWrapper>
       <StyledFindPwFormSection>
         <h1>비밀번호 찾기</h1>
+
         <Messages errorMessage={errorMessage} successMessage={successMessage} />
+
         <StyledFindPwForm>
-        <IdInput
+          <IdInput
             userId={formState.userId}
             setUserId={value => setField('userId', value)}
             errorMessage={errorMessage}
@@ -44,15 +59,20 @@ const Find_Pw = () => {
             status={status}
             isAllFieldsRequiredError={isAllFieldsRequiredError}
           />
+
           <EmailInput
             email={formState.email}
             setEmail={value => setField('email', value)}
             errorMessage={errorMessage}
             status={status}
-            handleEmailVerificationClick={() => handleEmailVerificationClick(formState.email)}
+            handleEmailVerificationClick={() =>
+              handleEmailVerificationClick(formState.userId, formState.email)
+            }
             isVerificationSent={isVerificationSent}
             isAllFieldsRequiredError={isAllFieldsRequiredError}
+            setErrorMessage={setErrorMessage}
           />
+
           {isEmailVisible && (
             <EmailVerificationInput
               inputVerificationCode={formState.inputVerificationCode}
@@ -63,18 +83,26 @@ const Find_Pw = () => {
               isEmailVerified={isEmailVerified}
               timeLeft={timeLeft}
               isAllFieldsRequiredError={isAllFieldsRequiredError}
+              setErrorMessage={setErrorMessage}
             />
           )}
+
           <StyledLink to="/Login">로그인페이지 이동</StyledLink>
-          <StyledButton
-            width="100%"
-            type="button"
-            onClick={() => findPwClickEvent({ ...formState })}
-          >
+
+          <StyledButton width="100%" type="button" onClick={handleFindPwButtonClick}>
             비밀번호 찾기
           </StyledButton>
         </StyledFindPwForm>
       </StyledFindPwFormSection>
+
+      {showPasswordChangeModal && (
+        <PasswordChangeModal
+          mailToken={mailToken}
+          onClose={() => setShowPasswordChangeModal(false)}
+          email={formState.email}
+          userId={formState.userId}
+        />
+      )}
     </PageWrapper>
   );
 };
