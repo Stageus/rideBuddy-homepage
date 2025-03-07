@@ -6,6 +6,7 @@ import { centersState, markerSourceState, roadsState, selectedItemState, selecte
 import useUserLocation from '../../../../shared/api/useUserLocation';
 import useCenters from '../../../../shared/api/useCenters';
 import useRoads from '../../../../shared/api/useRoads';
+import { StyledIconDiv } from './style/style';
 
 const Menu = () => {
   // 사용자 위치 훅
@@ -83,19 +84,26 @@ const Menu = () => {
   return (
     <>
       {/* 네비게이션 아이콘 클릭 시 roads API 호출 */}
-      <StyledIcon
-        src="img/icon_navigation.png"
-        alt="Navigation Icon"
-        onClick={handleRoadsClick}
-        style={{ cursor: 'pointer' }}
-      />
+      <StyledIconDiv>
+        <StyledIcon
+          src="img/icon_road.png"
+          alt="Navigation Icon"
+          onClick={handleRoadsClick}
+          style={{ cursor: 'pointer' }}
+        />
+        자전거길
+      </StyledIconDiv>
+     
       {/* 맵 핀 아이콘 클릭 시 centers API 호출 */}
-      <StyledIcon
-        src="img/icon_map_pin.png"
-        alt="Map Icon"
-        onClick={handleCentersClick}
-        style={{ cursor: 'pointer' }}
-      />
+      <StyledIconDiv>
+        <StyledIcon
+          src="img/icon_centers.png"
+          alt="Map Icon"
+          onClick={handleCentersClick}
+          style={{ cursor: 'pointer' }}
+        />
+        인증센터
+      </StyledIconDiv>
     </>
   );
 };

@@ -21,11 +21,13 @@ const UserProfile = ({ user }) => {
       <StyledAvatarContainerDiv>
         {/* 프로필 이미지 */}
         <StyledAvatarImg
-          src={profileImageUrl}
+          src={profileImageUrl || 'img/icon_user.svg'}
           alt={user.account_name || '프로필 이미지'}
         />
         <Link to="/history">
-          <StyledEditButtonButton>✏️</StyledEditButtonButton>
+          <StyledEditButtonButton>
+            <img src="img/icon_pen.png" alt="" width={'26px'} height={'26px'}/>
+          </StyledEditButtonButton>
         </Link>
       </StyledAvatarContainerDiv>
 

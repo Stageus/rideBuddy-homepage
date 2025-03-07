@@ -26,4 +26,18 @@ export const StyledKeywordList = styled.ul`
       background: ${({ theme }) => theme.colors.coolGray20};
     }
   }
+  /* 웹킷 스크롤바 스타일링 */
+  &::-webkit-scrollbar {
+    width: 6px; /* 스크롤바 너비 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.primary10};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.primary30};
+    border-radius: 10px;
+  }
 `;

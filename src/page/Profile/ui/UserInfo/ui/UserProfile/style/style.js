@@ -19,8 +19,8 @@ export const StyledAvatarImg = styled.img`
 
 export const StyledEditButtonButton = styled.button`
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -5px;
+  right: -5px;
   background-color: transparent;
   border: none;
   cursor: pointer;

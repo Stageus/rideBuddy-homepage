@@ -16,10 +16,9 @@ import {
 
 import EditProfilePopup from './ui/EditProfilePopup';
 import useProfileUpload from './api/useProfileUpload';
-import useProfileList from './api/useProfileList ';
 import useDeleteProfileImage from './api/useProfileDel';
 import useUserInfo from '../../shared/api/useUserInfo';
-
+import useProfileList from './api/useProfileList ';
 
 const HistoryForm = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -66,7 +65,6 @@ const HistoryForm = () => {
     }
   };
 
-  // 삭제 API 호출 함수 (토큰 로직은 훅 내부에 있음)
   const handleDelete = async (img_idx) => {
     try {
       await deleteProfileImage(img_idx);
@@ -80,32 +78,34 @@ const HistoryForm = () => {
     <>
       <Aside />
       <Header />
+  
       <PageWrapper>
         <StyledContainerDiv>
-          {profileList.length === 0 ? (
+          {listLoading ? (
+            <p>로딩 중...</p>
+          ) : profileList.length === 0 ? (
             <p>등록된 사진이 없습니다.</p>
           ) : (
             profileList.map(item => (
               <StyledStoryCard key={item.img_idx}>
                 <StyledProfileContainer>
-                  <StyledProfileImage src={user.img_url} />
-                  <StyledTitle>{user.account_name}님의 히스토리</StyledTitle>
+                  <StyledProfileImage src={user?.img_url || 'img/icon_user.svg'} />
+                  <StyledTitle>{user?.account_name || '사용자'}님의 히스토리</StyledTitle>
                 </StyledProfileContainer>
-                {/* 삭제 버튼 클릭 시 해당 이미지의 삭제 API 호출 */}
-                <StyledCloseButton onClick={() => handleDelete(item.img_idx)}>
-                  ×
+                {/* 삭제 중일 때 개별 로딩 표시 */}
+                <StyledCloseButton onClick={() => handleDelete(item.img_idx)} disabled={deleteLoading}>
+                  {deleteLoading ? '삭제 중...' : '×'}
                 </StyledCloseButton>
                 <StyledImage src={item.img_url} alt="Story Image" />
               </StyledStoryCard>
             ))
           )}
-
-          <StyledUploadButton onClick={handleUploadButtonClick}>
-            사진 업로드
-          </StyledUploadButton>
         </StyledContainerDiv>
-
-        {isPopupVisible && (
+        <StyledUploadButton onClick={handleUploadButtonClick} disabled={isLoading}>
+            {isLoading ? '업로드 중...' : '사진 업로드'}    
+        </StyledUploadButton>
+      </PageWrapper>
+      {isPopupVisible && (
           <EditProfilePopup
             onClose={handleClosePopup}
             onFileSelect={handleFileSelect}
@@ -114,7 +114,6 @@ const HistoryForm = () => {
             error={error}
           />
         )}
-      </PageWrapper>
     </>
   );
 };

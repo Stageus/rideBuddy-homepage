@@ -40,8 +40,8 @@ export const StyledMarkerImage = styled.img`
 
 export const StyledLikeIconDiv = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  right: 55px;
+  bottom: 30px;
   font-size: 20px;
   color: white;
   cursor: pointer;

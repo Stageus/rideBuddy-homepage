@@ -7,13 +7,11 @@ export const PageWrapper = styled(StyledContainer)`
   box-sizing: border-box;
   border-radius: 5px;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.coolGray20};
   color: ${({ theme }) => theme.colors.primary60};
   background-color: ${({ theme }) => theme.colors.white};
   overflow-y: auto;
-
-  height: calc(100vh);
-  margin-top: 63px;
+  height: calc(90vh);
+  margin-top: 10px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -25,8 +23,9 @@ export const StyledContainerDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 63px);
-  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.coolGray20};
+  padding-top: 25px;
+  min-height: 400px;
 `;
 
 export const StyledStoryCard = styled.div`
@@ -36,7 +35,8 @@ export const StyledStoryCard = styled.div`
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  padding-top: 45px;
 `;
 
 export const StyledProfileContainer = styled.div`
@@ -49,24 +49,25 @@ export const StyledProfileContainer = styled.div`
 `;
 
 export const StyledProfileImage = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background-color: #c4c4c4;
   margin-right: 8px;
 `;
 
 export const StyledTitle = styled.span`
-  color: white;
-  font-size: 12px;
+  color: ${({ theme }) => theme.colors.primary90 };
+  font-size: 14px;
   font-weight: bold;
+  padding-top: 5px;
 `;
 
 export const StyledCloseButton = styled.button`
   background: none;
   border: none;
-  font-size: 16px;
-  color: white;
+  font-size: 24px;
+  color: ${({ theme }) => theme.colors.primary60};
   cursor: pointer;
   position: absolute;
   top: 10px;
@@ -88,7 +89,10 @@ export const StyledUploadButton = styled.button`
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  display: block;
 `;
 
 

@@ -18,29 +18,30 @@ import Panorama from './ui/Panorama';
 const LikeList = () => {
   const [activeTab, setActiveTab] = useState('certification');
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
+  const [selectedName, setSelectedName] = useState(''); 
   const [showPanorama, setShowPanorama] = useState(false);
 
   const page = 0;
   const { data: centersData, loading: centersLoading, error: centersError } = useLikedCenters(page);
-
   const { data: roadsData, loading: roadsLoading, error: roadsError } = useLikedRoads(page);
 
-  // 리스트 클릭 시 실행할 핸들러
-  const handleClickItem = (lat, lng) => {
+  const handleClickItem = (lat, lng, name) => {
     const newLat = parseFloat(lat);
     const newLng = parseFloat(lng);
 
-    if (selectedCoordinates && selectedCoordinates.lat === newLat && selectedCoordinates.lng === newLng) {
-      // 같은 아이템을 클릭하면 showPanorama 토글
+    if (
+      selectedCoordinates &&
+      selectedCoordinates.lat === newLat &&
+      selectedCoordinates.lng === newLng
+    ) {
       setShowPanorama(prev => !prev);
     } else {
-      // 다른 아이템을 클릭하면 새 좌표로 파노라마 표시
       setSelectedCoordinates({ lat: newLat, lng: newLng });
+      setSelectedName(name);
       setShowPanorama(true);
     }
   };
 
-  // 인증 센터 리스트 렌더링
   const renderCenters = () => {
     if (centersLoading) return <div>Loading...</div>;
     if (centersError) return <div>Error: {centersError}</div>;
@@ -48,7 +49,12 @@ const LikeList = () => {
     return (
       <StyledListUl>
         {centersData.map((center, index) => (
-          <StyledListItemLi key={index} onClick={() => handleClickItem(center.latitude, center.longitude)}>
+          <StyledListItemLi
+            key={index}
+            onClick={() =>
+              handleClickItem(center.latitude, center.longitude, center.center_name)
+            }
+          >
             <span className="icon">💙</span>
             <span>{center.center_name}</span>
           </StyledListItemLi>
@@ -57,7 +63,7 @@ const LikeList = () => {
     );
   };
 
-  // 국토 종주(도로) 리스트 렌더링
+  // Render roads list
   const renderRoads = () => {
     if (roadsLoading) return <div>Loading...</div>;
     if (roadsError) return <div>Error: {roadsError}</div>;
@@ -65,7 +71,12 @@ const LikeList = () => {
     return (
       <StyledListUl>
         {roadsData.map((road, index) => (
-          <StyledListItemLi key={index} onClick={() => handleClickItem(road.latitude, road.longitude)}>
+          <StyledListItemLi
+            key={index}
+            onClick={() =>
+              handleClickItem(road.latitude, road.longitude, road.road_name)
+            }
+          >
             <span className="icon">💙</span>
             <span>{road.road_name}</span>
           </StyledListItemLi>
@@ -76,11 +87,11 @@ const LikeList = () => {
 
   return (
     <StyledLikeListContainerDiv>
-      {/* showPanorama가 true면 파노라마, false면 상단 영역 */}
       {showPanorama ? (
         selectedCoordinates && (
           <div>
             <Panorama latitude={selectedCoordinates.lat} longitude={selectedCoordinates.lng} />
+            <div>{selectedName}</div>
           </div>
         )
       ) : (
@@ -91,31 +102,29 @@ const LikeList = () => {
         </div>
       )}
 
-      {/* 탭 버튼 */}
       <StyledActionButtonContainerDiv>
         <StyledListButton
           width={'110px'}
           onClick={() => {
             setActiveTab('certification');
-            setShowPanorama(false); // 탭 전환 시 파노라마 -> 상단 영역으로 전환
+            setShowPanorama(false); 
           }}
           active={activeTab === 'certification'}
         >
-          인증 센터
+          인증센터
         </StyledListButton>
         <StyledListButton
           width={'110px'}
           onClick={() => {
             setActiveTab('tour');
-            setShowPanorama(false); // 탭 전환 시 파노라마 -> 상단 영역으로 전환
+            setShowPanorama(false); 
           }}
           active={activeTab === 'tour'}
         >
-          국토 종주
+          자전거길
         </StyledListButton>
       </StyledActionButtonContainerDiv>
 
-      {/* 탭에 따른 리스트 출력 */}
       {activeTab === 'certification' ? renderCenters() : renderRoads()}
     </StyledLikeListContainerDiv>
   );

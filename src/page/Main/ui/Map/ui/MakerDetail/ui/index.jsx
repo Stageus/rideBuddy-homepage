@@ -41,9 +41,7 @@ const MarkerDetail = ({
       <StyledMarkerLikeButton onClick={onLike}>
         좋아요
       </StyledMarkerLikeButton>
-      
-      {distance}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+       {error && <p style={{ color: 'red' }}>{error}</p>}
     </StyledMarkerDetailDiv>
   );
 };

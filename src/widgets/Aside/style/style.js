@@ -40,8 +40,8 @@ export const StyledIconContainer = styled.div`
 
 
 export const StyledIcon = styled.img`
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   cursor: pointer;
 `;
 

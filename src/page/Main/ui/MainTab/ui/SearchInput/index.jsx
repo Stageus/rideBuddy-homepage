@@ -99,6 +99,7 @@ const SearchInput = () => {
         onKeyDown={handleKeyDown}
         onClick={handleInputClick}
         onFocus={() => query.trim() && keywordData && setShowList(true)}
+        isKeywordListOpen={showList}
       />
       {showList && keywords.length > 0 && (
         <KeywordList keywords={keywords} onClickKeyword={handleKeywordClick} />

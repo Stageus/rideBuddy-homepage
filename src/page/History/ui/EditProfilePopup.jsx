@@ -62,6 +62,7 @@ const EditProfilePopup = ({ onClose, onFileSelect, onUpload, isLoading, error })
       </StyledFileInputContainerDiv>
 
       <StyledUploadButton onClick={onUpload} disabled={isLoading}>
+        업로드
       </StyledUploadButton>
 
     </StyledPopupContainerDiv>
