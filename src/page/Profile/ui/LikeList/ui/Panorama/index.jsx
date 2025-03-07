@@ -28,7 +28,7 @@ const Panorama = ({ latitude, longitude }) => {
     initPanorama();
   }, [latitude, longitude]);
 
-  return <div id="pano" style={{ width: '100%', height: '200px', overflow: 'hidden' }}></div>;
+  return <div id="pano" style={{ width: '100%', height: '200px', overflow: 'hidden', borderRadius:'8px' }}></div>;
 };
 
 Panorama.propTypes = {

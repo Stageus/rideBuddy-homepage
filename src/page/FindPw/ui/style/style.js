@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -8,6 +9,7 @@ export const ModalOverlay = styled.div`
   background: rgba(0,0,0,0.6);
   z-index: 9999;
 `;
+
 export const StyledPopupContainerDiv = styled.div`
   position: fixed;
   top: 50%;

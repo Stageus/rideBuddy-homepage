@@ -90,8 +90,9 @@ const LikeList = () => {
       {showPanorama ? (
         selectedCoordinates && (
           <div>
-            <Panorama latitude={selectedCoordinates.lat} longitude={selectedCoordinates.lng} />
-            <div>{selectedName}</div>
+            <StyledLikeListTitleH2>{selectedName}</StyledLikeListTitleH2>
+            <StyledLikeListDescriptionP>Panorama</StyledLikeListDescriptionP>
+            <Panorama latitude={selectedCoordinates.lat} longitude={selectedCoordinates.lng}/>
           </div>
         )
       ) : (
