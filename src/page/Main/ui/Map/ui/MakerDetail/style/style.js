@@ -28,7 +28,7 @@ export const StyledCloseButtonDiv = styled.div`
 
 export const StyledMarkerImageContainerDiv = styled.div`
   position: relative;
-  margin-top: 30px;
+  margin-top: 60px;
 `;
 
 export const StyledMarkerImage = styled.img`
@@ -40,14 +40,19 @@ export const StyledMarkerImage = styled.img`
 
 export const StyledLikeIconDiv = styled.div`
   position: absolute;
-  right: 55px;
-  bottom: 30px;
-  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  right: 20px;
+  top: 40px;
+  padding: 5px;
   color: white;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 4px 6px;
-  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:${({ theme }) => theme.colors.primary90};
+  border-radius: 8px;
+  font-size: 14px;
 `;
 
 export const StyledMarkerTitleH4 = styled.h4`
