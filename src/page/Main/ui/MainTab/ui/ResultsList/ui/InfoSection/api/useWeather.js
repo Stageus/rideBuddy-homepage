@@ -8,16 +8,14 @@ const useWeather = (longitude, latitude) => {
   const fetchWeather = useCallback(async () => {
     setLoading(true);
     setError(null);
-
+  
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        setError("올바른 access token이 아님");
-        setLoading(false);
-        return;
+        throw new Error("올바른 access token이 아님");
       }
-
-      const response = await fetch('http://3.35.94.179/weather', { 
+  
+      const response = await fetch('http://3.35.94.179/weather', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,14 +23,15 @@ const useWeather = (longitude, latitude) => {
         },
         body: JSON.stringify({ longitude, latitude }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || '에러 발생');
       }
-
+  
       const result = await response.json();
-      setWeather(result.data);
+      console.log('API Result:', result);
+      setWeather(result); 
     } catch (err) {
       setError(err.message);
     } finally {

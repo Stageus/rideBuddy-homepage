@@ -1,50 +1,50 @@
-// GraphChart.jsx
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'styled-components';
 import { Chart as ChartJS, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const GraphChart = () => {
-  const theme = useTheme(); // styled-components의 테마 사용
-
+const GraphChart = ({ weather }) => {
+  const theme = useTheme();
   const chartRef = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
+
+    // 기본 데이터 (weather가 없을 경우)
+    const defaultData = Array(5).fill(0);
+    const defaultLabels = ['0:00', '1:00', '2:00', '3:00', '4:00'];
+
+    // weather 데이터가 있을 경우 동적 데이터 생성
+    let labels = defaultLabels;
+    let rainData = defaultData;
+
+    if (weather) {
+      // 현재 시간 기준으로 레이블 생성
+      const currentTime = new Date(weather.dateTime);
+      labels = Array.from({ length: 5 }, (_, i) => {
+        const time = new Date(currentTime.getTime() + i * 60 * 60 * 1000);
+        return `${time.getHours()}:00`;
+      });
+
+      // 강수량 데이터 추출
+      rainData = [
+        parseFloat(weather["0_rain"]) || 0,
+        parseFloat(weather["1_rain"]) || 0,
+        parseFloat(weather["2_rain"]) || 0,
+        parseFloat(weather["3_rain"]) || 0,
+        parseFloat(weather["4_rain"]) || 0,
+      ];
+    }
+
     const chartInstance = new ChartJS(ctx, {
       type: 'bar',
       data: {
-        labels: [
-          '0:00',
-          '1:00',
-          '2:00',
-          '3:00',
-          '4:00',
-          '5:00',
-          '6:00',
-          '7:00',
-          '8:00',
-          '9:00',
-          '10:00',
-          '11:00',
-          '12:00',
-          '13:00',
-          '14:00',
-          '15:00',
-          '16:00',
-          '17:00',
-          '18:00',
-          '19:00',
-          '20:00',
-          '21:00',
-          '22:00',
-          '23:00',
-        ],
+        labels, 
         datasets: [
           {
             label: '강수량',
-            data: [50, 75, 30, 60, 90, 55, 80, 70, 65, 85, 90, 40, 30, 70, 60, 20, 50, 10, 90, 70, 60, 40, 30, 50],
+            data: rainData, 
             backgroundColor: theme.colors.primary30,
             borderColor: theme.colors.primary10,
             borderWidth: 1,
@@ -108,7 +108,7 @@ const GraphChart = () => {
     return () => {
       chartInstance.destroy();
     };
-  }, [theme]);
+  }, [theme, weather]); 
 
   return <canvas ref={chartRef} width="320px" height="200px"></canvas>;
 };
