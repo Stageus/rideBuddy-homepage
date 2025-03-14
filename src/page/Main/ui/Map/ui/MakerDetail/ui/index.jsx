@@ -8,6 +8,8 @@ import {
   StyledMarkerAddressP,
   StyledMarkerLikeButton,
   StyledCloseButtonDiv,
+  Heart,
+  HeartText,
 } from '../style/style';
 import Panorama from './Panorama';
 
@@ -32,7 +34,10 @@ const MarkerDetail = ({
       </StyledMarkerImageContainerDiv>
       
       <StyledLikeIconDiv onClick={onLike}>
-        {likeCount !== null ? likeCount : like}
+        <Heart></Heart>
+         <HeartText>
+          {likeCount !== null ? likeCount : like}
+        </HeartText>
       </StyledLikeIconDiv>
       
       <StyledMarkerTitleH4>{name}</StyledMarkerTitleH4>
@@ -47,3 +52,5 @@ const MarkerDetail = ({
 };
 
 export default MarkerDetail;
+
+

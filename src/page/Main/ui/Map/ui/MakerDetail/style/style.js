@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const StyledMarkerDetailDiv = styled.div`
   position: absolute;
@@ -40,17 +40,14 @@ export const StyledMarkerImage = styled.img`
 
 export const StyledLikeIconDiv = styled.div`
   position: absolute;
-  width: 20px;
-  height: 20px;
-  right: 20px;
-  top: 40px;
+  left: 20px;
+  top: 20px;
   padding: 5px;
   color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:${({ theme }) => theme.colors.primary90};
   border-radius: 8px;
   font-size: 14px;
 `;
@@ -81,4 +78,73 @@ export const StyledMarkerLikeButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary90};
   }
+`;
+
+
+export const heartbeat = keyframes`
+  0% {
+    transform: rotate(45deg) scale(1);
+  }
+  25% {
+    transform: rotate(45deg) scale(1);
+  }
+  30% {
+    transform: rotate(45deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.1);
+  }
+  70% {
+    transform: rotate(45deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(45deg) scale(1);
+  }
+`;
+
+
+export const Heart = styled.div`
+  position: relative;
+  width: 12px;
+  height: 12px;
+  background-color:${({ theme }) => theme.colors.primary60};
+  transform: rotate(45deg);
+  animation: ${heartbeat} 1.4s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:${({ theme }) => theme.colors.primary60};
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  &:before {
+    transform: translateY(-50%);
+  }
+
+  &:after {
+    transform: translateX(-50%);
+  }
+`;
+
+export const HeartText = styled.span`
+  /* transform: rotate(-45deg); */
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.primary60};
+  position: absolute;
+  bottom: -15px;
 `;
