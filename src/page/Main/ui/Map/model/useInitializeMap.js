@@ -45,9 +45,12 @@ const useInitializeMap = (mapRef, userLocation) => {
       position: location,
       map: mapInstance,
       icon: {
-        content: `<div style="background:#A6C8FF; color:white; padding:5px 10px; border-radius:50%; font-weight:bold; font-size:32px">🚴‍♂️</div>`,
+        content: `<div style="display: flex; justify-content: center; align-items: center;">
+                    <img src="/img/user_pin.png" style="width: 65px; height: 65px; transform: translate(-50%, -50%);">
+                  </div>`,
       },
     });
+    
 
     const bikeLayer = new naver.maps.BicycleLayer();
     setBicycleLayer(bikeLayer);

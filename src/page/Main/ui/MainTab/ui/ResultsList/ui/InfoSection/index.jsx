@@ -11,9 +11,6 @@ const InfoSection = () => {
   const address = useAddress(lat, lng);
   const { weather, loading, error, refetch } = useWeather(lng, lat);
 
-  console.log('Address:', address);
-  console.log('weather:', weather);
-
   if (loading) return <StyledInfoDiv>Loading...</StyledInfoDiv>;
   if (error) return <StyledInfoDiv>Error: {error}</StyledInfoDiv>;
 

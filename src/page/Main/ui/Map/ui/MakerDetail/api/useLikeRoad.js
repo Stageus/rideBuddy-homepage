@@ -29,10 +29,8 @@ const useLikeRoad = () => {
         },
       });
 
-      console.log('응답 상태 코드:', response.status);
       const contentType = response.headers.get('Content-Type');
       const responseText = await response.text(); 
-      console.log('서버 응답 내용:', responseText); 
 
       if (!contentType || !contentType.includes('application/json')) {
         throw new Error(`예상치 못한 응답 형식: ${contentType || '알 수 없음'}`);

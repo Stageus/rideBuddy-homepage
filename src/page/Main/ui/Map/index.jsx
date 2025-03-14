@@ -22,7 +22,6 @@ const Map = () => {
 
   // 지도 좌표 경계
   const { sw, ne } = useMapBounds(mapWrapper);
-  console.log('Current Map Bounds:', sw, ne);
 
   // API 호출 훅
   const { data, error, loading, fetchInfoPin } = useFetchInfoPin();
@@ -41,16 +40,6 @@ const Map = () => {
       return () => clearTimeout(timeoutId);
     }
   }, [sw, ne, fetchInfoPin]);
-
-  // (디버그용) API 응답 상태 확인
-  useEffect(() => {
-    if (data) {
-      console.log('API Response:', data);
-    }
-    if (error) {
-      console.log('API Error:', error);
-    }
-  }, [data, error]);
 
   usePinMarkers(mapWrapper, data);
 

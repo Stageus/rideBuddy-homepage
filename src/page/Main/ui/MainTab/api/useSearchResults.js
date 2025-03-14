@@ -15,8 +15,6 @@ const useSearchResults = () => {
     const longitudeValue = longitude ? Number(longitude) : 127.0;
     const latitudeValue = latitude ? Number(latitude) : 37.5;
 
-    console.log("📡 Search 요청:", { search, pageNumber, longitudeValue, latitudeValue, append });
-
     setError(null);
     setLoading(true);
 
@@ -39,15 +37,11 @@ const useSearchResults = () => {
         body: JSON.stringify(payload),
       });
 
-      console.log("📡 API 응답 상태:", response.status);
-
       if (response.ok) {
         const result = await response.json();
-        console.log("✅ API 응답 데이터:", result);
         const apiData = result.resultData || result.data || [];
         setSearchResults(prev => {
           const newData = append ? [...prev, ...apiData] : apiData;
-          console.log("🆕 업데이트된 searchResults:", newData);
           return newData;
         });
         setPage(pageNumber);

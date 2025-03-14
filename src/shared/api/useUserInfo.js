@@ -11,7 +11,6 @@ const useUserInfo = () => {
 
     try {
       const token = localStorage.getItem('token');
-      console.log("Retrieved token:", token);
 
       const response = await fetch('http://3.35.94.179/mypages', {
         method: 'GET',
@@ -36,7 +35,6 @@ const useUserInfo = () => {
       }
 
       const data = await response.json();
-      console.log("Fetched data:", data);
       
       setUser(data);
     } catch (err) {

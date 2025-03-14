@@ -30,7 +30,6 @@ const useWeather = (longitude, latitude) => {
       }
   
       const result = await response.json();
-      console.log('API Result:', result);
       setWeather(result); 
     } catch (err) {
       setError(err.message);

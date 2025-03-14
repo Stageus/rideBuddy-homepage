@@ -24,7 +24,6 @@ const SearchInput = () => {
 
   useEffect(() => {
     if (keywordData && !isKeywordSelected) {
-      console.log('자동완성 API 응답:', keywordData);
       setShowList(true);
     }
   }, [keywordData, isKeywordSelected]);
@@ -99,7 +98,7 @@ const SearchInput = () => {
         onKeyDown={handleKeyDown}
         onClick={handleInputClick}
         onFocus={() => query.trim() && keywordData && setShowList(true)}
-        isKeywordListOpen={showList}
+        isKeywordListOpen={showList && keywords.length > 0}
       />
       {showList && keywords.length > 0 && (
         <KeywordList keywords={keywords} onClickKeyword={handleKeywordClick} />

@@ -16,6 +16,16 @@ const LoginForm = () => {
     loginClickEvent(userId, password);
   };
 
+  const handleNaverLogin = () => {
+    const clientId = "RaXvdKNHdhG09w5hPjrI"; 
+    const redirectUri = encodeURIComponent("http://localhost:5173/callback"); 
+    const state = Math.random().toString(36).substring(2);
+    const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+    
+    // 팝업 창 열기 또는 리다이렉트
+    window.location.href = naverAuthUrl; // 또는 window.open()으로 팝업 처리 가능
+  };
+
   return (
     <StyledLoginForm>
       <h1>Hello!</h1>
@@ -52,7 +62,7 @@ const LoginForm = () => {
 
       <StyledSNSLoginDiv>
         <SNSLoginButton icon={<FcGoogle />} label="구글로 로그인" onClick={() => console.log('구글 로그인')} />
-        <SNSLoginButton logo="naver" icon={<SiNaver />} label="네이버로 로그인" onClick={() => console.log('네이버 로그인')} />
+        <SNSLoginButton logo="naver" icon={<SiNaver />} label="네이버로 로그인" onClick={handleNaverLogin} />
       </StyledSNSLoginDiv>
 
       <StyledSignUpDiv>
