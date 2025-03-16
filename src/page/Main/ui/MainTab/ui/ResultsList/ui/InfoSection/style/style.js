@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledInfoDiv = styled.div`
   display: flex;
@@ -35,4 +35,9 @@ export const StyledRideStatusP = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.bodyL};
   color: ${({ theme }) => theme.colors.primary60};
   margin-bottom: 50px;
+`;
+
+export const StyledFaceImg = styled.img`
+  width: 100px;
+  height: 100px;
 `;

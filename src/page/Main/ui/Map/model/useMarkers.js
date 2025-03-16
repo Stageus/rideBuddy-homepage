@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { currentMarkerState, markerSourceState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
 
-const useResultMarker = (mapWrapper) => {
+const useResultMarker = mapWrapper => {
   const markerRef = useRef(null);
   const currentMarker = useRecoilValue(currentMarkerState);
   const setSelectedResult = useSetRecoilState(selectedResultState);
   // Add a setter to clear the current marker state
   const setCurrentMarker = useSetRecoilState(currentMarkerState);
-  const setMarkerSourceState = useSetRecoilState(markerSourceState)
+  const setMarkerSourceState = useSetRecoilState(markerSourceState);
 
   // Effect to create and update the marker when currentMarker changes
   useEffect(() => {
@@ -34,11 +34,11 @@ const useResultMarker = (mapWrapper) => {
         icon: {
           content: [
             '<div style="width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">',
-            '  <img src="/img/Marker_Y.png" style="width: 100%; height: 100%;" alt="Marker" />',
-            '</div>'
+            '  <img src="/img/Marker_Y.png" style="width: 70%; height: 100%;" alt="Marker" />',
+            '</div>',
           ].join(''),
-          anchor: new naver.maps.Point(22.5, 45)
-        }
+          anchor: new naver.maps.Point(22.5, 45),
+        },
       });
       markerRef.current = marker;
       // 지도 중심 이동 (부드럽게)
@@ -69,7 +69,7 @@ const useResultMarker = (mapWrapper) => {
     const clearMarkerState = () => {
       setCurrentMarker(null);
       setSelectedResult(null);
-      setMarkerSourceState(null)
+      setMarkerSourceState(null);
     };
 
     // Add event listeners for drag and zoom events
