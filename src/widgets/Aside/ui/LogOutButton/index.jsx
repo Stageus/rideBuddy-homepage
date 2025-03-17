@@ -8,6 +8,7 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("OAuth");
     navigate("/login"); 
   };
 

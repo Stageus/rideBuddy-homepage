@@ -2,10 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 
 const API_URL = 'http://3.35.94.179/mypages/centers/like-list';
 
-const useLikedCenters = (page = 0) => {
-  const [data, setData] = useState([]);      
+const useLikedCenters = (page) => {
+  const [data, setData] = useState([]); // 기존 데이터를 유지하며 추가
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 확인
 
   const fetchLikedCenters = useCallback(async () => {
     setLoading(true);
@@ -21,9 +22,9 @@ const useLikedCenters = (page = 0) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ page })
+        body: JSON.stringify({ page }),
       });
 
       if (!response.ok) {
@@ -40,7 +41,9 @@ const useLikedCenters = (page = 0) => {
       }
 
       const jsonResponse = await response.json();
-      setData(jsonResponse.result);
+      const newData = jsonResponse.result || [];
+      setData((prev) => [...prev, ...newData]); // 기존 데이터에 새 데이터 추가
+      setHasMore(newData.length > 0); // 데이터가 더 있는지 확인
     } catch (err) {
       setError(err.message);
     } finally {
@@ -52,7 +55,7 @@ const useLikedCenters = (page = 0) => {
     fetchLikedCenters();
   }, [fetchLikedCenters]);
 
-  return { data, loading, error, refetch: fetchLikedCenters };
+  return { data, loading, error, hasMore };
 };
 
 export default useLikedCenters;

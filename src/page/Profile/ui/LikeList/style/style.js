@@ -36,7 +36,23 @@ export const StyledListUl = styled.ul`
   padding: 0;
   margin: 25px 0;
   text-align: left;
-  padding-left: 20px; 
+  padding-left: 20px;
+  height: 145px;
+  overflow: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 6px; /* 스크롤바 너비 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.primary10};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.primary30};
+    border-radius: 10px;
+  }
 `;
 
 export const StyledListItemLi = styled.li`

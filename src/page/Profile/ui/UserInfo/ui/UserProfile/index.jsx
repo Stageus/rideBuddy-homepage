@@ -12,6 +12,7 @@ import {
 const UserProfile = ({ user }) => {
   // user 정보가 없으면 렌더링하지 않음
   if (!user) return null;
+  const isOAuth = localStorage.getItem('OAuth') === 'true';
 
   // user.img_url이 없을 경우 기본값(빈 문자열 등) 사용 가능
   const profileImageUrl = user.img_url ? user.img_url : '';
@@ -35,9 +36,12 @@ const UserProfile = ({ user }) => {
         <StyledProfileNameP>
           {user.account_name || '이름 없음'}
         </StyledProfileNameP>
-        <StyledProfileEmailP>
+        {!isOAuth && 
+          <StyledProfileEmailP>
           {user.mail || '이메일 정보 없음'}
-        </StyledProfileEmailP>
+          </StyledProfileEmailP>
+        }
+      
       </StyledProfileInfoDiv>
     </StyledUserProfileContainerDiv>
   );

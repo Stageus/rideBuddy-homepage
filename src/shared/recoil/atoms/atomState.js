@@ -50,3 +50,9 @@ export const selectedItemState = atom({
   key: 'selectedItemState',
   default: null,
 });
+
+
+export const likeCount = atom({
+  key: 'likeCount',
+  default: null,
+});

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   StyledListButton,
   StyledActionButtonContainerDiv,
@@ -10,7 +9,6 @@ import {
   StyledListUl,
   StyledListItemLi,
 } from './style/style';
-
 import useLikedCenters from './api/useLikedCenters';
 import useLikedRoads from './api/useLikedBikePaths';
 import Panorama from './ui/Panorama';
@@ -18,12 +16,15 @@ import Panorama from './ui/Panorama';
 const LikeList = () => {
   const [activeTab, setActiveTab] = useState('certification');
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
-  const [selectedName, setSelectedName] = useState(''); 
+  const [selectedName, setSelectedName] = useState('');
   const [showPanorama, setShowPanorama] = useState(false);
+  const [centersPage, setCentersPage] = useState(0);
+  const [roadsPage, setRoadsPage] = useState(0);
 
-  const page = 0;
-  const { data: centersData, loading: centersLoading, error: centersError } = useLikedCenters(page);
-  const { data: roadsData, loading: roadsLoading, error: roadsError } = useLikedRoads(page);
+  const observerRef = useRef(null);
+
+  const { data: centersData, loading: centersLoading, error: centersError, hasMore: centersHasMore } = useLikedCenters(centersPage);
+  const { data: roadsData, loading: roadsLoading, error: roadsError, hasMore: roadsHasMore } = useLikedRoads(roadsPage);
 
   const handleClickItem = (lat, lng, name) => {
     const newLat = parseFloat(lat);
@@ -34,7 +35,7 @@ const LikeList = () => {
       selectedCoordinates.lat === newLat &&
       selectedCoordinates.lng === newLng
     ) {
-      setShowPanorama(prev => !prev);
+      setShowPanorama((prev) => !prev);
     } else {
       setSelectedCoordinates({ lat: newLat, lng: newLng });
       setSelectedName(name);
@@ -42,45 +43,73 @@ const LikeList = () => {
     }
   };
 
+  // Intersection Observer 설정
+  const lastItemRef = useCallback(
+    (node) => {
+      if (centersLoading || roadsLoading) return;
+      if (observerRef.current) observerRef.current.disconnect();
+
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && (centersHasMore || roadsHasMore)) {
+          if (activeTab === 'certification' && centersHasMore) {
+            setCentersPage((prev) => prev + 1);
+          } else if (activeTab === 'tour' && roadsHasMore) {
+            setRoadsPage((prev) => prev + 1);
+          }
+        }
+      });
+
+      if (node) observerRef.current.observe(node);
+    },
+    [centersLoading, roadsLoading, centersHasMore, roadsHasMore, activeTab]
+  );
+
   const renderCenters = () => {
-    if (centersLoading) return <div>Loading...</div>;
     if (centersError) return <div>Error: {centersError}</div>;
 
     return (
       <StyledListUl>
-        {centersData.map((center, index) => (
-          <StyledListItemLi
-            key={index}
-            onClick={() =>
-              handleClickItem(center.latitude, center.longitude, center.center_name)
-            }
-          >
-            <span className="icon">💙</span>
-            <span>{center.center_name}</span>
-          </StyledListItemLi>
-        ))}
+        {centersData.map((center, index) => {
+          const isLastItem = centersData.length === index + 1;
+          return (
+            <StyledListItemLi
+              key={index}
+              ref={isLastItem ? lastItemRef : null} // 마지막 아이템에 ref 추가
+              onClick={() =>
+                handleClickItem(center.latitude, center.longitude, center.center_name)
+              }
+            >
+              <span className="icon">💙</span>
+              <span>{center.center_name}</span>
+            </StyledListItemLi>
+          );
+        })}
+        {centersLoading && <div>Loading more...</div>}
       </StyledListUl>
     );
   };
 
-  // Render roads list
   const renderRoads = () => {
-    if (roadsLoading) return <div>Loading...</div>;
     if (roadsError) return <div>Error: {roadsError}</div>;
 
     return (
       <StyledListUl>
-        {roadsData.map((road, index) => (
-          <StyledListItemLi
-            key={index}
-            onClick={() =>
-              handleClickItem(road.latitude, road.longitude, road.road_name)
-            }
-          >
-            <span className="icon">💙</span>
-            <span>{road.road_name}</span>
-          </StyledListItemLi>
-        ))}
+        {roadsData.map((road, index) => {
+          const isLastItem = roadsData.length === index + 1;
+          return (
+            <StyledListItemLi
+              key={index}
+              ref={isLastItem ? lastItemRef : null} // 마지막 아이템에 ref 추가
+              onClick={() =>
+                handleClickItem(road.latitude, road.longitude, road.road_name)
+              }
+            >
+              <span className="icon">💙</span>
+              <span>{road.road_name}</span>
+            </StyledListItemLi>
+          );
+        })}
+        {roadsLoading && <div>Loading more...</div>}
       </StyledListUl>
     );
   };
@@ -92,7 +121,7 @@ const LikeList = () => {
           <div>
             <StyledLikeListTitleH2>{selectedName}</StyledLikeListTitleH2>
             <StyledLikeListDescriptionP>Panorama</StyledLikeListDescriptionP>
-            <Panorama latitude={selectedCoordinates.lat} longitude={selectedCoordinates.lng}/>
+            <Panorama latitude={selectedCoordinates.lat} longitude={selectedCoordinates.lng} />
           </div>
         )
       ) : (
@@ -108,7 +137,7 @@ const LikeList = () => {
           width={'110px'}
           onClick={() => {
             setActiveTab('certification');
-            setShowPanorama(false); 
+            setShowPanorama(false);
           }}
           active={activeTab === 'certification'}
         >
@@ -118,7 +147,7 @@ const LikeList = () => {
           width={'110px'}
           onClick={() => {
             setActiveTab('tour');
-            setShowPanorama(false); 
+            setShowPanorama(false);
           }}
           active={activeTab === 'tour'}
         >

@@ -17,4 +17,8 @@ export const PageWrapper = styled(StyledContainer)`
     top: calc(50% + 25px);
     left: calc(50%);
   }
+
+  @media (max-height: 1400px) {
+    top: calc(50% + 25px);
+  }
 `;

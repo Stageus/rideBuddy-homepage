@@ -2,10 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 
 const API_URL = 'http://3.35.94.179/mypages/roads/like-list';
 
-const useLikedRoads = (page = 0) => {
-  const [data, setData] = useState([]);      
+const useLikedRoads = (page) => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchLikedRoads = useCallback(async () => {
     setLoading(true);
@@ -21,9 +22,9 @@ const useLikedRoads = (page = 0) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ page })
+        body: JSON.stringify({ page }),
       });
 
       if (!response.ok) {
@@ -40,7 +41,9 @@ const useLikedRoads = (page = 0) => {
       }
 
       const jsonResponse = await response.json();
-      setData(jsonResponse.result);
+      const newData = jsonResponse.result || [];
+      setData((prev) => [...prev, ...newData]);
+      setHasMore(newData.length > 0);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -52,7 +55,7 @@ const useLikedRoads = (page = 0) => {
     fetchLikedRoads();
   }, [fetchLikedRoads]);
 
-  return { data, loading, error, refetch: fetchLikedRoads };
+  return { data, loading, error, hasMore };
 };
 
 export default useLikedRoads;

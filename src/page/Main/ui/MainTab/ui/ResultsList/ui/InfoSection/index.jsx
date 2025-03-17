@@ -5,7 +5,6 @@ import useAddress from '../../../../../../../../shared/api/useAddress';
 import useUserLocation from '../../../../../../../../shared/api/useUserLocation';
 import useWeather from './api/useWeather';
 import ErrorMessage from '../ErrorMessage';
-import styled from 'styled-components'; // styled-components 사용 가정
 
 const InfoSection = () => {
   const { lat, lng } = useUserLocation();
@@ -41,7 +40,7 @@ const InfoSection = () => {
   return (
     <StyledInfoDiv>
       <StyledLocInfoDiv>
-        <h2>{address || '위치를 찾을 수 없습니다.'}</h2>
+        <h2>{address || 'Loading...'}</h2>
         <p>
           현재 날씨: {weather ? weatherCondition(weather['0_weather']) : '알 수 없음'}, 기온은{' '}
           {weather ? weather['0_temperature'] : '알 수 없음'}°
