@@ -16,6 +16,7 @@ export const StyledAvatarImg = styled.img`
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid ${({ theme }) => theme.colors.primary60 };
 `;
 
 export const StyledEditButtonButton = styled.button`

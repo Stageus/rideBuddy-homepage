@@ -102,6 +102,71 @@ const GlobalStyle = createGlobalStyle`
   html, body, #root {
   height: 100%;
 }
+
+/* NanumSquareRoundB (Bold) */
+@font-face {
+  font-family: 'NanumSquareRoundB';
+  src: url('/fonts/NanumSquareRoundB.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundEB (ExtraBold) */
+@font-face {
+  font-family: 'NanumSquareRoundEB';
+  src: url('/fonts/NanumSquareRoundEB.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundL (Light) */
+@font-face {
+  font-family: 'NanumSquareRoundL';
+  src: url('/fonts/NanumSquareRoundL.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundR (Regular) */
+@font-face {
+  font-family: 'NanumSquareRoundR';
+  src: url('/fonts/NanumSquareRoundR.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundOTFB (OTF Bold) */
+@font-face {
+  font-family: 'NanumSquareRoundOTFB';
+  src: url('/fonts/NanumSquareRoundOTFB.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundOTFEB (OTF ExtraBold) */
+@font-face {
+  font-family: 'NanumSquareRoundOTFEB';
+  src: url('/fonts/NanumSquareRoundOTFEB.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundOTFL (OTF Light) */
+@font-face {
+  font-family: 'NanumSquareRoundOTFL';
+  src: url('/fonts/NanumSquareRoundOTFL.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NanumSquareRoundOTFR (OTF Regular) */
+@font-face {
+  font-family: 'NanumSquareRoundOTFR';
+  src: url('/fonts/NanumSquareRoundOTFR.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 `;
 
 export default GlobalStyle;

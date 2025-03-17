@@ -1,3 +1,5 @@
+
+
 export const theme = {
   colors: {
     background: '#FFFF',
@@ -40,6 +42,6 @@ export const theme = {
     regular: 300,
   },
   fonts: {
-    body: "'Roboto', sans-serif",
+    body: "'NanumSquareRoundR', sans-serif",
   },
 };

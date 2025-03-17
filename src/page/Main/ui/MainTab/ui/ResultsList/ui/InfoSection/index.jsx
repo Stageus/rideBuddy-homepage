@@ -1,18 +1,19 @@
 import React from 'react';
 import { StyledFaceImg, StyledInfoDiv, StyledLocInfoDiv, StyledRideStatusP, StyledSmileyDiv } from './style/style';
 import GraphChart from './ui/GraphChart';
-import { ImHappy2 } from 'react-icons/im';
 import useAddress from '../../../../../../../../shared/api/useAddress';
 import useUserLocation from '../../../../../../../../shared/api/useUserLocation';
 import useWeather from './api/useWeather';
+import ErrorMessage from '../ErrorMessage';
+import styled from 'styled-components'; // styled-components 사용 가정
 
 const InfoSection = () => {
   const { lat, lng } = useUserLocation();
   const address = useAddress(lat, lng);
   const { weather, loading, error, refetch } = useWeather(lng, lat);
 
-  if (loading) return <StyledInfoDiv>Loading...</StyledInfoDiv>;
-  if (error) return <StyledInfoDiv>Error: {error}</StyledInfoDiv>;
+  if (loading) return <StyledInfoDiv><ErrorMessage></ErrorMessage></StyledInfoDiv>;
+  if (error) return <StyledInfoDiv><ErrorMessage></ErrorMessage></StyledInfoDiv>;
 
   const weatherCondition = weatherCode => {
     switch (weatherCode) {
@@ -35,6 +36,8 @@ const InfoSection = () => {
     return !isRainy && !isBadPm10 && !isBadPm25 ? '좋음' : '나쁨';
   };
 
+  const rideStatus = getRideStatus();
+
   return (
     <StyledInfoDiv>
       <StyledLocInfoDiv>
@@ -44,20 +47,25 @@ const InfoSection = () => {
           {weather ? weather['0_temperature'] : '알 수 없음'}°
         </p>
         <p>
-          미세먼지 최고 {weather ? (weather.pm10Grade1h === '1' ? '좋음' : '나쁨') : '알 수 없음'}
-          {weather ? weather.pm10Value : '알 수 없음'} µg/m³
+          미세먼지 최고 {weather ? (weather.pm10Grade1h === '1' ? '좋음' : '나쁨') : '알 수 없음'} (
+          {weather ? weather.pm10Value : '알 수 없음'} µg/m³)
         </p>
         <p>
-          초미세먼지 {weather ? (weather.pm25Grade1h === '1' ? '좋음' : '나쁨') : '알 수 없음'}
-          {weather ? weather.pm25Value : '알 수 없음'} µg/m³
+          초미세먼지 {weather ? (weather.pm25Grade1h === '1' ? '좋음' : '나쁨') : '알 수 없음'} (
+          {weather ? weather.pm25Value : '알 수 없음'} µg/m³)
         </p>
       </StyledLocInfoDiv>
       <StyledSmileyDiv>
-        <StyledFaceImg src="img/happy.png"></StyledFaceImg>
-        {/* <ImHappy2 color="#5C7FDA" /> */}
+        {rideStatus === '좋음' ? (
+          <StyledFaceImg src="img/happy.png" alt="좋음" />
+        ) : (
+          <StyledFaceImg src="img/sad.png" alt="나쁨" />
+        )}
       </StyledSmileyDiv>
-      <StyledRideStatusP>오늘은 라이딩하기 "{getRideStatus()}" 입니다</StyledRideStatusP>
-      <GraphChart weather={weather} /> {/* weather 데이터를 props로 전달 */}
+      <StyledRideStatusP status={rideStatus}>
+        오늘은 라이딩하기 "{rideStatus}" 입니다
+      </StyledRideStatusP>
+      <GraphChart weather={weather} />
     </StyledInfoDiv>
   );
 };

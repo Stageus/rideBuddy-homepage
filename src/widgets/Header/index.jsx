@@ -18,7 +18,9 @@ const Header = () => {
 
       <StyledTitleContainer>
         <a href="/main" onClick={handleNavigation}>
-          <StyledTitle>ride buddy</StyledTitle>
+          <StyledTitle>
+            <img src="img/RideBuddy.png" alt="" />
+          </StyledTitle>
         </a>
       </StyledTitleContainer>
     </StyledHeader>

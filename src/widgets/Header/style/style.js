@@ -31,7 +31,8 @@ export const StyledTitleContainer = styled.div`
 `;
 
 export const StyledTitle = styled.h1`
-  font-size: 24px;
+  font-size: 0px;
   color: #4a73f3;
   font-weight: normal;
+  img {width:150px; height:100%}
 `;

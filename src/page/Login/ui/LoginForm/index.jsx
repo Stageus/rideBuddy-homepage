@@ -17,13 +17,20 @@ const LoginForm = () => {
   };
 
   const handleNaverLogin = () => {
-    const clientId = "RaXvdKNHdhG09w5hPjrI"; 
-    const redirectUri = encodeURIComponent("http://localhost:5173/callback"); 
+    const clientId = "RaXvdKNHdhG09w5hPjrI";
+    const redirectUri = encodeURIComponent("http://localhost:5173/NaverCallback");
     const state = Math.random().toString(36).substring(2);
     const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
-    
-    // 팝업 창 열기 또는 리다이렉트
-    window.location.href = naverAuthUrl; // 또는 window.open()으로 팝업 처리 가능
+    window.location.href = naverAuthUrl;
+  };
+
+  const handleGoogleLogin = () => {
+    const clientId = "YOUR_GOOGLE_CLIENT_ID"; // 구글 클라이언트 ID
+    const redirectUri = encodeURIComponent("http://localhost:5173/GoogleCallback");
+    const scope = encodeURIComponent("profile email"); // 구글에서 요청할 권한
+    const state = Math.random().toString(36).substring(2);
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
+    window.location.href = googleAuthUrl;
   };
 
   return (
@@ -61,7 +68,7 @@ const LoginForm = () => {
       <span>SNS 로그인 하기</span>
 
       <StyledSNSLoginDiv>
-        <SNSLoginButton icon={<FcGoogle />} label="구글로 로그인" onClick={() => console.log('구글 로그인')} />
+        <SNSLoginButton icon={<FcGoogle />} label="구글로 로그인" onClick={handleGoogleLogin} />
         <SNSLoginButton logo="naver" icon={<SiNaver />} label="네이버로 로그인" onClick={handleNaverLogin} />
       </StyledSNSLoginDiv>
 
