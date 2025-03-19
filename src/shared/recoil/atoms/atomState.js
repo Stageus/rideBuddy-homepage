@@ -56,3 +56,8 @@ export const likeCount = atom({
   key: 'likeCount',
   default: null,
 });
+
+export const detailSourceState = atom({
+  key: 'detailSourceState',
+  default: '',
+});

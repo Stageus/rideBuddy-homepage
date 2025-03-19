@@ -61,12 +61,8 @@ const useResultMarker = mapWrapper => {
       naver.maps.Event.addListener(marker, 'click', async () => {
         if(currentMarker.result && currentMarker.result === 'road'){
           await fetchRoadPoint(currentMarker.idx);
-          console.log(currentMarker.idx)
-          console.log(currentMarker.result)
         } else if (currentMarker.result && currentMarker.result === 'center') {
           await fetchCenterDetails(currentMarker.idx);
-          console.log(currentMarker.idx)
-          console.log(currentMarker.result)
         } else if (markerSource === 'roads') {
           await fetchRoadPoint(currentMarker.idx);
         } else if(markerSource === 'centers') {

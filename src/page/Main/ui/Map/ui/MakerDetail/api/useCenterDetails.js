@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { markerSourceState, selectedResultState } from '../../../../../../../shared/recoil/atoms/atomState';
+import { detailSourceState, selectedResultState } from '../../../../../../../shared/recoil/atoms/atomState';
 import { useSetRecoilState } from 'recoil';
 
 // Custom hook for fetching center details
@@ -8,7 +8,7 @@ const useCenterDetails = () => {
   const [error, setError] = useState(null); // Error message for 400, 401, 404, 500
   const [loading, setLoading] = useState(false); // Loading state
   const setSelectedResult = useSetRecoilState(selectedResultState);
-  const setMarkerSourceState = useSetRecoilState(markerSourceState);
+  const setDetailSourceState = useSetRecoilState(detailSourceState);
 
   // Function to validate centerIdx with regex
   const isValidCenterIdx = (idx) => /^\d+$/.test(idx);
@@ -58,7 +58,7 @@ const useCenterDetails = () => {
 
         setCenterDetail(result);         
         setSelectedResult(transformedResult);
-        setMarkerSourceState('center') 
+        setDetailSourceState('center') 
         // console.log(transformedResult);
       } else {
         switch (response.status) {

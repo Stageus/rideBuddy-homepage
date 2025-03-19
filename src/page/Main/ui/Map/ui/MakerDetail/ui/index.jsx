@@ -23,7 +23,7 @@ const MarkerDetail = ({
   like,
   setSelectedResult,
   addr,
-  markerSource
+  detailSource
 }) => {
   const { likeRoad, loading: roadLoading, error: roadError, setLikeCount: setRoadLikeCount } = useLikeRoad();
   const { likeCenter, loading: centerLoading, error: centerError, setLikeCount: setCenterLikeCount } = useLikeCenters();
@@ -33,31 +33,31 @@ const MarkerDetail = ({
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (markerSource === 'road') {
+    if (detailSource === 'road') {
       setRoadLikeCount(like);
-    } else if (markerSource === 'center') {
+    } else if (detailSource === 'center') {
       setCenterLikeCount(like);
     }
-  }, [like, markerSource, setRoadLikeCount, setCenterLikeCount]);
+  }, [like, detailSource, setRoadLikeCount, setCenterLikeCount]);
 
   const handleLikeClick = async () => {
     try {
       setIsLoading(true);
       setError(null);
 
-      if (markerSource === 'center') {
+      if (detailSource === 'center') {
         const response = await likeCenter(idx);
         if (response && response["center likeCount"] !== undefined) {
           setLocalLikeCount(response["center likeCount"]);
         }
-      } else if (markerSource === 'road') {
+      } else if (detailSource === 'road') {
         const response = await likeRoad(idx);
         if (response && response["road likeCount"] !== undefined) {
           setLocalLikeCount(response["road likeCount"]);
         }
       }
     } catch (err) {
-      setError(markerSource === 'center' ? centerError : roadError);
+      setError(detailSource === 'center' ? centerError : roadError);
     } finally {
       setIsLoading(false);
     }

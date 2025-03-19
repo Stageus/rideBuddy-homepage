@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { markerSourceState, selectedResultState } from '../../../../../../shared/recoil/atoms/atomState';
+import { detailSourceState, selectedResultState } from '../../../../../../shared/recoil/atoms/atomState';
 import MarkerDetail from './ui';
 import useLikeCenters from './api/useLikeCenters';
 import useLikeRoad from './api/useLikeRoad';
@@ -8,7 +8,7 @@ import useLikeRoad from './api/useLikeRoad';
 const MarkerDetailContainer = () => {
   const selectedResult = useRecoilValue(selectedResultState);
   const setSelectedResult = useSetRecoilState(selectedResultState);
-  const markerSource = useRecoilValue(markerSourceState);
+  const detailSource = useRecoilValue(detailSourceState);
   
 
   return (
@@ -21,7 +21,7 @@ const MarkerDetailContainer = () => {
       addr={selectedResult.addr}
       setSelectedResult={setSelectedResult}
       result={selectedResult.result}
-      markerSource={markerSource}
+      detailSource={detailSource}
     />
   );
 };
