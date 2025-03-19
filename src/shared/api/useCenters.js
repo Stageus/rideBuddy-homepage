@@ -46,7 +46,7 @@ const useCenters = () => {
           setHasMore(false);
         } else {
           const transformedResults = resultArray.map(item => ({
-            id: item.center_idx,
+            idx: item.center_idx,
             name: item.center_name,
             address: item.center_address,
             distance: item.cal,

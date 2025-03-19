@@ -7,7 +7,7 @@ import useFetchInfoPin from './model/useFetchInfoPin';
 import MarkerDetailContainer from './ui/MakerDetail';
 import { StyledMapWrap } from './style/style';
 import usePinMarkers from './model/usePinMarkers';
-import { centersState, markerSourceState, roadsState, searchResultsState, selectedItemState } from '../../../../shared/recoil/atoms/atomState';
+import { centersState, markerSourceState, roadsState, searchResultsState, selectedItemState, selectedResultState } from '../../../../shared/recoil/atoms/atomState';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const Map = () => {
@@ -16,6 +16,8 @@ const Map = () => {
   const mapWrapper = useInitializeMap(mapRef, userLocation);
   const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState);
   const markerSource = useRecoilValue(markerSourceState);
+  const selectedResult = useRecoilValue(selectedResultState);
+
 
   // 기존 마커 관련 로직 (Recoil 상태 기반)
   useResultMarker(mapWrapper);
@@ -46,7 +48,7 @@ const Map = () => {
   return (
     <StyledMapWrap>
       <div ref={mapRef} style={{ width: '100%', height: '100vh' }} />
-      <MarkerDetailContainer />
+      {selectedResult && <MarkerDetailContainer />}
       {/* 지도 경계 디버그 */}
     {/*   {sw && ne && (
         <div

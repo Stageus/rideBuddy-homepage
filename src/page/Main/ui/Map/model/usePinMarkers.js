@@ -1,26 +1,27 @@
-// usePinMarkers.js
 import { useEffect, useRef } from 'react';
 import { markerSourceState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import useRoadPointApi from '../ui/MakerDetail/api/useRoadPointApi';
+import useCenterDetails from '../ui/MakerDetail/api/useCenterDetails';
+
 
 function usePinMarkers(mapWrapper, data) {
   const currentMarkerSource = useRecoilValue(markerSourceState);
-  const setSelectedResult = useSetRecoilState(selectedResultState); // 추가
+  const setSelectedResult = useSetRecoilState(selectedResultState);
+  const { RoadDetail, error: roadError, loading: roadLoading, fetchRoadPoint } = useRoadPointApi();
+  const { CenterDetail, error: centerError, loading: centerLoading, fetchCenterDetails } = useCenterDetails();
   const markersRef = useRef([]);
 
   useEffect(() => {
     if (!mapWrapper?.map || !data) return;
 
-    // 기존 마커 제거
     markersRef.current.forEach(marker => marker.setMap(null));
     markersRef.current = [];
 
-    // markerSourceState에 값이 있으면 마커 생성하지 않고 종료 (기존 로직)
     if (currentMarkerSource) {
       return;
     }
 
-    // markerSourceState에 값이 없을 경우 새 마커 생성
     const newMarkers = data.map(item => {
       const { latitude, longitude, name } = item;
       const position = new naver.maps.LatLng(+latitude, +longitude);
@@ -39,10 +40,14 @@ function usePinMarkers(mapWrapper, data) {
         },
       });
 
-      // ★ 마커 클릭 시 -> Recoil State 업데이트
-      naver.maps.Event.addListener(marker, 'click', () => {
-        console.log('Marker Clicked:', item);
-        setSelectedResult(item);
+      naver.maps.Event.addListener(marker, 'click', async () => {
+        if (item.result === 'road') {
+          await fetchRoadPoint(item.idx);
+        } else if (item.result === 'center') {
+          await fetchCenterDetails(item.idx);
+        } else {
+          console.warn('Unknown result type:', item.result);
+        }
       });
 
       return marker;
@@ -50,14 +55,13 @@ function usePinMarkers(mapWrapper, data) {
 
     markersRef.current = newMarkers;
 
-    // 클린업
     return () => {
       markersRef.current.forEach(marker => marker.setMap(null));
-      markersRef.current = [];
+      markersRef.current = []; 
     };
-  }, [mapWrapper, data, currentMarkerSource, setSelectedResult]);
+  }, [mapWrapper, data, currentMarkerSource]);
 
-  // 필요한 경우 markersRef.current 반환
+  return { markersRef, RoadDetail, CenterDetail, roadLoading, centerLoading, roadError, centerError };
 }
 
 export default usePinMarkers;

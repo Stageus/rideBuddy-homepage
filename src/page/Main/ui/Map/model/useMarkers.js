@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { currentMarkerState, markerSourceState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
+import useRoadPointApi from '../ui/MakerDetail/api/useRoadPointApi';
+import useCenterDetails from '../ui/MakerDetail/api/useCenterDetails';
 
 const useResultMarker = mapWrapper => {
   const markerRef = useRef(null);
@@ -9,6 +11,10 @@ const useResultMarker = mapWrapper => {
   // Add a setter to clear the current marker state
   const setCurrentMarker = useSetRecoilState(currentMarkerState);
   const setMarkerSourceState = useSetRecoilState(markerSourceState);
+  const { RoadDetail, error: roadError, loading: roadLoading, fetchRoadPoint } = useRoadPointApi();
+  const { CenterDetail, error: centerError, loading: centerLoading, fetchCenterDetails } = useCenterDetails();
+  const markerSource = useRecoilValue(markerSourceState);
+
 
   // Effect to create and update the marker when currentMarker changes
   useEffect(() => {
@@ -52,8 +58,20 @@ const useResultMarker = mapWrapper => {
         console.warn('지도 중심 이동 함수가 없습니다:', actualMap);
       }
       // 마커 클릭 시에만 selectedResultState를 업데이트하여 팝업을 띄움
-      naver.maps.Event.addListener(marker, 'click', () => {
-        setSelectedResult(currentMarker);
+      naver.maps.Event.addListener(marker, 'click', async () => {
+        if(currentMarker.result && currentMarker.result === 'road'){
+          await fetchRoadPoint(currentMarker.idx);
+          console.log(currentMarker.idx)
+          console.log(currentMarker.result)
+        } else if (currentMarker.result && currentMarker.result === 'center') {
+          await fetchCenterDetails(currentMarker.idx);
+          console.log(currentMarker.idx)
+          console.log(currentMarker.result)
+        } else if (markerSource === 'roads') {
+          await fetchRoadPoint(currentMarker.idx);
+        } else if(markerSource === 'centers') {
+          await fetchCenterDetails(currentMarker.idx);
+        }
       });
     }
   }, [mapWrapper, currentMarker, setSelectedResult]);

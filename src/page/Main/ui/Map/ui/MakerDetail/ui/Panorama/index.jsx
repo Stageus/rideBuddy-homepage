@@ -20,7 +20,6 @@ const Panorama = ({ latitude, longitude }) => {
 
         // Event Listener for Panorama change
         window.naver.maps.Event.addListener(pano, 'pano_changed', () => {
-          console.log('PanoramaLocation', pano.getLocation());
         });
       }
     };

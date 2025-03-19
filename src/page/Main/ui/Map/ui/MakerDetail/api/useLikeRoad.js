@@ -10,7 +10,6 @@ const useLikeRoad = () => {
     setError(null); 
 
     const token = localStorage.getItem("token"); 
-    console.log('사용된 토큰:', token); 
 
     if (!token) {
       setError("로그인이 필요합니다."); 
@@ -39,7 +38,7 @@ const useLikeRoad = () => {
       const data = JSON.parse(responseText); 
 
       if (response.ok) {
-        setLikeCount(data["rode likeCount"]); 
+        setLikeCount(data["road likeCount"]); 
         return data;
       } else {
         switch (response.status) {
@@ -73,7 +72,7 @@ const useLikeRoad = () => {
     }
   };
 
-  return { likeCount, loading, error, likeRoad,setLikeCount };
+  return { likeCount, loading, error, likeRoad, setLikeCount };
 };
 
 export default useLikeRoad;

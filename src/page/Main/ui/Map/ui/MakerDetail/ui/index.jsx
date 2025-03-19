@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyledMarkerDetailDiv,
@@ -12,45 +12,81 @@ import {
   HeartText,
 } from '../style/style';
 import Panorama from './Panorama';
+import useLikeRoad from '../api/useLikeRoad';
+import useLikeCenters from '../api/useLikeCenters';
 
 const MarkerDetail = ({
-  name,
-  address,
-  distance,
   idx,
-  onClose,
+  name,
   latitude,
   longitude,
   like,
-  onLike,
-  likeCount,
-  error,
+  setSelectedResult,
+  addr,
+  markerSource
 }) => {
+  const { likeRoad, loading: roadLoading, error: roadError, setLikeCount: setRoadLikeCount } = useLikeRoad();
+  const { likeCenter, loading: centerLoading, error: centerError, setLikeCount: setCenterLikeCount } = useLikeCenters();
+  
+  const [localLikeCount, setLocalLikeCount] = useState(like);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (markerSource === 'road') {
+      setRoadLikeCount(like);
+    } else if (markerSource === 'center') {
+      setCenterLikeCount(like);
+    }
+  }, [like, markerSource, setRoadLikeCount, setCenterLikeCount]);
+
+  const handleLikeClick = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      if (markerSource === 'center') {
+        const response = await likeCenter(idx);
+        if (response && response["center likeCount"] !== undefined) {
+          setLocalLikeCount(response["center likeCount"]);
+        }
+      } else if (markerSource === 'road') {
+        const response = await likeRoad(idx);
+        if (response && response["road likeCount"] !== undefined) {
+          setLocalLikeCount(response["road likeCount"]);
+        }
+      }
+    } catch (err) {
+      setError(markerSource === 'center' ? centerError : roadError);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <StyledMarkerDetailDiv>
-      <StyledCloseButtonDiv onClick={onClose} />
+      <StyledCloseButtonDiv onClick={() => setSelectedResult(null)} />
+      
       <StyledMarkerImageContainerDiv>
         <Panorama latitude={latitude} longitude={longitude} />
       </StyledMarkerImageContainerDiv>
       
-      <StyledLikeIconDiv onClick={onLike}>
-        <Heart></Heart>
-         <HeartText>
-          {likeCount !== null ? likeCount : like}
-        </HeartText>
+      <StyledLikeIconDiv>
+        <Heart />
+        <HeartText>{localLikeCount}</HeartText>
       </StyledLikeIconDiv>
       
       <StyledMarkerTitleH4>{name}</StyledMarkerTitleH4>
-      <StyledMarkerAddressP>{address}</StyledMarkerAddressP>
+      <StyledMarkerAddressP>{addr}</StyledMarkerAddressP>
       
-      <StyledMarkerLikeButton onClick={onLike}>
+      <StyledMarkerLikeButton 
+        onClick={handleLikeClick}
+        disabled={isLoading || roadLoading || centerLoading}
+      >
         좋아요
       </StyledMarkerLikeButton>
-       {error && <p style={{ color: 'red' }}>{error}</p>}
     </StyledMarkerDetailDiv>
   );
 };
 
 export default MarkerDetail;
-
-
