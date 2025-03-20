@@ -33,8 +33,7 @@ export const StyledActionButtonContainerDiv = styled.div`
 
 export const StyledListUl = styled.ul`
   list-style: none;
-  padding: 0;
-  margin: 25px 0;
+  margin-top: 16px;
   text-align: left;
   padding-left: 20px;
   height: 145px;

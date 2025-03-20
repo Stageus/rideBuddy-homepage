@@ -32,6 +32,11 @@ const MarkerDetail = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // like prop이 변경될 때 localLikeCount를 동기화
+  useEffect(() => {
+    setLocalLikeCount(like);
+  }, [like]);
+
   useEffect(() => {
     if (detailSource === 'road') {
       setRoadLikeCount(like);
@@ -49,11 +54,15 @@ const MarkerDetail = ({
         const response = await likeCenter(idx);
         if (response && response["center likeCount"] !== undefined) {
           setLocalLikeCount(response["center likeCount"]);
+        } else {
+          setLocalLikeCount(like); // 응답이 유효하지 않으면 기본값 유지
         }
       } else if (detailSource === 'road') {
         const response = await likeRoad(idx);
         if (response && response["road likeCount"] !== undefined) {
           setLocalLikeCount(response["road likeCount"]);
+        } else {
+          setLocalLikeCount(like); // 응답이 유효하지 않으면 기본값 유지
         }
       }
     } catch (err) {

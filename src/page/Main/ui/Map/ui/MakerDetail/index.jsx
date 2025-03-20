@@ -13,6 +13,7 @@ const MarkerDetailContainer = () => {
 
   return (
     <MarkerDetail
+      key={selectedResult.idx}
       idx={selectedResult.idx}
       name={selectedResult.name}
       latitude={selectedResult.latitude}

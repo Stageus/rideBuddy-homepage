@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { markerSourceState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
+import { detailSourceState, markerSourceState, selectedResultState } from '../../../../../shared/recoil/atoms/atomState';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useRoadPointApi from '../ui/MakerDetail/api/useRoadPointApi';
 import useCenterDetails from '../ui/MakerDetail/api/useCenterDetails';
@@ -10,6 +10,7 @@ function usePinMarkers(mapWrapper, data) {
   const setSelectedResult = useSetRecoilState(selectedResultState);
   const { RoadDetail, error: roadError, loading: roadLoading, fetchRoadPoint } = useRoadPointApi();
   const { CenterDetail, error: centerError, loading: centerLoading, fetchCenterDetails } = useCenterDetails();
+  const detailSource = useRecoilValue(detailSourceState);
   const markersRef = useRef([]);
 
   useEffect(() => {
